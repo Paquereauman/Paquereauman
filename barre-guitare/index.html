@@ -61,6 +61,8 @@ svg text{font-family:var(--body);font-size:11px;fill:var(--fg)}
 .tri>*{min-width:0}
 .tpbox{position:relative}
 .tp .photo{aspect-ratio:4/3;object-fit:cover}
+figure[data-photo]>svg,.tpbox{cursor:pointer;border-radius:12px}
+figure[data-photo].active>svg,figure[data-photo].active .tpbox{outline:3px solid var(--up);outline-offset:3px}
 .badge{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:700 20px/1 var(--body);color:#fff}
 .badge.ok{background:var(--good)}.badge.ko{background:var(--bad)}
 .conv{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center}
@@ -200,11 +202,12 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 
   <div class="block">
     <h2>L'index : où le poser</h2>
+    <p class="tip">Pour ajouter une photo : clique sur une case, puis colle l'image avec Ctrl+V (ou Cmd+V), ou glisse-la dessus. Une photo collée reste dans ton navigateur ; pour la publier pour tout le monde, mets le fichier dans le dossier <code>photos/</code> du dépôt.</p>
     <p class="tip">Compare la bonne position avec les deux erreurs les plus fréquentes.</p>
     <div class="tri">
       <figure class="tp" data-photo="idx-ok">
         <div class="tpbox">
-          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : L'index est au bon endroit, juste derrière la frette."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Ta photo ici</text></svg>
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : L'index est au bon endroit, juste derrière la frette."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
           <img class="photo" alt="L'index est au bon endroit, juste derrière la frette." hidden>
           <span class="badge ok" aria-hidden="true">✓</span>
         </div>
@@ -213,7 +216,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
       </figure>
       <figure class="tp" data-photo="idx-far">
         <div class="tpbox">
-          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : L'index est trop loin de la frette : il faut serrer plus fort et ça grésille."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Ta photo ici</text></svg>
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : L'index est trop loin de la frette : il faut serrer plus fort et ça grésille."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
           <img class="photo" alt="L'index est trop loin de la frette : il faut serrer plus fort et ça grésille." hidden>
           <span class="badge ko" aria-hidden="true">✗</span>
         </div>
@@ -222,7 +225,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
       </figure>
       <figure class="tp" data-photo="idx-on">
         <div class="tpbox">
-          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : L'index est sur la frette : le son est étouffé."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Ta photo ici</text></svg>
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : L'index est sur la frette : le son est étouffé."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
           <img class="photo" alt="L'index est sur la frette : le son est étouffé." hidden>
           <span class="badge ko" aria-hidden="true">✗</span>
         </div>
@@ -238,29 +241,29 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     <div class="tri">
       <figure class="tp" data-photo="th-ok">
         <div class="tpbox">
-          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Le pouce est vertical, perpendiculaire au manche, au milieu et derrière l'index : il soutient la pression."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Ta photo ici</text></svg>
-          <img class="photo" alt="Le pouce est au milieu du manche, derrière l'index : il soutient la pression." hidden>
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Le pouce est vertical, perpendiculaire au manche, au milieu et derrière l'index : il soutient la pression."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
+          <img class="photo" alt="Le pouce est vertical, perpendiculaire au manche, au milieu et derrière l'index : il soutient la pression." hidden>
           <span class="badge ok" aria-hidden="true">✓</span>
         </div>
-        <figcaption>Le pouce est au milieu du manche, derrière l'index : il soutient la pression.</figcaption>
+        <figcaption>Le pouce est vertical, perpendiculaire au manche, au milieu et derrière l'index : il soutient la pression.</figcaption>
         <div class="photoctl"><label class="chip" for="ph-th-ok">Mettre ma photo<input id="ph-th-ok" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer</button></div>
       </figure>
       <figure class="tp" data-photo="th-over">
         <div class="tpbox">
-          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Le pouce est couché à l'horizontale le long du manche : c'est l'erreur la plus fréquente, et la force passe dans les doigts."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Ta photo ici</text></svg>
-          <img class="photo" alt="Le pouce est trop haut, il dépasse au-dessus du manche : tu perds de la force." hidden>
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Le pouce est couché à l'horizontale le long du manche : c'est l'erreur la plus fréquente, et la force passe dans les doigts."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
+          <img class="photo" alt="Le pouce est couché à l'horizontale le long du manche : c'est l'erreur la plus fréquente, et la force passe dans les doigts." hidden>
           <span class="badge ko" aria-hidden="true">✗</span>
         </div>
-        <figcaption>Le pouce est trop haut, il dépasse au-dessus du manche : tu perds de la force.</figcaption>
+        <figcaption>Le pouce est couché à l'horizontale le long du manche : c'est l'erreur la plus fréquente, et la force passe dans les doigts.</figcaption>
         <div class="photoctl"><label class="chip" for="ph-th-over">Mettre ma photo<input id="ph-th-over" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer</button></div>
       </figure>
       <figure class="tp" data-photo="th-low">
         <div class="tpbox">
-          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Le pouce est trop haut ou trop bas : l'index perd son appui."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Ta photo ici</text></svg>
-          <img class="photo" alt="Le pouce est trop bas et la paume colle au manche : l'index perd son appui." hidden>
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Le pouce est trop haut ou trop bas : l'index perd son appui."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
+          <img class="photo" alt="Le pouce est trop haut ou trop bas : l'index perd son appui." hidden>
           <span class="badge ko" aria-hidden="true">✗</span>
         </div>
-        <figcaption>Le pouce est trop bas et la paume colle au manche : l'index perd son appui.</figcaption>
+        <figcaption>Le pouce est trop haut ou trop bas : l'index perd son appui.</figcaption>
         <div class="photoctl"><label class="chip" for="ph-th-low">Mettre ma photo<input id="ph-th-low" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer</button></div>
       </figure>
     </div>
@@ -271,7 +274,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     <p class="tip">La main complète vue de derrière : pouce, paume, poignet et doigts, pour voir tout le placement d'un coup.</p>
     <figure class="tp" data-photo="rear" style="max-width:520px">
       <div class="tpbox">
-        <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : vue de derrière, main complète"><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Ta photo ici</text></svg>
+        <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : vue de derrière, main complète"><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
         <img class="photo" alt="Vue de derrière, main complète" hidden>
       </div>
       <figcaption>La main gauche complète vue de derrière le manche.</figcaption>
@@ -285,7 +288,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     <div class="tri">
       <figure class="tp" data-photo="pm-ok">
         <div class="tpbox">
-          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Un petit espace entre la paume et le manche, poignet droit."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Ta photo ici</text></svg>
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Un petit espace entre la paume et le manche, poignet droit."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
           <img class="photo" alt="Un petit espace entre la paume et le manche, poignet droit." hidden>
           <span class="badge ok" aria-hidden="true">✓</span>
         </div>
@@ -294,7 +297,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
       </figure>
       <figure class="tp" data-photo="pm-touch">
         <div class="tpbox">
-          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : La paume est collée au manche : les doigts ne peuvent plus s'arrondir."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Ta photo ici</text></svg>
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : La paume est collée au manche : les doigts ne peuvent plus s'arrondir."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
           <img class="photo" alt="La paume est collée au manche : les doigts ne peuvent plus s'arrondir." hidden>
           <span class="badge ko" aria-hidden="true">✗</span>
         </div>
@@ -303,7 +306,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
       </figure>
       <figure class="tp" data-photo="pm-bent">
         <div class="tpbox">
-          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Le poignet est trop plié : les tendons se tendent et la force baisse."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Ta photo ici</text></svg>
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Le poignet est trop plié : les tendons se tendent et la force baisse."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
           <img class="photo" alt="Le poignet est trop plié : les tendons se tendent et la force baisse." hidden>
           <span class="badge ko" aria-hidden="true">✗</span>
         </div>
@@ -602,6 +605,15 @@ function probePhoto(name,set){
     im.src=url;
   })(0);
 }
+const PH={active:null};
+document.addEventListener('paste',e=>{
+  const items=[...((e.clipboardData&&e.clipboardData.items)||[])].filter(i=>i.kind==='file'&&i.type.startsWith('image/'));
+  if(!items.length)return;
+  let fig=PH.active;
+  if(!fig||fig.offsetParent===null)fig=[...document.querySelectorAll('figure[data-photo]')].find(f=>f.offsetParent!==null&&f.querySelector('img').hasAttribute('hidden'));
+  if(!fig)return;
+  e.preventDefault();fig._load(items[0].getAsFile());
+});
 document.querySelectorAll('figure[data-photo]').forEach(fig=>{
   const key='photo-barre-'+fig.dataset.photo,svg=fig.querySelector('svg'),img=fig.querySelector('img'),inp=fig.querySelector('input'),rst=fig.querySelector('button');
   const set=src=>{
@@ -611,8 +623,8 @@ document.querySelectorAll('figure[data-photo]').forEach(fig=>{
   let loaded=false;
   try{const v=localStorage.getItem(key);if(v){set(v);loaded=true}}catch(e){}
   if(!loaded)probePhoto(fig.dataset.photo,set);
-  inp.addEventListener('change',()=>{
-    const f=inp.files[0];if(!f)return;
+  const loadFile=f=>{
+    if(!f||!f.type.startsWith('image/'))return;
     const im=new Image(),u=URL.createObjectURL(f);
     im.onload=()=>{
       const k=Math.min(1,900/im.width),c=document.createElement('canvas');
@@ -621,8 +633,17 @@ document.querySelectorAll('figure[data-photo]').forEach(fig=>{
       const d=c.toDataURL('image/jpeg',.82);URL.revokeObjectURL(u);set(d);
       try{localStorage.setItem(key,d)}catch(e){}
     };
-    im.src=u;inp.value='';
-  });
+    im.src=u;
+  };
+  fig._load=loadFile;
+  inp.addEventListener('change',()=>{loadFile(inp.files[0]);inp.value=''});
+  const box=fig.querySelector('.tpbox')||svg;
+  box.tabIndex=0;box.setAttribute('role','button');
+  box.setAttribute('aria-label','Case photo : clique puis colle une image avec Ctrl+V');
+  const activate=()=>{document.querySelectorAll('figure[data-photo].active').forEach(x=>x.classList.remove('active'));fig.classList.add('active');PH.active=fig};
+  box.addEventListener('click',activate);box.addEventListener('focus',activate);
+  box.addEventListener('dragover',e=>{e.preventDefault()});
+  box.addEventListener('drop',e=>{e.preventDefault();activate();const f=[...(e.dataTransfer?e.dataTransfer.files:[])].find(x=>x.type.startsWith('image/'));loadFile(f)});
   rst.addEventListener('click',()=>{set(null);try{localStorage.removeItem(key)}catch(e){}probePhoto(fig.dataset.photo,set)});
 });
 
