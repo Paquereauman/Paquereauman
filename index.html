@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bai Laoshi</title>
+<meta name="description" content="Bai Laoshi (Paquereauman): techno-anthropologist turned teacher, building useful tools with Claude.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: sombre panneau d'accueil (comme la bannière du profil), puis sections claires en colonne étroite. */
+:root{
+  --bg:#eef1ec; --surface:#f8faf6; --fg:#13201c; --muted:#56665d; --line:#cbd5ca;
+  --teal:#14524c; --amber:#f5b942; --amber-ink:#8a5a00; --link:#0b6b73;
+  --display:'Familjen Grotesk',system-ui,sans-serif; --body:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --hero1:#0b1f2a; --hero2:#14524c; --hero-fg:#fff; --hero-muted:#cfe8e4; --node:#7fd1c4;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1613; --surface:#161f1b; --fg:#e8efe9; --muted:#93a69a; --line:#2a3a31; --amber-ink:#f5b942; --link:#5fd0dc; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1613; --surface:#161f1b; --fg:#e8efe9; --muted:#93a69a; --line:#2a3a31; --amber-ink:#f5b942; --link:#5fd0dc; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 var(--body);padding-inline:16px}
+.wrap{max-width:960px;margin:0 auto}
+a{color:var(--link)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
+p{margin:0}
+html:not([data-lang="fr"]) [lang="fr"]{display:none!important}
+html[data-lang="fr"] [lang="en"]{display:none!important}
+
+.top{display:flex;justify-content:space-between;align-items:center;padding-block:18px}
+.top .brand{font:700 1.05rem var(--display)}
+.top nav{display:flex;gap:6px;align-items:center}
+.top nav a{color:var(--muted);text-decoration:none;font-weight:500;padding:6px 10px;border-radius:8px}
+.top nav a:hover{color:var(--fg)}
+.langs{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden;margin-left:6px}
+.langs button{font:600 .8rem var(--mono);background:none;color:var(--muted);border:0;padding:6px 11px;cursor:pointer}
+.langs button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+
+.hero{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(135deg,var(--hero1),var(--hero2));color:var(--hero-fg);padding:clamp(28px,6vw,64px);display:grid;gap:18px;min-height:340px;align-content:center}
+.hero>*{position:relative;z-index:1;max-width:30ch}
+.hero .eyebrow{font:500 .9rem var(--mono);color:var(--amber);letter-spacing:.04em}
+.hero h1{font-size:clamp(2.8rem,9vw,5.2rem);letter-spacing:-.02em}
+.hero .rule{width:120px;height:5px;border-radius:3px;background:linear-gradient(90deg,#f5b942,#f58f42)}
+.hero p.lead{font-size:clamp(1.1rem,2.6vw,1.35rem);color:var(--hero-muted);max-width:34ch}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.btn{display:inline-block;font:600 1rem var(--body);text-decoration:none;border-radius:99px;padding:12px 22px}
+.btn.primary{background:var(--amber);color:#1b1500}
+.btn.ghost{border:1.5px solid rgba(255,255,255,.55);color:#fff}
+.net{position:absolute;right:-30px;top:0;height:100%;width:min(60%,520px);z-index:0;opacity:.9}
+@media (max-width:620px){.net{opacity:.28;width:100%;right:-20%}}
+
+section{padding-block:56px 8px}
+section>h2{font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:22px}
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:28px}
+.about>*{min-width:0}
+.about p{color:var(--fg);max-width:60ch}
+.facts{display:grid;gap:12px;align-content:start}
+.fact{border-left:3px solid var(--amber);padding:2px 0 2px 14px}
+.fact b{display:block;font-family:var(--display);font-size:1.1rem}
+.fact span{color:var(--muted);font-size:.95rem}
+@media (max-width:720px){.about{grid-template-columns:1fr}}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+.card .media{background:#e6ebe4;display:grid;place-items:center;border-bottom:1px solid var(--line);aspect-ratio:16/9;overflow:hidden}
+.card .media img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
+.card .body{padding:20px 22px 24px;display:grid;gap:12px;align-content:start}
+.card h3{font-size:1.5rem}
+.card p{color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font:500 .78rem var(--mono);border:1px solid var(--line);border-radius:99px;padding:2px 10px;color:var(--muted)}
+.card .btn.primary{justify-self:start;background:var(--teal);color:#fff}
+.card.soon{border-style:dashed;background:transparent}
+.card.soon .media{background:repeating-linear-gradient(135deg,transparent 0 14px,color-mix(in srgb,var(--line) 55%,transparent) 14px 15px);color:var(--muted);font:600 1.1rem var(--display)}
+.badge{justify-self:start;font:500 .78rem var(--mono);background:color-mix(in srgb,var(--amber) 28%,transparent);color:var(--amber-ink);border-radius:99px;padding:3px 12px}
+
+.contact{display:grid;gap:14px;justify-items:start}
+.contact .mail{font:600 clamp(1.2rem,3.4vw,1.7rem) var(--display)}
+footer{padding-block:56px 40px;color:var(--muted);font-size:.9rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.net *{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="brand">Bai Laoshi</span>
+    <nav aria-label="Main">
+      <a href="#projects"><span lang="en">Projects</span><span lang="fr">Projets</span></a>
+      <a href="#contact">Contact</a>
+      <span class="langs" role="group" aria-label="Language"><button type="button" data-l="en" aria-pressed="true">EN</button><button type="button" data-l="fr" aria-pressed="false">FR</button></span>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <svg class="net" viewBox="0 0 520 340" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <g stroke="#7fd1c4" stroke-opacity=".3" stroke-width="1.4" fill="none">
+          <path d="M120 40L240 110L360 50L460 150L350 240L230 210L120 40"/>
+          <path d="M240 110L230 210M360 50L350 240M240 110L350 240M460 150L500 290M230 210L170 310"/>
+        </g>
+        <g fill="#7fd1c4">
+          <circle cx="120" cy="40" r="6" opacity=".7"/>
+          <circle cx="240" cy="110" r="9"><animate attributeName="opacity" values=".5;1;.5" dur="4s" repeatCount="indefinite"/></circle>
+          <circle cx="360" cy="50" r="6" opacity=".7"/>
+          <circle cx="460" cy="150" r="10"><animate attributeName="opacity" values="1;.5;1" dur="5s" repeatCount="indefinite"/></circle>
+          <circle cx="350" cy="240" r="7" opacity=".8"/>
+          <circle cx="230" cy="210" r="6" opacity=".7"/>
+          <circle cx="500" cy="290" r="5" opacity=".5"/><circle cx="170" cy="310" r="5" opacity=".5"/>
+        </g>
+        <circle cx="460" cy="150" r="16" fill="none" stroke="#f5b942" stroke-width="2.4"><animate attributeName="r" values="14;28;14" dur="4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0;.9" dur="4s" repeatCount="indefinite"/></circle>
+      </svg>
+      <span class="eyebrow">@Paquereauman</span>
+      <h1>Bai Laoshi</h1>
+      <span class="rule"></span>
+      <p class="lead" lang="en">Techno-anthropologist turned teacher. I build useful tools with Claude.</p>
+      <p class="lead" lang="fr">Techno-anthropologue devenu enseignant. Je construis des outils utiles avec Claude.</p>
+      <div class="cta">
+        <a class="btn primary" href="#projects"><span lang="en">See my projects</span><span lang="fr">Voir mes projets</span></a>
+        <a class="btn ghost" href="#contact"><span lang="en">Get in touch</span><span lang="fr">Me contacter</span></a>
+      </div>
+    </div>
+
+    <section id="about">
+      <h2><span lang="en">About</span><span lang="fr">À propos</span></h2>
+      <div class="about">
+        <div style="display:grid;gap:14px">
+          <p lang="en">I trained in techno-anthropology in Copenhagen, the study of how people and technology shape each other, and I now work as a teacher. I originally learned Python to do web scraping for my research.</p>
+          <p lang="fr">J'ai étudié la techno-anthropologie à Copenhague, l'étude de la façon dont les personnes et la technologie se façonnent, et je suis aujourd'hui enseignant. J'ai appris Python à l'origine pour faire du web scraping dans mes recherches.</p>
+          <p lang="en">Today I mostly code with Claude. I start from a real problem I see around me, such as accessibility for people with reduced mobility, or something in my work, and turn it into a tool that helps someone.</p>
+          <p lang="fr">Aujourd'hui, je code surtout avec Claude. Je pars d'un vrai problème que je vois autour de moi, comme l'accessibilité pour les personnes à mobilité réduite, ou quelque chose dans mon travail, et j'en fais un outil qui aide quelqu'un.</p>
+        </div>
+        <div class="facts">
+          <div class="fact"><b lang="en">Observe first</b><b lang="fr">Observer d'abord</b><span lang="en">Understand what people actually need.</span><span lang="fr">Comprendre ce dont les gens ont vraiment besoin.</span></div>
+          <div class="fact"><b lang="en">Build small, useful tools</b><b lang="fr">Des outils simples et utiles</b><span lang="en">One problem, one tool that works.</span><span lang="fr">Un problème, un outil qui fonctionne.</span></div>
+          <div class="fact"><b lang="en">Learn by doing</b><b lang="fr">Apprendre en faisant</b><span lang="en">Every project teaches me something new.</span><span lang="fr">Chaque projet m'apprend quelque chose.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2><span lang="en">Projects</span><span lang="fr">Projets</span></h2>
+      <div class="cards">
+        <article class="card">
+          <div class="media"><img src="assets/barre-demo.gif" alt="Animated chord shape sliding along the guitar neck" width="720" height="360" loading="lazy"></div>
+          <div class="body">
+            <h3>Barré guitare</h3>
+            <p lang="en">A web app to learn barre chords: hand and thumb position, chords that slide along the neck, drills, songs to practise and a tuner. In French.</p>
+            <p lang="fr">Une appli web pour apprendre le barré : position de la main et du pouce, accords qui glissent sur le manche, exercices, morceaux et un accordeur.</p>
+            <div class="tags"><span class="tag">Web app</span><span class="tag">Guitar</span><span class="tag">Tuner</span><span class="tag">FR</span></div>
+            <a class="btn primary" href="barre-guitare/"><span lang="en">Open the app</span><span lang="fr">Ouvrir l'appli</span></a>
+          </div>
+        </article>
+
+        <article class="card soon">
+          <div class="media"><span lang="en">China project</span><span lang="fr">Projet Chine</span></div>
+          <div class="body">
+            <span class="badge" lang="en">Coming soon</span><span class="badge" lang="fr">Bientôt</span>
+            <h3 lang="en">China project</h3><h3 lang="fr">Projet Chine</h3>
+            <p lang="en">A new project is on its way. Details will appear here.</p>
+            <p lang="fr">Un nouveau projet arrive. Les détails apparaîtront ici.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="contact">
+        <p lang="en">Got an idea, a problem to solve, or want to collaborate? Write to me.</p>
+        <p lang="fr">Une idée, un problème à résoudre, une collaboration ? Écris-moi.</p>
+        <a class="mail" href="mailto:bpaquereau@hotmail.fr">bpaquereau@hotmail.fr</a>
+        <a href="https://github.com/Paquereauman">github.com/Paquereauman</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span lang="en">Made with curiosity, coffee and a bit of help from Claude.</span>
+    <span lang="fr">Fait avec curiosité, du café et un peu d'aide de Claude.</span>
+  </footer>
+</div>
+<script>
+(function(){
+  var root=document.documentElement,btns=document.querySelectorAll('.langs button');
+  function setLang(l){
+    root.dataset.lang=l;root.lang=l;
+    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.l===l))});
+    try{localStorage.setItem('site-lang',l)}catch(e){}
+  }
+  var saved=null;try{saved=localStorage.getItem('site-lang')}catch(e){}
+  setLang(saved||((navigator.language||'').toLowerCase().indexOf('fr')===0?'fr':'en'));
+  btns.forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.l)})});
+})();
+</script>
+</body>
+</html>
