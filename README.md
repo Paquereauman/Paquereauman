@@ -63,7 +63,6 @@ Today I mostly code **with Claude**. What I enjoy is starting from a real proble
 |---|---|
 | 🐱 [**Stickaru**](https://github.com/Paquereauman/stickaru) ([installer](https://github.com/Paquereauman/stickaru/releases/latest)) | A Windows sticker and meme library: keyless search (Tenor, GIPHY, Telegram, RisiBank), one-click copy with transparency, favourites and a flying desktop cat. Python and pygame, in French, English and Chinese. |
 | 🎸 [**Barré guitare**](https://paquereauman.github.io/Paquereauman/barre-guitare/) ([code](./barre-guitare)) | A web app to learn barre chords on guitar: hand position, animated chords that slide along the neck, practice drills, songs and a tuner. In French. |
-
 | 🈶 [**Learn Chinese**](https://paquereauman.github.io/apprendre-chinois/) ([code](https://github.com/Paquereauman/apprendre-chinois)) | A Mandarin course from A1 to B1 for French speakers: about 900 words, a tone gym with animated pitch curves, spaced repetition, grammar and character writing. One web page, works on phone and computer. In French. |
 | 🎙️ **Dictaphone DeepSeek FR** *(private)* | Free voice dictation in French for DeepSeek: a Chrome extension plus a local Whisper server, so nothing leaves the computer. Voice commands such as "Valider" send the message. |
 
