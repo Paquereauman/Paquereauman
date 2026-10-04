@@ -27,4 +27,5 @@ ou une image libre (domaine public, CC0, ou CC avec attribution). Note la source
 
 | Fichier | Auteur / source | Licence |
 |---|---|---|
+| `front.jpg` | Lucian Popescu, [A♯ minor chord on guitar with barre.jpg](https://commons.wikimedia.org/wiki/File:A%E2%99%AF_minor_chord_on_guitar_with_barre.jpg), Wikimedia Commons (redimensionnée à 1400 px) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
 | | | |
