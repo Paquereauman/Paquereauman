@@ -1,32 +1,33 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="Paquereauman, anthropologue, enseignant, je construis des outils utiles avec Claude" width="100%">
+<img src="assets/banner.svg" alt="Paquereauman, techno-anthropologist, teacher, I build useful tools with Claude" width="100%">
 
 <br>
 
-![Anthropologie](https://img.shields.io/badge/formation-anthropologie-14524c?style=for-the-badge)
-![Enseignant](https://img.shields.io/badge/métier-enseignant-f5b942?style=for-the-badge&labelColor=333)
+![Techno-Anthropology](https://img.shields.io/badge/background-techno--anthropology-14524c?style=for-the-badge)
+![Copenhagen](https://img.shields.io/badge/trained%20in-Copenhagen-c8102e?style=for-the-badge)
+![Teacher](https://img.shields.io/badge/job-teacher-f5b942?style=for-the-badge&labelColor=333)
 ![Python](https://img.shields.io/badge/Python-3-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Claude Code](https://img.shields.io/badge/code%20avec-Claude-D97757?style=for-the-badge)
+![Claude Code](https://img.shields.io/badge/builds%20with-Claude-D97757?style=for-the-badge)
 
 </div>
 
 ---
 
-## 👋 Salut, moi c'est Paquereauman
+## 👋 Hi, I'm Paquereauman
 
-J'ai une formation en **anthropologie** et je suis aujourd'hui **enseignant**. J'ai appris Python à la base pour faire du **web scraping** : récupérer des données pour mes recherches.
+I trained in **techno-anthropology** in **Copenhagen**, the study of how people and technology shape each other, and I now work as a **teacher**. I originally learned Python to do **web scraping**: collecting data for my research.
 
-Aujourd'hui, je code surtout **avec Claude**. Ce qui m'intéresse, c'est de partir d'un vrai problème que je vois autour de moi et d'en faire un outil qui sert à quelqu'un.
+Today I mostly code **with Claude**. What I enjoy is starting from a real problem I see around me and turning it into a tool that helps someone.
 
-## 🧭 Ce que j'aime faire
+## 🧭 What I like to do
 
-- 🦽 **Des outils pour l'accessibilité** : trouver des solutions pour les personnes à mobilité réduite.
-- 🎓 **Des outils pour mon travail** : simplifier ce que je fais en classe et au quotidien.
-- 🔎 **Observer avant de construire** : mon regard d'anthropologue m'aide à comprendre ce dont les gens ont réellement besoin.
-- 🌱 **Apprendre en faisant** : chaque projet m'apprend quelque chose de nouveau.
+- 🦽 **Accessibility tools**: finding solutions for people with reduced mobility.
+- 🎓 **Tools for my work**: making what I do in class and day to day simpler.
+- 🔎 **Observing before building**: my techno-anthropology training helps me understand what people actually need.
+- 🌱 **Learning by doing**: every project teaches me something new.
 
-## 🛠️ Boîte à outils
+## 🛠️ Toolbox
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
@@ -37,20 +38,20 @@ Aujourd'hui, je code surtout **avec Claude**. Ce qui m'intéresse, c'est de part
 ![Claude](https://img.shields.io/badge/Claude%20Code-D97757?style=flat-square)
 ![Web scraping](https://img.shields.io/badge/Web%20scraping-14524c?style=flat-square)
 
-## 🚀 Projets
+## 🚀 Projects
 
-| Projet | Description |
+| Project | Description |
 |---|---|
-| 🎸 [**Barré guitare**](https://paquereauman.github.io/Paquereauman/barre-guitare/) ([code](./barre-guitare)) | Une appli web pour apprendre le barré : la position de la main, des accords animés qui glissent sur le manche, et des exercices de logique. |
+| 🎸 [**Barré guitare**](https://paquereauman.github.io/Paquereauman/barre-guitare/) ([code](./barre-guitare)) | A web app to learn barre chords on guitar: hand position, animated chords that slide along the neck, practice drills and logic quizzes. In French. |
 
-*D'autres projets arrivent. Je les ajoute ici au fur et à mesure.*
+*More projects are coming. I add them here as I go.*
 
-## 📫 Me contacter
+## 📫 Get in touch
 
-Une idée, un problème à résoudre, une collaboration ? Écris-moi : **[bpaquereau@hotmail.fr](mailto:bpaquereau@hotmail.fr)**
+Got an idea, a problem to solve, or want to collaborate? Write to me: **[bpaquereau@hotmail.fr](mailto:bpaquereau@hotmail.fr)**
 
 ---
 
 <div align="center">
-<sub>Fait avec curiosité, du café et un peu d'aide de Claude.</sub>
+<sub>Made with curiosity, coffee and a bit of help from Claude.</sub>
 </div>
