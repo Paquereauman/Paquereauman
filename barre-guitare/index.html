@@ -120,6 +120,24 @@ code{font-family:var(--mono);font-size:.9em}
 .btn.big{font-size:1.1rem;padding:14px 28px;border-radius:99px}
 .chip.str{min-width:56px;text-align:center}
 .chip.det{outline:2px solid var(--up);outline-offset:1px}
+@media (pointer:coarse),(max-width:560px){
+nav{scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+nav button{min-height:44px;padding:10px 16px;scroll-snap-align:center}
+.btn,.chip,select{min-height:44px}
+.chip{padding:10px 16px;font-size:1rem}
+select{font-size:16px;padding:10px 12px}
+input[type=range]{width:100%;min-height:36px}
+.tblw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl{min-width:420px}
+.tlinks a{display:inline-block;padding:10px 4px}
+}
+@media (max-width:560px){
+header{padding-block:18px 8px}
+h1{font-size:1.7rem}
+section.tab{gap:22px;padding-block:18px;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+.rule,.tuner{padding:14px}
+.btn{width:100%}
+}
 @media (prefers-reduced-motion:reduce){.tnote,.mark,.tuner{transition:none}}
 /* manche animé */
 #neck{background:var(--surface);border:1px solid var(--line);border-radius:12px}
