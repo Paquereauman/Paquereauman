@@ -8,7 +8,6 @@
 ![Copenhagen](https://img.shields.io/badge/trained%20in-Copenhagen-c8102e?style=for-the-badge)
 ![Teacher](https://img.shields.io/badge/job-teacher-f5b942?style=for-the-badge&labelColor=333)
 ![Python](https://img.shields.io/badge/Python-3-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Claude Code](https://img.shields.io/badge/builds%20with-Claude-D97757?style=for-the-badge)
 
 <p align="center">
 <a href="https://paquereauman.github.io/Paquereauman/">🌐 Website</a> ·
