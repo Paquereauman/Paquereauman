@@ -10,7 +10,25 @@
 ![Python](https://img.shields.io/badge/Python-3-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Claude Code](https://img.shields.io/badge/builds%20with-Claude-D97757?style=for-the-badge)
 
+<p align="center">
+<a href="https://paquereauman.github.io/Paquereauman/barre-guitare/">🎸 Live demo</a> ·
+<a href="#-projects">🚀 Projects</a> ·
+<a href="#-get-in-touch">📫 Contact</a>
+</p>
+
 </div>
+
+---
+
+## 🎸 Featured project: Barré guitare
+
+A web app that teaches **barre chords**, one of the hardest steps for guitar beginners. Chords go from the easiest (the 4-string mini-barre) to the hardest, with hand and palm placement, drills with a timer and two songs to practise. The interface is in French.
+
+<p align="center">
+<a href="https://paquereauman.github.io/Paquereauman/barre-guitare/"><img src="assets/barre-demo.gif" alt="Animated chord shape sliding along the guitar neck, the chord name changing at each fret" width="720"></a>
+</p>
+
+**[Open the app →](https://paquereauman.github.io/Paquereauman/barre-guitare/)**
 
 ---
 
@@ -45,6 +63,11 @@ Today I mostly code **with Claude**. What I enjoy is starting from a real proble
 | 🎸 [**Barré guitare**](https://paquereauman.github.io/Paquereauman/barre-guitare/) ([code](./barre-guitare)) | A web app to learn barre chords on guitar: hand position, animated chords that slide along the neck, practice drills and logic quizzes. In French. |
 
 *More projects are coming. I add them here as I go.*
+
+## 🔭 Right now
+
+- 🎸 Improving the barré app, with real photos of the hand position.
+- 🧪 Looking for the next everyday problem to solve with a tool.
 
 ## 📫 Get in touch
 
