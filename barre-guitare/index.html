@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Apprendre le barré à la guitare : position de la main, accords animés sur le manche et exercices de logique.">
+<title>Barré guitare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: une colonne étroite, onglets collants, le manche (SVG animé) est le centre de l'écran Accords. */
+:root{
+  --bg:#eef1ec; --surface:#f8faf6; --fg:#16201b; --muted:#56665d; --line:#cbd5ca;
+  --down:#b4510c; --up:#0b7a8c; --good:#1f7a43; --bad:#b3261e;
+  --skin:#e3b48d; --skin2:#c58a62; --skinhi:#f1cdaa; --woodhi:#c98d4f; --wood:#8a5a2b; --strg:#cfcab8; --pick:#d9a21b;
+  --display:'Familjen Grotesk',system-ui,sans-serif; --body:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#101613; --surface:#172019; --fg:#e8efe9; --muted:#93a69a; --line:#2b3a31;
+  --down:#f29a4a; --up:#4cc7da; --good:#4cc27a; --bad:#ff7b72;
+  --skin:#c99671; --skin2:#a87654; --skinhi:#dcaa82; --woodhi:#8f5d2c; --wood:#5e3a18; --strg:#d8d4c4; --pick:#e8b53a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101613; --surface:#172019; --fg:#e8efe9; --muted:#93a69a; --line:#2b3a31;
+  --down:#f29a4a; --up:#4cc7da; --good:#4cc27a; --bad:#ff7b72;
+  --skin:#c99671; --skin2:#a87654; --skinhi:#dcaa82; --woodhi:#8f5d2c; --wood:#5e3a18; --strg:#d8d4c4; --pick:#e8b53a; color-scheme:dark}
+*{box-sizing:border-box}
+:root{color-scheme:light}
+[hidden]{display:none!important}
+img{max-width:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--body);padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:880px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(1.9rem,6vw,2.8rem);letter-spacing:-.01em}
+h2{font-size:1.45rem}
+h3{font-size:1.1rem}
+p{margin:0}
+header{padding-block:28px 14px;display:grid;gap:8px}
+header p{color:var(--muted);max-width:60ch}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:4px;padding-block:8px;overflow-x:auto}
+nav button{font:600 .95rem var(--body);color:var(--muted);background:none;border:0;border-radius:8px;padding:10px 14px;cursor:pointer;white-space:nowrap}
+nav button[aria-selected="true"]{color:var(--bg);background:var(--fg)}
+button:focus-visible,select:focus-visible,input:focus-visible,label:focus-within{outline:3px solid var(--up);outline-offset:2px}
+section.tab{display:grid;gap:28px;padding-block:24px}
+.block{display:grid;gap:12px}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:6px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px}
+.two>*{min-width:0}
+figure{margin:0;display:grid;gap:8px;align-content:start}
+figcaption{color:var(--muted);font-size:.9rem}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:var(--body);font-size:11px;fill:var(--fg)}
+.steps{margin:0;padding-left:1.2em;display:grid;gap:10px}
+.steps li::marker{font-family:var(--mono);color:var(--muted)}
+.tip{color:var(--muted);font-size:.95rem}
+.mk circle{fill:var(--fg)}
+.mk text{fill:var(--bg);font-weight:600;text-anchor:middle}
+.photo{width:100%;border-radius:12px;display:block}
+.photoctl{display:flex;gap:8px;flex-wrap:wrap}
+/* manche animé */
+#neck{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.mv{transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .3s}
+#bar rect{fill:var(--up)}
+#bar text,.dot text{fill:var(--bg);font-weight:600;text-anchor:middle;font-size:11px}
+.dot circle{fill:var(--down)}
+.mx{fill:var(--bad);font-weight:700;font-size:14px;text-anchor:middle;transition:opacity .3s}
+.fn{fill:var(--muted);font-family:var(--mono);font-size:10px;text-anchor:middle}
+.chordname{font:700 clamp(2rem,8vw,3.2rem)/1 var(--display)}
+.chordsub{color:var(--muted);font-size:.95rem}
+.controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center}
+.controls label{display:flex;gap:10px;align-items:center;font-size:.92rem;color:var(--muted)}
+select{font:inherit;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
+.fv{font-family:var(--mono);color:var(--fg);min-width:2.4ch;text-align:right}
+.btn{font:600 1rem var(--body);background:var(--fg);color:var(--bg);border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.9rem;color:var(--muted)}
+.legend b{color:var(--fg);font-family:var(--mono)}
+/* exercices */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 .9rem var(--body);background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:99px;padding:7px 14px;cursor:pointer;display:inline-block}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.score{display:flex;gap:22px;font-family:var(--mono);font-size:.95rem;color:var(--muted)}
+.score b{color:var(--fg);font-size:1.2rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:16px}
+.q{font-size:1.15rem}
+.count{font-family:var(--mono);font-weight:500}
+.choices{display:flex;flex-wrap:wrap;gap:10px}
+.choice{font:500 1rem var(--body);background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:12px 18px;cursor:pointer;min-width:64px;text-align:left}
+.choice.ok{border-color:var(--good);background:color-mix(in srgb,var(--good) 18%,var(--bg))}
+.choice.ko{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 18%,var(--bg))}
+.choice:disabled{cursor:default}
+.fb{padding:12px 14px;border-radius:10px;border:1px solid var(--line)}
+.fb.ok{border-color:var(--good)}.fb.ko{border-color:var(--bad)}
+.fb strong.ok{color:var(--good)}.fb strong.ko{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){.mv{transition-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Barré guitare</h1>
+  <p>Apprends à faire le barré : la position de l'index et du pouce, le déplacement de l'accord le long du manche en animation, puis des exercices pour comprendre la logique des accords.</p>
+</header>
+<nav role="tablist" aria-label="Sections">
+  <button role="tab" id="t-pos" aria-selected="true" data-tab="pos">Position</button>
+  <button role="tab" id="t-acc" aria-selected="false" data-tab="acc">Accords animés</button>
+  <button role="tab" id="t-ex" aria-selected="false" data-tab="ex">Exercices</button>
+</nav>
+
+<!-- POSITION -->
+<section class="tab" id="pos">
+  <div class="rule">
+    <h3>L'idée du barré</h3>
+    <p>Ton index remplace le sillet : il appuie sur toutes les cordes d'un coup, à une frette. Les autres doigts dessinent la forme de l'accord. Comme la forme ne change pas, tu la fais glisser le long du manche pour obtenir tous les accords.</p>
+  </div>
+
+  <div class="two">
+    <figure data-photo="front">
+      <svg viewBox="0 0 360 240" role="img" aria-label="Index posé à plat en travers des cordes, juste derrière une frette">
+        <defs>
+          <linearGradient id="gWd" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:var(--woodhi)"/><stop offset="1" style="stop-color:var(--wood)"/></linearGradient>
+          <linearGradient id="gSk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--skinhi)"/><stop offset="1" style="stop-color:var(--skin)"/></linearGradient>
+        </defs>
+        <rect x="70" y="6" width="220" height="228" rx="6" fill="url(#gWd)"/>
+        <path d="M70 62H290M70 132H290M70 202H290" stroke="var(--strg)" stroke-width="5" opacity=".9"/>
+        <g stroke="var(--strg)" fill="none">
+          <path d="M100 6V234" stroke-width="3.2"/><path d="M132 6V234" stroke-width="2.7"/><path d="M164 6V234" stroke-width="2.2"/>
+          <path d="M196 6V234" stroke-width="1.7"/><path d="M228 6V234" stroke-width="1.3"/><path d="M260 6V234" stroke-width="1"/>
+        </g>
+        <path d="M334 100C350 104 360 120 360 140V170C350 174 338 170 332 160Z" fill="var(--skin)" stroke="var(--skin2)" stroke-width="2"/>
+        <rect x="58" y="96" width="290" height="34" rx="17" fill="url(#gSk)" stroke="var(--skin2)" stroke-width="2"/>
+        <path d="M66 104C120 99 250 99 340 104" fill="none" stroke="var(--skinhi)" stroke-width="3" opacity=".8"/>
+        <path d="M180 100V126M246 100V126" stroke="var(--skin2)" stroke-width="2" opacity=".7"/>
+        <g class="mk"><circle cx="150" cy="113" r="10"/><text x="150" y="117">1</text></g>
+        <g class="mk"><circle cx="40" cy="132" r="10"/><text x="40" y="136">2</text></g>
+        <g class="mk"><circle cx="62" cy="40" r="10"/><text x="62" y="44">3</text></g>
+        <path d="M50 132H66" stroke="var(--fg)" stroke-width="1.2"/>
+      </svg>
+      <img class="photo" alt="Photo : index en barré" hidden>
+      <figcaption>Vue de face, manche à la verticale. <b>1</b> L'index repose à plat sur toutes les cordes. <b>2</b> Il se place juste derrière la frette, jamais au milieu de la case. <b>3</b> Le bout de l'index dépasse un peu de la corde grave.</figcaption>
+      <div class="photoctl"><label class="chip" for="ph-front">Mettre ma photo<input id="ph-front" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Remettre le schéma</button></div>
+    </figure>
+
+    <figure data-photo="cross">
+      <svg viewBox="0 0 360 240" role="img" aria-label="Coupe du manche : l'index roulé sur son côté osseux et le pouce derrière le manche">
+        <defs>
+          <linearGradient id="gWd2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--woodhi)"/><stop offset="1" style="stop-color:var(--wood)"/></linearGradient>
+          <radialGradient id="gSk2" cx=".35" cy=".3" r=".8"><stop offset="0" style="stop-color:var(--skinhi)"/><stop offset="1" style="stop-color:var(--skin)"/></radialGradient>
+        </defs>
+        <path d="M110 92H250C250 150 224 190 180 190C136 190 110 150 110 92Z" fill="url(#gWd2)"/>
+        <rect x="106" y="86" width="148" height="8" rx="3" fill="var(--hole)" opacity=".5"/>
+        <g fill="var(--strg)"><circle cx="124" cy="82" r="2.6"/><circle cx="144" cy="82" r="2.3"/><circle cx="164" cy="82" r="2"/><circle cx="184" cy="82" r="1.7"/><circle cx="204" cy="82" r="1.4"/><circle cx="224" cy="82" r="1.1"/></g>
+        <circle cx="168" cy="52" r="26" fill="url(#gSk2)" stroke="var(--skin2)" stroke-width="2" transform="rotate(-18 168 52)"/>
+        <path d="M148 64C154 76 166 80 178 76" fill="none" stroke="var(--skin2)" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+        <ellipse cx="180" cy="214" rx="34" ry="19" fill="url(#gSk2)" stroke="var(--skin2)" stroke-width="2"/>
+        <path d="M264 60V80M264 80L259 73M264 80L269 73" fill="none" stroke="var(--fg)" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M264 224V204M264 204L259 211M264 204L269 211" fill="none" stroke="var(--fg)" stroke-width="1.8" stroke-linecap="round"/>
+        <g class="mk"><circle cx="124" cy="38" r="10"/><text x="124" y="42">1</text></g>
+        <g class="mk"><circle cx="124" cy="214" r="10"/><text x="124" y="218">2</text></g>
+        <g class="mk"><circle cx="294" cy="142" r="10"/><text x="294" y="146">3</text></g>
+      </svg>
+      <img class="photo" alt="Photo : coupe du manche, index et pouce" hidden>
+      <figcaption>Coupe du manche vue depuis la tête. <b>1</b> L'index est légèrement roulé : c'est son côté osseux qui touche les cordes. <b>2</b> Le pouce est derrière le manche, vers le milieu. <b>3</b> Les deux se rapprochent, comme une pince.</figcaption>
+      <div class="photoctl"><label class="chip" for="ph-cross">Mettre ma photo<input id="ph-cross" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Remettre le schéma</button></div>
+    </figure>
+  </div>
+
+  <div class="block">
+    <h2>Les réglages à vérifier</h2>
+    <ol class="steps">
+      <li><b>Index à plat, un peu roulé.</b> Tourne-le légèrement vers la tête de la guitare. Le côté osseux est plus ferme que la pulpe et il n'a pas de plis de peau qui tombent sur une corde.</li>
+      <li><b>Juste derrière la frette.</b> Plus tu es loin de la frette, plus il faut appuyer fort et plus ça grésille.</li>
+      <li><b>Pouce derrière le manche, vers le milieu.</b> Il s'oppose à l'index. Un pouce qui dépasse trop au-dessus du manche te fait perdre de la force.</li>
+      <li><b>Utilise le poids du bras.</b> Tire très légèrement le manche vers toi avec le bras au lieu de serrer uniquement avec la main. Relâche la pression entre deux accords.</li>
+      <li><b>Coude proche du corps.</b> Un coude trop écarté fait tourner le poignet et affaiblit l'index.</li>
+      <li><b>Teste les cordes une par une.</b> Fais sonner chaque corde séparément. Si l'une grésille, décale ou fais pivoter légèrement l'index, sans serrer plus fort.</li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h2>S'entraîner par étapes</h2>
+    <ol class="steps">
+      <li><b>Barré seul.</b> Pose uniquement l'index entre les frettes 5 et 7, gratte les six cordes, vérifie que chaque corde sonne. En général c'est plus facile à ces frettes qu'à la frette 1.</li>
+      <li><b>Ajoute la forme.</b> Pose les autres doigts de la forme de Mi majeur (voir l'onglet Accords animés).</li>
+      <li><b>Descends vers la frette 1.</b> Le Fa majeur est le barré classique, et le plus exigeant.</li>
+      <li><b>Change de frette.</b> Fais glisser toute la forme sans la défaire, et dis le nom de chaque accord.</li>
+    </ol>
+    <p class="tip">Séances courtes (5 à 10 minutes) avec des pauses. Le barré demande de la force et de la précision, ça se construit avec les jours.</p>
+  </div>
+</section>
+
+<!-- ACCORDS -->
+<section class="tab" id="acc" hidden>
+  <div class="block">
+    <h2>La même forme, un autre nom à chaque frette</h2>
+    <p class="tip">Choisis une forme et déplace le curseur. La barre bleue est ton index, les ronds orange sont les autres doigts. Le nom de l'accord est celui de la note de la corde racine (la 6e pour les formes de Mi, la 5e pour les formes de La) à la frette du barré.</p>
+  </div>
+
+  <div class="block">
+    <div class="chordname" id="cname" aria-live="polite">Fa majeur</div>
+    <div class="chordsub" id="csub"></div>
+  </div>
+
+  <svg id="neck" viewBox="0 0 360 190" role="img" aria-label="Manche de guitare avec la forme du barré">
+    <defs><linearGradient id="gN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--woodhi)"/><stop offset="1" style="stop-color:var(--wood)"/></linearGradient></defs>
+    <g id="board"></g>
+    <g id="bar" class="mv"><rect rx="9" width="18"/><text id="bartxt">1</text></g>
+    <g id="dots"></g>
+    <g id="mutes"></g>
+  </svg>
+  <div class="legend"><span><b>1</b> index (barré)</span><span><b>2</b> majeur</span><span><b>3</b> annulaire</span><span><b>4</b> auriculaire</span><span><b>×</b> corde non jouée</span></div>
+
+  <div class="controls">
+    <label for="shape">Forme
+      <select id="shape"></select>
+    </label>
+    <label for="fret">Frette du barré
+      <input type="range" id="fret" min="1" max="10" value="1"><span class="fv" id="fv">1</span>
+    </label>
+    <button class="btn" id="play" type="button">Jouer l'accord</button>
+  </div>
+
+  <div class="rule">
+    <h3>Comment trouver le nom</h3>
+    <p id="how"></p>
+  </div>
+  <p class="tip">Notes d'une frette à l'autre : Do, Do♯, Ré, Ré♯, Mi, Fa, Fa♯, Sol, Sol♯, La, La♯, Si. Chaque frette monte d'un demi-ton.</p>
+</section>
+
+<!-- EXERCICES -->
+<section class="tab" id="ex" hidden>
+  <div class="block">
+    <h2>Entraîne ta logique du barré</h2>
+    <p class="tip">Ces exercices travaillent le raisonnement derrière le barré : retrouver les notes sur le manche, nommer l'accord, choisir les doigts et diagnostiquer un problème.</p>
+    <div class="chips" id="kinds" role="group" aria-label="Type d'exercice"></div>
+    <div class="score"><span>Score <b id="sc">0</b>/<b id="tot">0</b></span><span>Série <b id="stk">0</b></span></div>
+  </div>
+  <div class="card" id="exCard"></div>
+</section>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const rand=n=>Math.floor(Math.random()*n);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rand(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const NOTES=['Do','Do♯','Ré','Ré♯','Mi','Fa','Fa♯','Sol','Sol♯','La','La♯','Si'];
+const OPEN={6:4,5:9,4:2,3:7,2:11,1:4};              /* note de chaque corde à vide (index dans NOTES) */
+const F0={6:82.41,5:110,4:146.83,3:196,2:246.94,1:329.63}; /* fréquences à vide */
+const FINGER=['Index','Majeur','Annulaire','Auriculaire'];
+/* [corde, décalage de frette après le barré, doigt] */
+const SHAPES={
+  Emaj:{label:'forme de Mi majeur',root:6,minor:false,bar:[6,1],dots:[[3,1,2],[5,2,3],[4,2,4]],muted:[]},
+  Emin:{label:'forme de Mi mineur',root:6,minor:true,bar:[6,1],dots:[[5,2,3],[4,2,4]],muted:[]},
+  Amaj:{label:'forme de La majeur',root:5,minor:false,bar:[5,1],dots:[[4,2,2],[3,2,3],[2,2,4]],muted:[6]},
+  Amin:{label:'forme de La mineur',root:5,minor:true,bar:[5,1],dots:[[4,2,3],[3,2,4],[2,1,2]],muted:[6]}
+};
+const chordName=(sh,b)=>NOTES[(OPEN[SHAPES[sh].root]+b)%12]+(SHAPES[sh].minor?' mineur':' majeur');
+
+/* ---------- onglets ---------- */
+const tabs=['pos','acc','ex'];
+function show(id){
+  tabs.forEach(t=>{$('#'+t).hidden=t!==id;$('#t-'+t).setAttribute('aria-selected',String(t===id))});
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));
+
+/* ---------- manche animé ---------- */
+const X=n=>20+640*(1-Math.pow(2,-n/12));       /* position de la frette n (espacement réel) */
+const MID=n=>(X(n-1)+X(n))/2;                  /* centre de la case n */
+const Y=s=>34+(6-s)*20;                        /* 6e corde en haut, 1re en bas */
+(function drawBoard(){
+  let h=`<rect x="20" y="22" width="320" height="124" rx="4" fill="url(#gN)"/><rect x="17" y="22" width="5" height="124" fill="var(--strg)"/>`;
+  for(let n=1;n<=12;n++)h+=`<line x1="${X(n)}" x2="${X(n)}" y1="22" y2="146" stroke="var(--strg)" stroke-width="2" opacity=".8"/>`;
+  [3,5,7,9].forEach(n=>h+=`<circle cx="${MID(n)}" cy="84" r="4" fill="var(--strg)" opacity=".35"/>`);
+  h+=`<circle cx="${MID(12)}" cy="64" r="4" fill="var(--strg)" opacity=".35"/><circle cx="${MID(12)}" cy="104" r="4" fill="var(--strg)" opacity=".35"/>`;
+  [6,5,4,3,2,1].forEach((s,i)=>h+=`<line x1="20" x2="340" y1="${Y(s)}" y2="${Y(s)}" stroke="var(--strg)" stroke-width="${3.1-i*.4}"/>`);
+  [1,3,5,7,9,12].forEach(n=>h+=`<text class="fn" x="${MID(n)}" y="166">${n}</text>`);
+  $('#board').innerHTML=h;
+  $('#dots').innerHTML=[0,1,2].map(i=>`<g class="dot mv" id="d${i}" style="opacity:0"><circle r="8.5"/><text y="4">2</text></g>`).join('');
+  $('#mutes').innerHTML=[6,5,4,3,2,1].map(s=>`<text class="mx" id="mx${s}" x="9" y="${Y(s)+5}" style="opacity:0">×</text>`).join('');
+})();
+$('#shape').innerHTML=Object.entries(SHAPES).map(([k,v])=>`<option value="${k}">${v.label[0].toUpperCase()+v.label.slice(1)}</option>`).join('');
+
+const ST={shape:'Emaj',fret:1};
+function fretsOf(){
+  const sh=SHAPES[ST.shape],b=ST.fret,res={};
+  for(let s=sh.bar[0];s>=sh.bar[1];s--)res[s]=b;
+  sh.dots.forEach(([s,o])=>res[s]=b+o);
+  return res;
+}
+function render(){
+  const sh=SHAPES[ST.shape],b=ST.fret;
+  $('#fv').textContent=b;
+  const bar=$('#bar'),r=bar.querySelector('rect'),y1=Y(sh.bar[0])-9,y2=Y(sh.bar[1])+9;
+  r.setAttribute('x',-9);r.setAttribute('y',y1);r.setAttribute('height',y2-y1);
+  const t=$('#bartxt');t.setAttribute('x',0);t.setAttribute('y',(y1+y2)/2+4);
+  bar.style.transform=`translate(${MID(b)}px,0px)`;
+  [0,1,2].forEach(i=>{
+    const g=$('#d'+i),d=sh.dots[i];
+    if(!d){g.style.opacity=0;return}
+    g.style.opacity=1;
+    g.querySelector('text').textContent=d[2];
+    g.style.transform=`translate(${MID(b+d[1])}px,${Y(d[0])}px)`;
+  });
+  [6,5,4,3,2,1].forEach(s=>$('#mx'+s).style.opacity=sh.muted.includes(s)?1:0);
+  const note=NOTES[(OPEN[sh.root]+b)%12],name=chordName(ST.shape,b);
+  $('#cname').textContent=name;
+  $('#csub').textContent=`Racine : ${note}, sur la ${sh.root}e corde à la frette ${b}.`;
+  $('#how').textContent=`À vide, la ${sh.root}e corde est ${NOTES[OPEN[sh.root]]}. À la frette ${b}, on monte de ${b} demi-ton${b>1?'s':''} : ${note}. La ${sh.label} est ${sh.minor?'mineure':'majeure'}, donc l'accord est ${name}.`;
+}
+$('#shape').addEventListener('change',e=>{ST.shape=e.target.value;render()});
+$('#fret').addEventListener('input',e=>{ST.fret=+e.target.value;render()});
+render();
+
+/* ---------- son ---------- */
+let ctx=null;
+function audio(){if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();return ctx}
+function playChord(){
+  audio();
+  const f=fretsOf(),t=ctx.currentTime+.05;
+  Object.keys(f).map(Number).sort((a,b)=>b-a).forEach((s,i)=>{
+    const t0=t+i*.03,freq=F0[s]*Math.pow(2,f[s]/12);
+    const g=ctx.createGain(),lp=ctx.createBiquadFilter();
+    lp.type='lowpass';lp.frequency.value=2400;
+    g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(.17,t0+.005);g.gain.exponentialRampToValueAtTime(.001,t0+1.8);
+    [['triangle',1],['sawtooth',.25]].forEach(([type,k])=>{
+      const o=ctx.createOscillator(),og=ctx.createGain();
+      o.type=type;o.frequency.value=freq;og.gain.value=k;o.connect(og).connect(lp);o.start(t0);o.stop(t0+1.9);
+    });
+    lp.connect(g).connect(ctx.destination);
+  });
+}
+$('#play').addEventListener('click',playChord);
+
+/* ---------- photos personnelles ---------- */
+document.querySelectorAll('figure[data-photo]').forEach(fig=>{
+  const key='photo-barre-'+fig.dataset.photo,svg=fig.querySelector('svg'),img=fig.querySelector('img'),inp=fig.querySelector('input'),rst=fig.querySelector('button');
+  const set=src=>{
+    if(src)img.src=src;
+    img.toggleAttribute('hidden',!src);svg.toggleAttribute('hidden',!!src);rst.toggleAttribute('hidden',!src);
+  };
+  try{const v=localStorage.getItem(key);if(v)set(v)}catch(e){}
+  inp.addEventListener('change',()=>{
+    const f=inp.files[0];if(!f)return;
+    const im=new Image(),u=URL.createObjectURL(f);
+    im.onload=()=>{
+      const k=Math.min(1,900/im.width),c=document.createElement('canvas');
+      c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+      c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+      const d=c.toDataURL('image/jpeg',.82);URL.revokeObjectURL(u);set(d);
+      try{localStorage.setItem(key,d)}catch(e){}
+    };
+    im.src=u;inp.value='';
+  });
+  rst.addEventListener('click',()=>{set(null);try{localStorage.removeItem(key)}catch(e){}});
+});
+
+/* ---------- exercices ---------- */
+const KINDS=[['note','Notes du manche'],['name','Nommer l\'accord'],['fret','Trouver la frette'],['finger','Doigts'],['diag','Diagnostic'],['mix','Mélange']];
+const EX={kind:'mix',score:0,total:0,streak:0,cur:null,done:false};
+$('#kinds').innerHTML=KINDS.map(([k,l])=>`<button type="button" class="chip" data-k="${k}" aria-pressed="${k===EX.kind}">${l}</button>`).join('');
+const numChoices=(ans,lo,hi)=>{
+  const set=new Set([ans]);
+  while(set.size<4){const v=Math.max(lo,Math.min(hi,ans+rand(7)-3));set.add(v)}
+  return [...set].sort((a,b)=>a-b).map(v=>[String(v),String(v)]);
+};
+const SHKEYS=Object.keys(SHAPES);
+
+function genNote(){
+  const s=[6,5][rand(2)],f=1+rand(11),ans=NOTES[(OPEN[s]+f)%12];
+  const opts=new Set([ans]);while(opts.size<4)opts.add(NOTES[rand(12)]);
+  return {q:`Quelle note joues-tu sur la <b class="count">${s}e corde</b>, <b class="count">frette ${f}</b> ?`,
+    choices:shuffle([...opts]).map(n=>[n,n]),answer:ans,
+    explain:`La ${s}e corde à vide est ${NOTES[OPEN[s]]}. Chaque frette ajoute un demi-ton : ${f} demi-ton${f>1?'s':''} après ${NOTES[OPEN[s]]}, on arrive sur ${ans}.`};
+}
+function genName(){
+  const k=SHKEYS[rand(4)],sh=SHAPES[k],b=1+rand(10),ans=chordName(k,b);
+  const note=OPEN[sh.root]+b,opts=new Set([ans]);
+  opts.add(NOTES[note%12]+(sh.minor?' majeur':' mineur'));
+  while(opts.size<4){const d=[-2,-1,1,2][rand(4)];opts.add(NOTES[(note+d+12)%12]+(sh.minor?' mineur':' majeur'))}
+  return {q:`Tu joues la <b class="count">${sh.label}</b>, avec le barré à la <b class="count">frette ${b}</b>. Quel accord est-ce ?`,
+    choices:shuffle([...opts]).map(n=>[n,n]),answer:ans,
+    explain:`La racine est sur la ${sh.root}e corde : ${NOTES[OPEN[sh.root]]} + ${b} demi-ton${b>1?'s':''} = ${NOTES[note%12]}. La forme est ${sh.minor?'mineure':'majeure'} : ${ans}.`};
+}
+function genFret(){
+  let k,b,r;
+  do{k=SHKEYS[rand(4)];r=rand(12);b=(r-OPEN[SHAPES[k].root]+12)%12}while(b<1||b>10);
+  const sh=SHAPES[k],name=NOTES[r]+(sh.minor?' mineur':' majeur');
+  return {q:`Où poses-tu le barré pour jouer <b class="count">${name}</b> avec la <b class="count">${sh.label}</b> ?`,
+    choices:numChoices(b,1,10).map(([v])=>[v,`Frette ${v}`]),answer:String(b),
+    explain:`Il faut que la ${sh.root}e corde donne ${NOTES[r]}. Depuis ${NOTES[OPEN[sh.root]]} à vide, ${NOTES[r]} est ${b} demi-ton${b>1?'s':''} plus haut : frette ${b}.`};
+}
+function genFinger(){
+  const k=SHKEYS[rand(4)],sh=SHAPES[k],d=sh.dots[rand(sh.dots.length)];
+  return {q:`Dans la <b class="count">${sh.label}</b>, quel doigt va sur la <b class="count">${d[0]}e corde</b>, <b class="count">${d[1]} frette${d[1]>1?'s':''} après le barré</b> ?`,
+    choices:FINGER.map((n,i)=>[String(i+1),n]),answer:String(d[2]),
+    explain:`${FINGER[d[2]-1]} (doigt ${d[2]}). L'index (1) fait le barré, le majeur est le 2, l'annulaire le 3 et l'auriculaire le 4. Regarde le schéma dans l'onglet Accords animés.`};
+}
+const DIAG=[
+  {q:'Une seule corde (la 3e) grésille, les autres sonnent bien. Que fais-tu en premier ?',
+   good:'Je fais pivoter ou je décale légèrement l\'index : un pli de peau tombe sans doute sur cette corde.',
+   bad:['Je serre beaucoup plus fort avec tout le bras.','Je change la corde.','Je gratte plus fort pour la faire sonner.'],
+   explain:'Un grésillement isolé vient presque toujours d\'un point faible de l\'index (pli de peau, trou entre deux phalanges). Un petit changement d\'angle règle souvent le problème sans force en plus.'},
+  {q:'Ton index est posé au milieu de la case, loin de la frette. Qu\'est-ce qui va probablement se passer ?',
+   good:'Les cordes sonnent sourdes ou grésillent : il faut rapprocher l\'index de la frette, juste derrière.',
+   bad:['Le son sera plus clair car la corde est plus libre.','Rien, c\'est la bonne position.','Le son sera plus aigu.'],
+   explain:'Plus l\'index est loin de la frette, plus il faut de force pour plaquer la corde, et plus le grésillement est probable.'},
+  {q:'Après 30 secondes, ta main et ton avant-bras sont crispés. Que faire ?',
+   good:'Relâcher la pression entre deux accords, rapprocher le coude du corps et tirer légèrement le manche avec le poids du bras.',
+   bad:['Serrer encore plus fort pour que ça sonne tout de suite.','Jouer plus vite pour finir plus tôt.','Remonter le pouce au-dessus du manche.'],
+   explain:'Le barré se fait avec une pression juste suffisante. Serrer en continu fatigue vite. Alterne l\'effort et le relâchement.'},
+  {q:'Où est-il généralement plus facile de s\'exercer au barré au début ?',
+   good:'Vers les frettes 5 à 7, avant d\'aller vers la frette 1 (Fa majeur).',
+   bad:['Uniquement à la frette 1, c\'est la plus facile.','Au-delà de la frette 12 uniquement.','Peu importe, la difficulté est identique partout.'],
+   explain:'À la frette 1, la corde est plus tendue et plus difficile à plaquer. Les frettes 5 à 7 demandent en général moins de force, ce qui aide à trouver la bonne position.'},
+  {q:'Où doit se placer ton pouce pour avoir le plus de force ?',
+   good:'Derrière le manche, vers le milieu, en opposition à l\'index.',
+   bad:['Au-dessus du manche, sur la corde grave.','Sous le manche, tout près de la tête.','Il n\'a pas d\'importance.'],
+   explain:'Le pouce et l\'index forment une pince. Un pouce derrière le manche, vers le milieu, transmet mieux la force qu\'un pouce qui dépasse sur le dessus.'}
+];
+function genDiag(){
+  const d=DIAG[rand(DIAG.length)];
+  return {q:d.q,choices:shuffle([['g',d.good],...d.bad.slice(0,2).map((b,i)=>['b'+i,b])]),answer:'g',explain:d.explain};
+}
+const GEN={note:genNote,name:genName,fret:genFret,finger:genFinger,diag:genDiag};
+function nextEx(){
+  const k=EX.kind==='mix'?['note','name','fret','finger','diag'][rand(5)]:EX.kind;
+  EX.cur=GEN[k]();EX.done=false;renderEx();
+}
+function renderEx(){
+  const c=EX.cur;
+  $('#exCard').innerHTML=`<p class="q">${c.q}</p><div class="choices">${c.choices.map(([v,l])=>`<button class="choice" type="button" data-v="${v}">${l}</button>`).join('')}</div><div id="fb" hidden></div>`;
+}
+function finish(ok){
+  EX.done=true;EX.total++;
+  if(ok){EX.score++;EX.streak++}else EX.streak=0;
+  $('#sc').textContent=EX.score;$('#tot').textContent=EX.total;$('#stk').textContent=EX.streak;
+  const fb=$('#fb');fb.hidden=false;fb.className='fb '+(ok?'ok':'ko');
+  fb.innerHTML=`<p><strong class="${ok?'ok':'ko'}">${ok?'Bien joué.':'Pas tout à fait.'}</strong> ${EX.cur.explain}</p><p style="margin-top:10px"><button class="btn" type="button" data-act="next">Exercice suivant</button></p>`;
+}
+$('#kinds').addEventListener('click',e=>{
+  const b=e.target.closest('.chip');if(!b)return;
+  EX.kind=b.dataset.k;
+  document.querySelectorAll('#kinds .chip').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  nextEx();
+});
+$('#exCard').addEventListener('click',e=>{
+  const t=e.target.closest('button');if(!t)return;
+  if(t.dataset.act==='next')return nextEx();
+  if(EX.done||!t.classList.contains('choice'))return;
+  const ok=t.dataset.v===EX.cur.answer;
+  document.querySelectorAll('.choice').forEach(c=>{c.disabled=true;if(c.dataset.v===EX.cur.answer)c.classList.add('ok')});
+  if(!ok)t.classList.add('ko');
+  finish(ok);
+});
+nextEx();
+</script>
+</body>
+</html>
