@@ -64,6 +64,7 @@ svg text{font-family:var(--body);font-size:11px;fill:var(--fg)}
 #bar text,.dot text{fill:var(--bg);font-weight:600;text-anchor:middle;font-size:11px}
 .dot circle{fill:var(--down)}
 .mx{fill:var(--bad);font-weight:700;font-size:14px;text-anchor:middle;transition:opacity .3s}
+.sn{fill:var(--muted);font-family:var(--mono);font-size:10px;text-anchor:end}
 .fn{fill:var(--muted);font-family:var(--mono);font-size:10px;text-anchor:middle}
 .chordname{font:700 clamp(2rem,8vw,3.2rem)/1 var(--display)}
 .chordsub{color:var(--muted);font-size:.95rem}
@@ -120,22 +121,22 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
       <svg viewBox="0 0 360 240" role="img" aria-label="Index posé à plat en travers des cordes, juste derrière une frette">
         <defs>
           <linearGradient id="gWd" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:var(--woodhi)"/><stop offset="1" style="stop-color:var(--wood)"/></linearGradient>
-          <linearGradient id="gSk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--skinhi)"/><stop offset="1" style="stop-color:var(--skin)"/></linearGradient>
+          <linearGradient id="gSk" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:var(--skin)"/><stop offset=".82" style="stop-color:var(--skin)"/><stop offset="1" style="stop-color:var(--skin);stop-opacity:0"/></linearGradient>
         </defs>
-        <rect x="70" y="6" width="220" height="228" rx="6" fill="url(#gWd)"/>
-        <path d="M70 62H290M70 132H290M70 202H290" stroke="var(--strg)" stroke-width="5" opacity=".9"/>
+        <rect x="90" y="8" width="210" height="224" rx="6" fill="url(#gWd)"/>
+        <path d="M90 62H300M90 132H300M90 202H300" stroke="var(--strg)" stroke-width="5" opacity=".9"/>
         <g stroke="var(--strg)" fill="none">
-          <path d="M100 6V234" stroke-width="3.2"/><path d="M132 6V234" stroke-width="2.7"/><path d="M164 6V234" stroke-width="2.2"/>
-          <path d="M196 6V234" stroke-width="1.7"/><path d="M228 6V234" stroke-width="1.3"/><path d="M260 6V234" stroke-width="1"/>
+          <path d="M118 8V232" stroke-width="3.2"/><path d="M150 8V232" stroke-width="2.7"/><path d="M182 8V232" stroke-width="2.2"/>
+          <path d="M214 8V232" stroke-width="1.7"/><path d="M246 8V232" stroke-width="1.3"/><path d="M278 8V232" stroke-width="1"/>
         </g>
-        <path d="M334 100C350 104 360 120 360 140V170C350 174 338 170 332 160Z" fill="var(--skin)" stroke="var(--skin2)" stroke-width="2"/>
-        <rect x="58" y="96" width="290" height="34" rx="17" fill="url(#gSk)" stroke="var(--skin2)" stroke-width="2"/>
-        <path d="M66 104C120 99 250 99 340 104" fill="none" stroke="var(--skinhi)" stroke-width="3" opacity=".8"/>
-        <path d="M180 100V126M246 100V126" stroke="var(--skin2)" stroke-width="2" opacity=".7"/>
-        <g class="mk"><circle cx="150" cy="113" r="10"/><text x="150" y="117">1</text></g>
-        <g class="mk"><circle cx="40" cy="132" r="10"/><text x="40" y="136">2</text></g>
-        <g class="mk"><circle cx="62" cy="40" r="10"/><text x="62" y="44">3</text></g>
-        <path d="M50 132H66" stroke="var(--fg)" stroke-width="1.2"/>
+        <rect x="72" y="96" width="270" height="34" rx="17" fill="url(#gSk)" stroke="none"/>
+        <path d="M80 98C140 94 260 94 330 98" fill="none" stroke="var(--skinhi)" stroke-width="3" opacity=".8"/>
+        <path d="M196 100V126M262 100V126" stroke="var(--skin2)" stroke-width="2" opacity=".6"/>
+        <path d="M80 100C72 106 72 120 80 126" fill="none" stroke="var(--skin2)" stroke-width="2"/>
+        <g class="mk"><circle cx="30" cy="68" r="10"/><text x="30" y="72">3</text></g>
+        <g class="mk"><circle cx="30" cy="113" r="10"/><text x="30" y="117">1</text></g>
+        <g class="mk"><circle cx="30" cy="170" r="10"/><text x="30" y="174">2</text></g>
+        <path d="M40 72L74 104M40 113H70M40 166L90 134" stroke="var(--fg)" stroke-width="1.2" fill="none" opacity=".6"/>
       </svg>
       <img class="photo" alt="Photo : index en barré" hidden>
       <figcaption>Vue de face, manche à la verticale. <b>1</b> L'index repose à plat sur toutes les cordes. <b>2</b> Il se place juste derrière la frette, jamais au milieu de la case. <b>3</b> Le bout de l'index dépasse un peu de la corde grave.</figcaption>
@@ -151,17 +152,18 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
         <path d="M110 92H250C250 150 224 190 180 190C136 190 110 150 110 92Z" fill="url(#gWd2)"/>
         <rect x="106" y="86" width="148" height="8" rx="3" fill="var(--hole)" opacity=".5"/>
         <g fill="var(--strg)"><circle cx="124" cy="82" r="2.6"/><circle cx="144" cy="82" r="2.3"/><circle cx="164" cy="82" r="2"/><circle cx="184" cy="82" r="1.7"/><circle cx="204" cy="82" r="1.4"/><circle cx="224" cy="82" r="1.1"/></g>
-        <circle cx="168" cy="52" r="26" fill="url(#gSk2)" stroke="var(--skin2)" stroke-width="2" transform="rotate(-18 168 52)"/>
-        <path d="M148 64C154 76 166 80 178 76" fill="none" stroke="var(--skin2)" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+        <circle cx="160" cy="52" r="26" fill="url(#gSk2)" stroke="var(--skin2)" stroke-width="2" transform="rotate(-18 160 52)"/>
+        <path d="M140 64C146 76 158 80 170 76" fill="none" stroke="var(--skin2)" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
         <ellipse cx="180" cy="214" rx="34" ry="19" fill="url(#gSk2)" stroke="var(--skin2)" stroke-width="2"/>
-        <path d="M264 60V80M264 80L259 73M264 80L269 73" fill="none" stroke="var(--fg)" stroke-width="1.8" stroke-linecap="round"/>
-        <path d="M264 224V204M264 204L259 211M264 204L269 211" fill="none" stroke="var(--fg)" stroke-width="1.8" stroke-linecap="round"/>
-        <g class="mk"><circle cx="124" cy="38" r="10"/><text x="124" y="42">1</text></g>
-        <g class="mk"><circle cx="124" cy="214" r="10"/><text x="124" y="218">2</text></g>
-        <g class="mk"><circle cx="294" cy="142" r="10"/><text x="294" y="146">3</text></g>
+        <path d="M284 56V80M284 80L279 73M284 80L289 73" fill="none" stroke="var(--fg)" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M284 226V202M284 202L279 209M284 202L289 209" fill="none" stroke="var(--fg)" stroke-width="1.8" stroke-linecap="round"/>
+        <g class="mk"><circle cx="30" cy="52" r="10"/><text x="30" y="56">1</text></g>
+        <g class="mk"><circle cx="30" cy="214" r="10"/><text x="30" y="218">2</text></g>
+        <g class="mk"><circle cx="30" cy="134" r="10"/><text x="30" y="138">3</text></g>
+        <path d="M40 52H128M40 214H142M40 134H104" stroke="var(--fg)" stroke-width="1.2" opacity=".6"/>
       </svg>
       <img class="photo" alt="Photo : coupe du manche, index et pouce" hidden>
-      <figcaption>Coupe du manche vue depuis la tête. <b>1</b> L'index est légèrement roulé : c'est son côté osseux qui touche les cordes. <b>2</b> Le pouce est derrière le manche, vers le milieu. <b>3</b> Les deux se rapprochent, comme une pince.</figcaption>
+      <figcaption>Coupe du manche vue depuis la tête. <b>1</b> L'index est légèrement roulé : c'est son côté osseux qui touche les cordes. <b>2</b> Le pouce est derrière le manche, vers le milieu. <b>3</b> Les deux se rapprochent comme une pince (flèches).</figcaption>
       <div class="photoctl"><label class="chip" for="ph-cross">Mettre ma photo<input id="ph-cross" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Remettre le schéma</button></div>
     </figure>
   </div>
@@ -186,11 +188,11 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
       <li><b>Le bas de la main frôle le manche.</b> La base du pouce et le bord de la main peuvent effleurer le bas du manche, mais sans s'y appuyer.</li>
       <li><b>Les doigts restent arrondis,</b> posés sur la pulpe, juste derrière les frettes, pour ne pas toucher les cordes voisines.</li>
     </ol>
-    <figure data-photo="palm">
-      <svg viewBox="0 0 360 120" role="img" aria-label="Emplacement pour ta photo de la paume">
-        <rect x="2" y="2" width="356" height="116" rx="12" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/>
-        <text x="180" y="58" text-anchor="middle">Photo de la paume et du poignet</text>
-        <text x="180" y="78" text-anchor="middle" style="fill:var(--muted)">Ajoute la tienne avec le bouton ci-dessous</text>
+    <figure data-photo="palm" style="max-width:420px">
+      <svg viewBox="0 0 360 80" role="img" aria-label="Emplacement pour ta photo de la paume">
+        <rect x="2" y="2" width="356" height="76" rx="12" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/>
+        <text x="180" y="36" text-anchor="middle">Photo de la paume et du poignet</text>
+        <text x="180" y="56" text-anchor="middle" style="fill:var(--muted)">Ajoute la tienne avec le bouton ci-dessous</text>
       </svg>
       <img class="photo" alt="Photo : position de la paume et du poignet" hidden>
       <div class="photoctl"><label class="chip" for="ph-palm">Mettre ma photo<input id="ph-palm" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer la photo</button></div>
@@ -221,7 +223,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     <div class="chordsub" id="csub"></div>
   </div>
 
-  <svg id="neck" viewBox="0 0 360 190" role="img" aria-label="Manche de guitare avec la forme du barré">
+  <svg id="neck" viewBox="-36 0 396 176" role="img" aria-label="Manche de guitare avec la forme du barré">
     <defs><linearGradient id="gN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--woodhi)"/><stop offset="1" style="stop-color:var(--wood)"/></linearGradient></defs>
     <g id="board"></g>
     <g id="bar" class="mv"><rect rx="9" width="18"/><text id="bartxt">1</text></g>
@@ -328,6 +330,9 @@ const Y=s=>34+(6-s)*20;                        /* 6e corde en haut, 1re en bas *
   h+=`<circle cx="${MID(12)}" cy="64" r="4" fill="var(--strg)" opacity=".35"/><circle cx="${MID(12)}" cy="104" r="4" fill="var(--strg)" opacity=".35"/>`;
   [6,5,4,3,2,1].forEach((s,i)=>h+=`<line x1="20" x2="340" y1="${Y(s)}" y2="${Y(s)}" stroke="var(--strg)" stroke-width="${3.1-i*.4}"/>`);
   [1,3,5,7,9,12].forEach(n=>h+=`<text class="fn" x="${MID(n)}" y="166">${n}</text>`);
+  const SN={6:'Mi',5:'La',4:'Ré',3:'Sol',2:'Si',1:'Mi'};
+  [6,5,4,3,2,1].forEach(s=>h+=`<text class="sn" x="-2" y="${Y(s)+4}">${s} ${SN[s]}</text>`);
+  h+=`<text class="fn" x="20" y="166">0</text>`;
   $('#board').innerHTML=h;
   $('#dots').innerHTML=[0,1,2].map(i=>`<g class="dot mv" id="d${i}" style="opacity:0"><circle r="8.5"/><text y="4">2</text></g>`).join('');
   $('#mutes').innerHTML=[6,5,4,3,2,1].map(s=>`<text class="mx" id="mx${s}" x="9" y="${Y(s)+5}" style="opacity:0">×</text>`).join('');
