@@ -23,7 +23,7 @@
 
 ## <img src="assets/stickaru-logo.png" alt="" height="34" align="absmiddle"> Featured project: Stickaru
 
-A **Windows desktop app** that puts a sticker and meme library one click away. Search animated stickers (Tenor, GIPHY), Telegram packs and RisiBank with **no API key**, click any image to copy it, transparency included, straight into WhatsApp, Discord or WeChat, keep your favourites in your own collection, or let a **flying cat** wander across your desktop. The interface comes in French, English and Chinese.
+A **Windows desktop app** that puts a sticker and meme library one click away. Search animated stickers (Tenor, GIPHY), Telegram packs and RisiBank with **no API key**, click any image to copy it, transparency included, straight into WhatsApp, Discord or WeChat, keep your favourites in your own collection, or let a **flying cat** wander across your desktop. It is also handy for **slideshows and presentations**: drop a transparent sticker or animated GIF onto a slide in PowerPoint or Google Slides with a simple paste, no cropping or background removal needed. The interface comes in French, English and Chinese.
 
 <p align="center">
 <a href="https://github.com/Paquereauman/stickaru"><img src="assets/stickaru-capture.png" alt="Stickaru search window: a search bar, theme chips (Cats, Dogs, Memes, Funny, Love) and a side menu with Search, Shop, Import URL and My stickers" width="860"></a>
@@ -61,7 +61,7 @@ Today I mostly code **with Claude**. What I enjoy is starting from a real proble
 
 | Project | Description |
 |---|---|
-| <img src="assets/stickaru-logo.png" alt="" height="20"> [**Stickaru**](https://github.com/Paquereauman/stickaru) ([installer](https://github.com/Paquereauman/stickaru/releases/latest)) | A Windows sticker and meme library: keyless search (Tenor, GIPHY, Telegram, RisiBank), one-click copy with transparency, favourites and a flying desktop cat. Python and pygame, in French, English and Chinese. |
+| <img src="assets/stickaru-logo.png" alt="" height="20"> [**Stickaru**](https://github.com/Paquereauman/stickaru) ([installer](https://github.com/Paquereauman/stickaru/releases/latest)) | A Windows sticker and meme library: keyless search (Tenor, GIPHY, Telegram, RisiBank), one-click copy with transparency, favourites and a flying desktop cat, plus transparent stickers you can paste straight into slideshows. Python and pygame, in French, English and Chinese. |
 | 🎸 [**Barré guitare**](https://paquereauman.github.io/Paquereauman/barre-guitare/) ([code](./barre-guitare)) | A web app to learn barre chords on guitar: hand position, animated chords that slide along the neck, practice drills, songs and a tuner. In French. |
 | 🈶 [**Learn Chinese**](https://paquereauman.github.io/apprendre-chinois/) ([code](https://github.com/Paquereauman/apprendre-chinois)) | A Mandarin course from A1 to B1 for French speakers: about 900 words, a tone gym with animated pitch curves, spaced repetition, grammar and character writing. One web page, works on phone and computer. In French. |
 | 🎙️ [**Dictaphone DeepSeek FR**](https://github.com/Paquereauman/dictaphone-deepseek-fr) | Free voice dictation in French for DeepSeek: a Chrome extension plus a local Whisper server, so nothing leaves the computer. Voice commands such as "Valider" send the message. |
