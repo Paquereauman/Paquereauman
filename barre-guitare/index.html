@@ -75,6 +75,15 @@ svg text{font-family:var(--body);font-size:11px;fill:var(--fg)}
 .cd .brr{fill:var(--up)}
 .conv .arrow svg{width:70px;color:var(--muted)}
 @media (max-width:560px){.conv{grid-template-columns:1fr}.conv .arrow{transform:rotate(90deg);justify-self:center}}
+.tblw{overflow-x:auto}
+.tbl{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:.88rem;text-align:center}
+.tbl th,.tbl td{border:1px solid var(--line);padding:6px 8px;white-space:nowrap}
+.tbl th{font-weight:500;color:var(--muted);background:var(--surface)}
+.tbl td.root{color:var(--down);font-weight:700}
+.tbl td.need{color:var(--up);font-weight:700}
+.tbl td.soft{color:var(--muted)}
+.tbl td.off{color:var(--muted);font-size:.72rem;white-space:normal}
+.fr{font-family:var(--body);font-weight:400;font-size:.85rem;color:var(--muted)}
 /* manche animé */
 #neck{background:var(--surface);border:1px solid var(--line);border-radius:12px}
 .mv{transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .3s}
@@ -131,7 +140,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 <section class="tab" id="pos">
   <div class="rule">
     <h3>L'idée du barré</h3>
-    <p>Ton index remplace le sillet : il appuie sur toutes les cordes d'un coup, à une frette. Les autres doigts dessinent la forme de l'accord. Comme la forme ne change pas, tu la fais glisser le long du manche pour obtenir tous les accords.</p>
+    <p>Ton index remplace le sillet : il se couche sur toutes les cordes d'une frette. Les autres doigts dessinent la forme de l'accord. Il n'a besoin d'appuyer fort que sur les cordes qu'aucun autre doigt ne tient : les autres sont déjà fixées par les doigts de la forme. Comme la forme ne change pas, tu la fais glisser le long du manche pour obtenir tous les accords.</p>
   </div>
 
   <div class="two">
@@ -294,6 +303,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
       <li><b>Index à plat, un peu roulé.</b> Tourne-le légèrement vers la tête de la guitare. Le côté osseux est plus ferme que la pulpe et il n'a pas de plis de peau qui tombent sur une corde.</li>
       <li><b>Juste derrière la frette.</b> Plus tu es loin de la frette, plus il faut appuyer fort et plus ça grésille.</li>
       <li><b>Pouce au milieu du manche, derrière l'index.</b> Il fournit le soutien dont l'index a besoin pour appuyer. Évite de le placer trop haut ou trop bas : tu perdrais de la force.</li>
+      <li><b>Appuie là où il le faut.</b> Dans la forme de E, l'index doit surtout tenir les cordes 6, 2 et 1. Sur les cordes tenues par les doigts 2, 3 et 4, il n'a pas besoin de forcer. Le tableau de l'onglet Accords animés indique, pour chaque forme, les cordes concernées.</li>
       <li><b>Juste assez de pression.</b> Appuie seulement ce qu'il faut pour obtenir un son clair, sans créer de tension inutile dans la main. Si tu serres trop, tu te fatigues très vite. Quand le son est net, relâche un peu.</li>
       <li><b>Utilise le poids du bras.</b> Tire très légèrement le manche vers toi avec le bras au lieu de serrer uniquement avec la main. Relâche la pression entre deux accords.</li>
       <li><b>Coude proche du corps.</b> Un coude trop écarté fait tourner le poignet et affaiblit l'index.</li>
@@ -349,6 +359,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     <g id="dots"></g>
     <g id="mutes"></g>
   </svg>
+  <div id="strtab"></div>
   <div class="legend"><span><b>1</b> index (barré)</span><span><b>2</b> majeur</span><span><b>3</b> annulaire</span><span><b>4</b> auriculaire</span><span><b>×</b> corde non jouée</span></div>
 
   <div class="controls">
@@ -373,12 +384,25 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
   <div class="block">
     <h2>Petits exercices pour la main</h2>
     <ol class="steps">
+      <li><b>Les 4 positions, lentement (2 min chacune).</b> Joue chaque forme, E et A, majeure et mineure, à la frette 5. Fais sonner les cordes une par une, très lentement, jusqu'à ce que chacune résonne parfaitement. Le tableau des cordes et des notes est dans l'onglet Accords animés.</li>
       <li><b>Écrase-relâche (2 min).</b> Pose l'index à plat sur toutes les cordes à la frette 5. Appuie 3 secondes, relâche 3 secondes, 10 fois, sans bouger la main. Tu cherches la bonne position.</li>
       <li><b>Corde par corde (3 min).</b> Même barré frette 5. Fais sonner chaque corde une par une. Note celle qui grésille, change légèrement l'angle de l'index, recommence.</li>
       <li><b>Mini-barré de F (5 min).</b> Pose la forme 1 à la frette 1 et fais sonner les 4 cordes. Alterne avec un C majeur ouvert, 10 allers-retours lents.</li>
       <li><b>Glissade (3 min).</b> Forme de E mineur : barré frette 2, puis 3, 5, 7. Dis le nom à voix haute : F♯ mineur, G mineur, A mineur, B mineur.</li>
       <li><b>Changement (5 min).</b> E mineur ouvert, puis F♯ mineur en barré (même forme, glissée de 2 frettes). 10 allers-retours, lentement.</li>
     </ol>
+  </div>
+
+  <div class="block">
+    <h2>Progression : plusieurs barrés, une seule forme</h2>
+    <p class="tip">Une fois les 4 positions maîtrisées, enchaîne plusieurs accords avec la même forme. Une bonne progression pour commencer : F, G, A, F. Tu glisses ta main, tu ne changes pas de forme.</p>
+    <div class="controls">
+      <label for="progSel">Forme
+        <select id="progSel"></select>
+      </label>
+      <button class="btn" id="progPlay" type="button">Jouer la progression</button>
+    </div>
+    <div id="progOut" class="block"></div>
   </div>
 
   <div class="rule">
@@ -396,6 +420,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
       <li><b>Take Me Home, Country Roads</b> (John Denver). En A : A, E, F♯ mineur, D. Un seul barré : F♯ mineur, forme de E mineur à la frette 2.</li>
       <li><b>Let It Be</b> (The Beatles). C, G, A mineur, F. Le F se joue en mini-barré (forme 1), donc sans le grand barré.</li>
     </ol>
+    <p class="tip"><b>Morceau objectif : Where Is My Mind?</b> (Pixies). Sa grille d'accords n'est pas encore ajoutée : je ne l'ai pas de façon fiable, à compléter depuis une tablature.</p>
     <p class="tip">Les accords sont donnés de mémoire. Vérifie la grille exacte et l'ordre sur une tablature avant de jouer.</p>
   </div>
 </section>
@@ -419,6 +444,7 @@ const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rand(i+1);[a
 const NOTES=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
 const OPEN={6:4,5:9,4:2,3:7,2:11,1:4};              /* note de chaque corde à vide (index dans NOTES) */
 const F0={6:82.41,5:110,4:146.83,3:196,2:246.94,1:329.63}; /* fréquences à vide */
+const STR_NAMES={6:'E',5:'A',4:'D',3:'G',2:'B',1:'e'};
 const FINGER=['Index','Majeur','Annulaire','Auriculaire'];
 /* [corde, décalage de frette après le barré, doigt] */
 const SHAPES={
@@ -480,6 +506,7 @@ function render(){
     g.style.transform=`translate(${MID(b+d[1])}px,${Y(d[0])}px)`;
   });
   [6,5,4,3,2,1].forEach(s=>$('#mx'+s).style.opacity=sh.muted.includes(s)?1:0);
+  $('#strtab').innerHTML=stringsTable(ST.shape,b);
   const rf=b+sh.rootOff,note=NOTES[(OPEN[sh.root]+rf)%12],name=chordName(ST.shape,b);
   $('#cname').textContent=name;
   $('#csub').textContent=`Racine : ${note}, sur la ${sh.root}e corde à la frette ${rf}.`;
@@ -489,12 +516,33 @@ $('#shape').addEventListener('change',e=>{ST.shape=e.target.value;render()});
 $('#fret').addEventListener('input',e=>{ST.fret=+e.target.value;render()});
 render();
 
+
+/* ---------- cordes à pincer et notes ---------- */
+function chordFrets(k,b){
+  const sh=SHAPES[k],res={};
+  for(let s=sh.bar[0];s>=sh.bar[1];s--)res[s]=b;
+  sh.dots.forEach(([s,o])=>res[s]=b+o);
+  return res;
+}
+function stringsTable(k,b){
+  const f=chordFrets(k,b),sh=SHAPES[k],rootNote=NOTES[(OPEN[sh.root]+b+sh.rootOff)%12];
+  const order=[6,5,4,3,2,1];
+  let h='<div class="tblw"><table class="tbl"><thead><tr><th scope="row">Corde</th>'+order.map(s=>`<th>${s} ${STR_NAMES[s]}</th>`).join('')+'</tr></thead><tbody>';
+  h+='<tr><th scope="row">Frette</th>'+order.map(s=>`<td>${s in f?f[s]:'×'}</td>`).join('')+'</tr>';
+  h+='<tr><th scope="row">Note</th>'+order.map(s=>{
+    if(!(s in f))return '<td class="off">à ne pas jouer</td>';
+    const n=NOTES[(OPEN[s]+f[s])%12];return `<td class="${n===rootNote?'root':''}">${n}</td>`}).join('')+'</tr>';
+  h+='<tr><th scope="row">Pression de l\'index</th>'+order.map(s=>{
+    if(!(s in f))return '<td class="off">—</td>';
+    const dotted=sh.dots.some(d=>d[0]===s);
+    return dotted?'<td class="soft">inutile</td>':'<td class="need">oui</td>'}).join('')+'</tr>';
+  return h+'</tbody></table></div>';
+}
+
 /* ---------- son ---------- */
 let ctx=null;
 function audio(){if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();return ctx}
-function playChord(){
-  audio();
-  const f=fretsOf(),t=ctx.currentTime+.05;
+function strumFrets(f,t){
   Object.keys(f).map(Number).sort((a,b)=>b-a).forEach((s,i)=>{
     const t0=t+i*.03,freq=F0[s]*Math.pow(2,f[s]/12);
     const g=ctx.createGain(),lp=ctx.createBiquadFilter();
@@ -507,6 +555,7 @@ function playChord(){
     lp.connect(g).connect(ctx.destination);
   });
 }
+function playChord(){audio();strumFrets(fretsOf(),ctx.currentTime+.05)}
 $('#play').addEventListener('click',playChord);
 
 /* ---------- photos personnelles ---------- */
@@ -560,6 +609,25 @@ function drawConv(k){
 $('#convSel').innerHTML=[['maj','E → F majeur'],['min','E → F mineur']].map(([k,l])=>`<button type="button" class="chip" data-k="${k}" aria-pressed="false">${l}</button>`).join('');
 $('#convSel').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)drawConv(b.dataset.k)});
 drawConv('maj');
+
+/* ---------- progression ---------- */
+const PROGS=[
+  {k:'Emaj',frets:[1,3,5,1],label:'Forme de E majeur : F, G, A, F'},
+  {k:'Emin',frets:[1,3,5,1],label:'Forme de E mineur : Fm, Gm, Am, Fm'},
+  {k:'Amaj',frets:[1,3,5,1],label:'Forme de A majeur : A♯, C, D, A♯'},
+  {k:'Amin',frets:[1,3,5,1],label:'Forme de A mineur : A♯m, Cm, Dm, A♯m'}
+];
+$('#progSel').innerHTML=PROGS.map((p,i)=>`<option value="${i}">${p.label}</option>`).join('');
+function drawProg(){
+  const p=PROGS[+$('#progSel').value];
+  $('#progOut').innerHTML=p.frets.map((b,i)=>`<div><h3>${i+1}. ${chordName(p.k,b)} <span class="fr">barré frette ${b}</span></h3>${stringsTable(p.k,b)}</div>`).join('');
+}
+$('#progSel').addEventListener('change',drawProg);
+$('#progPlay').addEventListener('click',()=>{
+  audio();const p=PROGS[+$('#progSel').value],t=ctx.currentTime+.05;
+  p.frets.forEach((b,i)=>strumFrets(chordFrets(p.k,b),t+i*1.7));
+});
+drawProg();
 
 /* ---------- minuteur ---------- */
 const TM={on:false,phase:'work',left:30,id:null};
