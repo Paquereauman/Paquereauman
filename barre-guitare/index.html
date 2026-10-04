@@ -59,6 +59,8 @@ svg text{font-family:var(--body);font-size:11px;fill:var(--fg)}
 .photoctl{display:flex;gap:8px;flex-wrap:wrap}
 .tri{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px}
 .tri>*{min-width:0}
+.credit{margin:0;font-size:.78rem;color:var(--muted)}
+.credit a{color:inherit}
 .tpbox{position:relative}
 .tp .photo{aspect-ratio:4/3;object-fit:cover}
 figure[data-photo]>svg,.tpbox{cursor:pointer;border-radius:12px}
@@ -171,7 +173,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
         <path d="M40 72L74 104M40 113H70M40 166L90 134" stroke="var(--fg)" stroke-width="1.2" fill="none" opacity=".6"/>
       </svg>
       <img class="photo" alt="Photo : index en barré" hidden>
-      <figcaption>Vue de face, manche à la verticale. <b>1</b> L'index repose à plat sur toutes les cordes. <b>2</b> Il se place juste derrière la frette, jamais au milieu de la case. <b>3</b> Le bout de l'index dépasse un peu de la corde grave.</figcaption>
+      <figcaption>Vue de face. L'index repose à plat sur toutes les cordes, juste derrière la frette et jamais au milieu de la case. Son bout dépasse un peu de la corde grave.</figcaption>
       <div class="photoctl"><label class="chip" for="ph-front">Mettre ma photo<input id="ph-front" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Remettre le schéma</button></div>
     </figure>
 
@@ -595,12 +597,22 @@ function playChord(){audio();strumFrets(fretsOf(),ctx.currentTime+.05)}
 $('#play').addEventListener('click',playChord);
 
 /* ---------- photos : fichiers du dossier photos/ puis photo personnelle ---------- */
+const CREDITS={
+  front:'Photo : barré de La♯ mineur, <a href="https://commons.wikimedia.org/wiki/File:A%E2%99%AF_minor_chord_on_guitar_with_barre.jpg" target="_blank" rel="noopener">Lucian Popescu</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>, via Wikimedia Commons (redimensionnée).'
+};
+function showCredit(name,on){
+  const fig=document.querySelector('figure[data-photo="'+name+'"]');if(!fig)return;
+  let c=fig.querySelector('.credit');
+  if(!on||!CREDITS[name]){if(c)c.hidden=true;return}
+  if(!c){c=document.createElement('p');c.className='credit';fig.querySelector('figcaption').after(c)}
+  c.innerHTML=CREDITS[name];c.hidden=false;
+}
 function probePhoto(name,set){
   const exts=['jpg','jpeg','png','webp'];
   (function next(i){
     if(i>=exts.length)return;
     const im=new Image(),url='photos/'+name+'.'+exts[i];
-    im.onload=()=>set(url);
+    im.onload=()=>{set(url);showCredit(name,true)};
     im.onerror=()=>next(i+1);
     im.src=url;
   })(0);
@@ -617,6 +629,7 @@ document.addEventListener('paste',e=>{
 document.querySelectorAll('figure[data-photo]').forEach(fig=>{
   const key='photo-barre-'+fig.dataset.photo,svg=fig.querySelector('svg'),img=fig.querySelector('img'),inp=fig.querySelector('input'),rst=fig.querySelector('button');
   const set=src=>{
+    if(!src||src.startsWith('data:'))showCredit(fig.dataset.photo,false);
     if(src)img.src=src;
     img.toggleAttribute('hidden',!src);svg.toggleAttribute('hidden',!!src);rst.toggleAttribute('hidden',!src);
   };
