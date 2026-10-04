@@ -41,7 +41,7 @@ Aujourd'hui, je code surtout **avec Claude**. Ce qui m'intéresse, c'est de part
 
 | Projet | Description |
 |---|---|
-| 🎸 [**Barré guitare**](./barre-guitare) | Une appli web pour apprendre le barré : la position de la main, des accords animés qui glissent sur le manche, et des exercices de logique. |
+| 🎸 [**Barré guitare**](https://paquereauman.github.io/Paquereauman/barre-guitare/) ([code](./barre-guitare)) | Une appli web pour apprendre le barré : la position de la main, des accords animés qui glissent sur le manche, et des exercices de logique. |
 
 *D'autres projets arrivent. Je les ajoute ici au fur et à mesure.*
 

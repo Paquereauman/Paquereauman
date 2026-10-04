@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Apprendre le barré à la guitare : position de la main, accords animés sur le manche et exercices de logique.">
 <title>Barré guitare</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +25,10 @@
   --down:#f29a4a; --up:#4cc7da; --good:#4cc27a; --bad:#ff7b72;
   --skin:#c99671; --skin2:#a87654; --skinhi:#dcaa82; --woodhi:#8f5d2c; --wood:#5e3a18; --strg:#d8d4c4; --pick:#e8b53a; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font:16px/1.55 var(--body);padding-inline:16px;padding-block:0 48px}
+:root{color-scheme:light}
+[hidden]{display:none!important}
+img{max-width:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 var(--body);padding-inline:16px;padding-block:0 48px}
 .wrap{max-width:880px;margin:0 auto}
 h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
 h1{font-size:clamp(1.9rem,6vw,2.8rem);letter-spacing:-.01em}
@@ -85,7 +94,8 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 .fb strong.ok{color:var(--good)}.fb strong.ko{color:var(--bad)}
 @media (prefers-reduced-motion:reduce){.mv{transition-duration:.01s!important}}
 </style>
-
+</head>
+<body>
 <div class="wrap">
 <header>
   <h1>Barré guitare</h1>
@@ -445,3 +455,5 @@ $('#exCard').addEventListener('click',e=>{
 });
 nextEx();
 </script>
+</body>
+</html>
