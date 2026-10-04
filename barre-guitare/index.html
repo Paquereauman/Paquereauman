@@ -100,6 +100,7 @@ figure[data-photo].active>svg,figure[data-photo].active .tpbox{outline:3px solid
 .howto p{margin-top:8px;color:var(--muted);font-size:.95rem}
 code{font-family:var(--mono);font-size:.9em}
 /* accordeur */
+.tlinks a{font-weight:600}
 .tuner{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px 18px;display:grid;gap:14px;justify-items:center;text-align:center;transition:border-color .3s}
 .tuner[data-state="ok"]{border-color:var(--good)}
 .tstate{font:600 1.1rem var(--body);min-height:1.6em}
@@ -710,6 +711,7 @@ drawProg();
 
 /* ---------- morceaux ---------- */
 const TABS=t=>`https://www.ultimate-guitar.com/search.php?search_type=title&value=${encodeURIComponent(t)}`;
+const SONGSTERR=t=>`https://www.songsterr.com/?pattern=${encodeURIComponent(t)}`;
 const SONGS=[
   {t:'The Beatles, « Let It Be »',lvl:1,why:'Le F peut se jouer en mini-barré, donc sans le grand barré.',ch:['C','G','Am','F'],q:'beatles let it be'},
   {t:'Red Hot Chili Peppers, « Californication »',lvl:1,why:'Quatre accords simples, avec un seul F à barrer.',ch:['Am','F','C','G'],q:'red hot chili peppers californication'},
@@ -742,7 +744,7 @@ function openOnNeck(k,f){
 }
 $('#songs').innerHTML=SONGS.map((so,i)=>`<div class="card" data-song="${i}"><h3>${so.t} <span class="level">${LVL[so.lvl]}</span></h3><p class="tip">${so.why}</p>`+
   (so.ch.length?`<div class="chips">${so.ch.map((c,j)=>`<button type="button" class="chip" data-i="${i}" data-j="${j}" aria-pressed="false">${c}</button>`).join('')}</div>`:`<p class="tip">Grille d'accords à compléter depuis une tablature.</p>`)+
-  `<div class="sinfo" aria-live="polite"></div><p class="tip"><a href="${TABS(so.q)}" target="_blank" rel="noopener">Chercher la tablature</a></p></div>`).join('');
+  `<div class="sinfo" aria-live="polite"></div><p class="tip tlinks">Morceau complet avec tablature : <a href="${SONGSTERR(so.q)}" target="_blank" rel="noopener">Songsterr</a> · <a href="${TABS(so.q)}" target="_blank" rel="noopener">Ultimate Guitar</a></p></div>`).join('');
 $('#songs').addEventListener('click',e=>{
   const b=e.target.closest('.chip');
   if(b){
@@ -780,7 +782,7 @@ $('#tmBtn').addEventListener('click',()=>{
 
 /* ---------- accordeur ---------- */
 const TSTR=[{n:6,note:'E',f:82.41},{n:5,note:'A',f:110},{n:4,note:'D',f:146.83},{n:3,note:'G',f:196},{n:2,note:'B',f:246.94},{n:1,note:'E',f:329.63}];
-const TU={on:false,stream:null,an:null,buf:null,raf:0,target:'auto',hist:[],okRun:0,pos:0,want:0,silent:0,frame:0,last:null};
+const TU={on:false,stream:null,an:null,buf:null,raf:0,target:'auto',hist:[],okRun:0,pos:0,want:0,silent:0,frame:0,last:null,age:0,sm:null,lock:null};
 $('#tStrings').innerHTML=`<button type="button" class="chip str" data-s="auto" aria-pressed="true">Auto</button>`+TSTR.map(t=>`<button type="button" class="chip str" data-s="${t.n}" aria-pressed="false">${t.n} · ${t.note}</button>`).join('');
 function playTone(f){
   audio();const t=ctx.currentTime,g=ctx.createGain();
@@ -794,7 +796,7 @@ $('#tStrings').addEventListener('click',e=>{
   TU.target=b.dataset.s;
   document.querySelectorAll('#tStrings .chip').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
   if(TU.target!=='auto')playTone(TSTR.find(t=>t.n===+TU.target).f);
-  TU.hist=[];TU.okRun=0;
+  TU.hist=[];TU.okRun=0;TU.sm=null;TU.lock=null;TU.age=0;
 });
 /* détection de hauteur (méthode YIN) */
 function detectPitch(buf,sr){
@@ -817,31 +819,42 @@ function tick(){
   if(!TU.on)return;
   TU.raf=requestAnimationFrame(tick);
   TU.frame++;
-  TU.pos+=(TU.want-TU.pos)*.18;                       /* curseur fluide */
+  TU.pos+=(TU.want-TU.pos)*.12;                       /* curseur fluide */
   $('#tMark').style.transform=`translateX(${260+TU.pos*4.8}px)`;
   if(TU.frame%3)return;
   TU.an.getFloatTimeDomainData(TU.buf);
   const {f}=detectPitch(TU.buf,ctx.sampleRate);
   if(!f){
+    TU.age=0;TU.hist=[];
     if(++TU.silent>14){
-      TU.hist=[];TU.okRun=0;TU.want=0;
+      TU.okRun=0;TU.want=0;TU.sm=null;TU.lock=null;
       setTuner('listen','J\'écoute…',"Joue une corde à vide et laisse-la sonner.");
       $('#tNote').textContent='–';$('#tStr').innerHTML='&nbsp;';$('#tCents').innerHTML='&nbsp;';
+      document.querySelectorAll('#tStrings .chip').forEach(x=>x.classList.remove('det'));
     }
     return;
   }
   TU.silent=0;
-  TU.hist.push(f);if(TU.hist.length>6)TU.hist.shift();
+  /* l'attaque du pizzicato sonne toujours trop aigu : on l'ignore (~0,4 s) */
+  if(++TU.age<8){setTuner('listen','Laisse sonner…','Ne touche plus la corde, la mesure se stabilise.');return}
+  TU.hist.push(f);if(TU.hist.length>9)TU.hist.shift();
+  if(TU.hist.length<5)return;
+  const cs=TU.hist.slice(-5).map(x=>1200*Math.log2(x/TU.hist[TU.hist.length-1]));
+  if(Math.max(...cs)-Math.min(...cs)>25)return;        /* lecture pas encore stable : on garde l'affichage */
   const sorted=TU.hist.slice().sort((a,b)=>a-b),med=sorted[sorted.length>>1];
-  const tgt=TU.target==='auto'?TSTR.reduce((b,t)=>Math.abs(centsOf(med,t.f))<Math.abs(centsOf(med,b.f))?t:b):TSTR.find(t=>t.n===+TU.target);
-  const c=centsOf(med,tgt.f);
+  if(TU.target==='auto'){if(!TU.lock)TU.lock=TSTR.reduce((b,t)=>Math.abs(centsOf(med,t.f))<Math.abs(centsOf(med,b.f))?t:b)}
+  const tgt=TU.target==='auto'?TU.lock:TSTR.find(t=>t.n===+TU.target);
+  const raw=centsOf(med,tgt.f);
+  TU.sm=TU.sm==null?raw:TU.sm+(raw-TU.sm)*.35;        /* lissage */
+  const c=TU.sm;
   document.querySelectorAll('#tStrings .chip').forEach(x=>x.classList.toggle('det',TU.target==='auto'&&+x.dataset.s===tgt.n));
   $('#tNote').textContent=tgt.note;
   $('#tStr').textContent=`Corde ${tgt.n}`;
   $('#tCents').textContent=(c>0?'+':'')+Math.round(c)+' cents';
   TU.want=Math.max(-50,Math.min(50,c));
-  if(Math.abs(c)>150){setTuner('listen','Ce n\'est pas la bonne corde',TU.target==='auto'?'Joue une corde à vide.':'Joue la corde '+tgt.n+' à vide.');TU.okRun=0;return}
-  if(Math.abs(c)<=5){
+  if(Math.abs(c)>150){setTuner('listen','Ce n\'est pas la bonne corde',TU.target==='auto'?'Joue une corde à vide.':'Joue la corde '+tgt.n+' à vide.');TU.okRun=0;TU.lock=null;return}
+  const inTol=Math.abs(c)<=(TU.okRun>0?8:5);
+  if(inTol){
     if(++TU.okRun>=3)setTuner('ok','Accordée ✓','Parfait. Passe à la corde suivante.');
   }else{
     TU.okRun=0;
@@ -863,8 +876,8 @@ async function startTuner(){
     return;
   }
   const src=ctx.createMediaStreamSource(TU.stream);
-  TU.an=ctx.createAnalyser();TU.an.fftSize=4096;TU.buf=new Float32Array(TU.an.fftSize);src.connect(TU.an);
-  TU.on=true;TU.hist=[];TU.okRun=0;TU.silent=0;TU.pos=0;TU.want=0;TU.frame=0;
+  TU.an=ctx.createAnalyser();TU.an.fftSize=8192;TU.buf=new Float32Array(TU.an.fftSize);src.connect(TU.an);
+  TU.on=true;TU.hist=[];TU.okRun=0;TU.age=0;TU.sm=null;TU.lock=null;TU.silent=0;TU.pos=0;TU.want=0;TU.frame=0;
   $('#tBtn').textContent='Arrêter l\'accordeur';
   setTuner('listen','J\'écoute…','Joue une corde à vide et laisse-la sonner.');
   tick();
