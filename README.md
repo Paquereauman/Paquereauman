@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="Paquereauman, techno-anthropologist, teacher, I build useful tools with Claude" width="100%">
+<img src="assets/banner-en.svg" alt="Bai Laoshi (Paquereauman), techno-anthropologist, teacher, I build useful tools with Claude" width="100%">
 
 <br>
 
@@ -14,7 +14,7 @@
 
 ---
 
-## 👋 Hi, I'm Paquereauman
+## 👋 Hi, I'm Bai Laoshi
 
 I trained in **techno-anthropology** in **Copenhagen**, the study of how people and technology shape each other, and I now work as a **teacher**. I originally learned Python to do **web scraping**: collecting data for my research.
 
