@@ -60,7 +60,7 @@ Today I mostly code **with Claude**. What I enjoy is starting from a real proble
 
 | Project | Description |
 |---|---|
-| 🎸 [**Barré guitare**](https://paquereauman.github.io/Paquereauman/barre-guitare/) ([code](./barre-guitare)) | A web app to learn barre chords on guitar: hand position, animated chords that slide along the neck, practice drills and logic quizzes. In French. |
+| 🎸 [**Barré guitare**](https://paquereauman.github.io/Paquereauman/barre-guitare/) ([code](./barre-guitare)) | A web app to learn barre chords on guitar: hand position, animated chords that slide along the neck, practice drills, songs and a tuner. In French. |
 
 *More projects are coming. I add them here as I go.*
 

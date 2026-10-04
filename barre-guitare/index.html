@@ -12,17 +12,17 @@
 /* Layout: une colonne étroite, onglets collants, le manche (SVG animé) est le centre de l'écran Accords. */
 :root{
   --bg:#eef1ec; --surface:#f8faf6; --fg:#16201b; --muted:#56665d; --line:#cbd5ca;
-  --down:#b4510c; --up:#0b7a8c; --good:#1f7a43; --bad:#b3261e;
+  --down:#b4510c; --up:#0b7a8c; --good:#1f7a43; --bad:#b3261e; --warn:#b7791f;
   --skin:#e3b48d; --skin2:#c58a62; --skinhi:#f1cdaa; --woodhi:#c98d4f; --wood:#8a5a2b; --strg:#cfcab8; --pick:#d9a21b;
   --display:'Familjen Grotesk',system-ui,sans-serif; --body:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#101613; --surface:#172019; --fg:#e8efe9; --muted:#93a69a; --line:#2b3a31;
-  --down:#f29a4a; --up:#4cc7da; --good:#4cc27a; --bad:#ff7b72;
+  --down:#f29a4a; --up:#4cc7da; --good:#4cc27a; --bad:#ff7b72; --warn:#e8b53a;
   --skin:#c99671; --skin2:#a87654; --skinhi:#dcaa82; --woodhi:#8f5d2c; --wood:#5e3a18; --strg:#d8d4c4; --pick:#e8b53a; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#101613; --surface:#172019; --fg:#e8efe9; --muted:#93a69a; --line:#2b3a31;
-  --down:#f29a4a; --up:#4cc7da; --good:#4cc27a; --bad:#ff7b72;
+  --down:#f29a4a; --up:#4cc7da; --good:#4cc27a; --bad:#ff7b72; --warn:#e8b53a;
   --skin:#c99671; --skin2:#a87654; --skinhi:#dcaa82; --woodhi:#8f5d2c; --wood:#5e3a18; --strg:#d8d4c4; --pick:#e8b53a; color-scheme:dark}
 *{box-sizing:border-box}
 :root{color-scheme:light}
@@ -91,6 +91,35 @@ figure[data-photo].active>svg,figure[data-photo].active .tpbox{outline:3px solid
 .fr{font-family:var(--body);font-weight:400;font-size:.85rem;color:var(--muted)}
 .sinfo{display:grid;gap:8px}
 .sinfo:empty{display:none}
+.step h2{display:flex;gap:10px;align-items:center}
+.sn{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;background:var(--fg);color:var(--bg);font:600 .95rem var(--mono)}
+.bl{margin:0;padding-left:1.2em;display:grid;gap:6px}
+.hero{max-width:560px}
+.howto{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 16px}
+.howto summary{cursor:pointer;font-weight:600}
+.howto p{margin-top:8px;color:var(--muted);font-size:.95rem}
+code{font-family:var(--mono);font-size:.9em}
+/* accordeur */
+.tuner{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px 18px;display:grid;gap:14px;justify-items:center;text-align:center;transition:border-color .3s}
+.tuner[data-state="ok"]{border-color:var(--good)}
+.tstate{font:600 1.1rem var(--body);min-height:1.6em}
+.tnote{font:700 clamp(4.5rem,22vw,8rem)/1 var(--display);min-height:1em;transition:color .3s}
+.tuner[data-state="ok"] .tnote{color:var(--good)}
+.tuner[data-state="low"] .tnote,.tuner[data-state="high"] .tnote{color:var(--warn)}
+.tstr{color:var(--muted);min-height:1.5em}
+.gauge{width:100%;max-width:520px}
+.gauge svg{overflow:visible}
+.gauge .z0{fill:var(--line)}.gauge .z1{fill:color-mix(in srgb,var(--warn) 45%,var(--line))}.gauge .z2{fill:color-mix(in srgb,var(--good) 70%,var(--line))}
+.gauge .mark{fill:var(--muted);stroke:var(--bg);stroke-width:3;transition:fill .25s}
+.tuner[data-state="ok"] .mark{fill:var(--good)}
+.tuner[data-state="low"] .mark,.tuner[data-state="high"] .mark{fill:var(--warn)}
+.gauge .gt{font-size:12px;fill:var(--muted)}
+.tadvice{max-width:44ch;min-height:3em}
+.tcents{font-family:var(--mono);font-size:.9rem;color:var(--muted)}
+.btn.big{font-size:1.1rem;padding:14px 28px;border-radius:99px}
+.chip.str{min-width:56px;text-align:center}
+.chip.det{outline:2px solid var(--up);outline-offset:1px}
+@media (prefers-reduced-motion:reduce){.tnote,.mark,.tuner{transition:none}}
 /* manche animé */
 #neck{background:var(--surface);border:1px solid var(--line);border-radius:12px}
 .mv{transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .3s}
@@ -134,24 +163,29 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 <div class="wrap">
 <header>
   <h1>Barré guitare</h1>
-  <p>Apprends à faire le barré : la position de l'index et du pouce, le déplacement de l'accord le long du manche en animation, puis des exercices pour comprendre la logique des accords.</p>
+  <p>Apprends à faire le barré : la position de la main, les accords qui glissent sur le manche, des exercices et un accordeur.</p>
 </header>
 <nav role="tablist" aria-label="Sections">
   <button role="tab" id="t-pos" aria-selected="true" data-tab="pos">Position</button>
-  <button role="tab" id="t-acc" aria-selected="false" data-tab="acc">Accords animés</button>
+  <button role="tab" id="t-acc" aria-selected="false" data-tab="acc">Accords</button>
   <button role="tab" id="t-train" aria-selected="false" data-tab="train">S'entraîner</button>
-  <button role="tab" id="t-ex" aria-selected="false" data-tab="ex">Quiz</button>
+  <button role="tab" id="t-tune" aria-selected="false" data-tab="tune">Accordeur</button>
 </nav>
 
 <!-- POSITION -->
 <section class="tab" id="pos">
   <div class="rule">
     <h3>L'idée du barré</h3>
-    <p>Ton index remplace le sillet : il se couche sur toutes les cordes d'une frette. Les autres doigts dessinent la forme de l'accord. Il n'a besoin d'appuyer fort que sur les cordes qu'aucun autre doigt ne tient : les autres sont déjà fixées par les doigts de la forme. Comme la forme ne change pas, tu la fais glisser le long du manche pour obtenir tous les accords.</p>
+    <p>Ton index remplace le sillet : il se couche sur les cordes d'une frette, et les autres doigts dessinent la forme de l'accord. Comme la forme ne change pas, tu la fais glisser le long du manche pour obtenir tous les accords.</p>
+    <p><button type="button" class="chip" data-goto="tune">Ta guitare est accordée ? Ouvre l'accordeur</button></p>
   </div>
+  <details class="howto"><summary>Comment ajouter une photo ?</summary><p>Clique sur une case, puis colle l'image avec Ctrl+V (Cmd+V sur Mac), ou glisse-la dessus. Une photo collée reste dans ton navigateur. Pour la publier pour tout le monde, mets le fichier dans le dossier <code>photos/</code> du dépôt avec le nom indiqué dans <code>photos/README.md</code>.</p></details>
 
-  <div class="two">
-    <figure data-photo="front">
+  <div class="block step">
+    <h2><span class="sn">1</span>L'index</h2>
+    <ul class="bl"><li>À plat, un peu roulé : appuie avec sa <b>tranche osseuse</b> plutôt qu'avec la pulpe.</li><li><b>Juste derrière la frette</b>, jamais sur la barre métallique ni au milieu de la case.</li><li>Les cordes de G et de B s'étouffent souvent dans les creux entre les phalanges : ajuste la torsion ou la hauteur de l'index.</li><li>Il n'a besoin d'appuyer fort que sur les cordes qu'aucun autre doigt ne tient. Le tableau de l'onglet Accords te montre lesquelles.</li></ul>
+    <div class="hero">
+<figure data-photo="front" class="hero">
       <svg viewBox="0 0 360 240" role="img" aria-label="Index posé à plat en travers des cordes, juste derrière une frette">
         <defs>
           <linearGradient id="gWd" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:var(--woodhi)"/><stop offset="1" style="stop-color:var(--wood)"/></linearGradient>
@@ -176,36 +210,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
       <figcaption>Vue de face. L'index repose à plat sur toutes les cordes, juste derrière la frette et jamais au milieu de la case. Son bout dépasse un peu de la corde grave.</figcaption>
       <div class="photoctl"><label class="chip" for="ph-front">Mettre ma photo<input id="ph-front" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Remettre le schéma</button></div>
     </figure>
-
-    <figure data-photo="cross">
-      <svg viewBox="0 0 360 240" role="img" aria-label="Coupe du manche : l'index roulé sur son côté osseux et le pouce derrière le manche">
-        <defs>
-          <linearGradient id="gWd2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--woodhi)"/><stop offset="1" style="stop-color:var(--wood)"/></linearGradient>
-          <radialGradient id="gSk2" cx=".35" cy=".3" r=".8"><stop offset="0" style="stop-color:var(--skinhi)"/><stop offset="1" style="stop-color:var(--skin)"/></radialGradient>
-        </defs>
-        <path d="M110 92H250C250 150 224 190 180 190C136 190 110 150 110 92Z" fill="url(#gWd2)"/>
-        <rect x="106" y="86" width="148" height="8" rx="3" fill="var(--hole)" opacity=".5"/>
-        <g fill="var(--strg)"><circle cx="124" cy="82" r="2.6"/><circle cx="144" cy="82" r="2.3"/><circle cx="164" cy="82" r="2"/><circle cx="184" cy="82" r="1.7"/><circle cx="204" cy="82" r="1.4"/><circle cx="224" cy="82" r="1.1"/></g>
-        <circle cx="160" cy="52" r="26" fill="url(#gSk2)" stroke="var(--skin2)" stroke-width="2" transform="rotate(-18 160 52)"/>
-        <path d="M140 64C146 76 158 80 170 76" fill="none" stroke="var(--skin2)" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
-        <ellipse cx="180" cy="214" rx="34" ry="19" fill="url(#gSk2)" stroke="var(--skin2)" stroke-width="2"/>
-        <path d="M284 56V80M284 80L279 73M284 80L289 73" fill="none" stroke="var(--fg)" stroke-width="1.8" stroke-linecap="round"/>
-        <path d="M284 226V202M284 202L279 209M284 202L289 209" fill="none" stroke="var(--fg)" stroke-width="1.8" stroke-linecap="round"/>
-        <g class="mk"><circle cx="30" cy="52" r="10"/><text x="30" y="56">1</text></g>
-        <g class="mk"><circle cx="30" cy="214" r="10"/><text x="30" y="218">2</text></g>
-        <g class="mk"><circle cx="30" cy="134" r="10"/><text x="30" y="138">3</text></g>
-        <path d="M40 52H128M40 214H142M40 134H104" stroke="var(--fg)" stroke-width="1.2" opacity=".6"/>
-      </svg>
-      <img class="photo" alt="Photo : coupe du manche, index et pouce" hidden>
-      <figcaption>Coupe du manche vue depuis la tête. <b>1</b> L'index est légèrement roulé : c'est son côté osseux qui touche les cordes. <b>2</b> Le pouce est derrière le manche, vers le milieu. <b>3</b> Les deux se rapprochent comme une pince (flèches).</figcaption>
-      <div class="photoctl"><label class="chip" for="ph-cross">Mettre ma photo<input id="ph-cross" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Remettre le schéma</button></div>
-    </figure>
-  </div>
-
-  <div class="block">
-    <h2>L'index : où le poser</h2>
-    <p class="tip">Pour ajouter une photo : clique sur une case, puis colle l'image avec Ctrl+V (ou Cmd+V), ou glisse-la dessus. Une photo collée reste dans ton navigateur ; pour la publier pour tout le monde, mets le fichier dans le dossier <code>photos/</code> du dépôt.</p>
-    <p class="tip">Compare la bonne position avec les deux erreurs les plus fréquentes.</p>
+    </div>
     <div class="tri">
       <figure class="tp" data-photo="idx-ok">
         <div class="tpbox">
@@ -237,26 +242,26 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     </div>
   </div>
 
-  <div class="block">
-    <h2>Le pouce : derrière le manche</h2>
-    <p class="tip">Le pouce soutient la pression de l'index. Place-le bien vertical, perpendiculaire au manche, au milieu et derrière l'index, et pas couché le long du manche.</p>
+  <div class="block step">
+    <h2><span class="sn">2</span>Le pouce</h2>
+    <ul class="bl"><li><b>Vertical</b>, perpendiculaire au manche, et non couché le long du manche.</li><li>Derrière le milieu de la main, à peu près en face du majeur ou de l'index : il soutient la pression de l'index.</li><li>Ainsi tu actives la force de l'avant-bras au lieu de tout faire avec la crispation des doigts.</li><li>Ni trop haut ni trop bas : l'index perdrait son appui.</li></ul>
     <div class="tri">
       <figure class="tp" data-photo="th-ok">
         <div class="tpbox">
-          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Le pouce est vertical, perpendiculaire au manche, au milieu et derrière l'index : il soutient la pression."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
-          <img class="photo" alt="Le pouce est vertical, perpendiculaire au manche, au milieu et derrière l'index : il soutient la pression." hidden>
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Le pouce est vertical, perpendiculaire au manche, au milieu et derrière l'index."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
+          <img class="photo" alt="Le pouce est vertical, perpendiculaire au manche, au milieu et derrière l'index." hidden>
           <span class="badge ok" aria-hidden="true">✓</span>
         </div>
-        <figcaption>Le pouce est vertical, perpendiculaire au manche, au milieu et derrière l'index : il soutient la pression.</figcaption>
+        <figcaption>Le pouce est vertical, perpendiculaire au manche, au milieu et derrière l'index.</figcaption>
         <div class="photoctl"><label class="chip" for="ph-th-ok">Mettre ma photo<input id="ph-th-ok" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer</button></div>
       </figure>
       <figure class="tp" data-photo="th-over">
         <div class="tpbox">
-          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Le pouce est couché à l'horizontale le long du manche : c'est l'erreur la plus fréquente, et la force passe dans les doigts."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
-          <img class="photo" alt="Le pouce est couché à l'horizontale le long du manche : c'est l'erreur la plus fréquente, et la force passe dans les doigts." hidden>
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Le pouce est couché à l'horizontale le long du manche : c'est l'erreur la plus fréquente."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
+          <img class="photo" alt="Le pouce est couché à l'horizontale le long du manche : c'est l'erreur la plus fréquente." hidden>
           <span class="badge ko" aria-hidden="true">✗</span>
         </div>
-        <figcaption>Le pouce est couché à l'horizontale le long du manche : c'est l'erreur la plus fréquente, et la force passe dans les doigts.</figcaption>
+        <figcaption>Le pouce est couché à l'horizontale le long du manche : c'est l'erreur la plus fréquente.</figcaption>
         <div class="photoctl"><label class="chip" for="ph-th-over">Mettre ma photo<input id="ph-th-over" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer</button></div>
       </figure>
       <figure class="tp" data-photo="th-low">
@@ -268,25 +273,20 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
         <figcaption>Le pouce est trop haut ou trop bas : l'index perd son appui.</figcaption>
         <div class="photoctl"><label class="chip" for="ph-th-low">Mettre ma photo<input id="ph-th-low" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer</button></div>
       </figure>
+      <figure class="tp" data-photo="rear">
+        <div class="tpbox">
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Vue d'ensemble, de derrière : la main complète."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
+          <img class="photo" alt="Vue d'ensemble, de derrière : la main complète." hidden>
+        </div>
+        <figcaption>Vue d'ensemble, de derrière : la main complète.</figcaption>
+        <div class="photoctl"><label class="chip" for="ph-rear">Mettre ma photo<input id="ph-rear" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer</button></div>
+      </figure>
     </div>
   </div>
 
-  <div class="block">
-    <h2>Vue d'ensemble, de derrière</h2>
-    <p class="tip">La main complète vue de derrière : pouce, paume, poignet et doigts, pour voir tout le placement d'un coup.</p>
-    <figure class="tp" data-photo="rear" style="max-width:520px">
-      <div class="tpbox">
-        <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : vue de derrière, main complète"><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
-        <img class="photo" alt="Vue de derrière, main complète" hidden>
-      </div>
-      <figcaption>La main gauche complète vue de derrière le manche.</figcaption>
-      <div class="photoctl"><label class="chip" for="ph-rear">Mettre ma photo<input id="ph-rear" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer</button></div>
-    </figure>
-  </div>
-
-  <div class="block">
-    <h2>La paume et le poignet</h2>
-    <p class="tip">Vue de derrière, main complète.</p>
+  <div class="block step">
+    <h2><span class="sn">3</span>La paume et le poignet</h2>
+    <ul class="bl"><li>La paume <b>ne touche pas le manche</b> : laisse un petit espace, comme si tu tenais une petite balle. Les doigts peuvent ainsi s'arrondir.</li><li>Le poignet reste le plus <b>droit</b> possible. Trop plié, il fatigue les tendons et affaiblit l'index.</li><li>La base du pouce peut effleurer le bas du manche, sans s'y appuyer.</li></ul>
     <div class="tri">
       <figure class="tp" data-photo="pm-ok">
         <div class="tpbox">
@@ -318,53 +318,16 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     </div>
   </div>
 
-  <div class="block">
-    <h2>Les réglages à vérifier</h2>
-    <ol class="steps">
-      <li><b>Index à plat, un peu roulé.</b> Tourne-le légèrement vers la tête de la guitare. Le côté osseux est plus ferme que la pulpe et il n'a pas de plis de peau qui tombent sur une corde.</li>
-      <li><b>Juste derrière la frette.</b> Plus tu es loin de la frette, plus il faut appuyer fort et plus ça grésille.</li>
-      <li><b>Pouce vertical, au milieu du manche, derrière l'index.</b> Il fournit le soutien dont l'index a besoin pour appuyer. Place-le bien droit, perpendiculaire au manche, derrière le milieu de la main (à peu près en face du majeur ou de l'index), et non couché le long du manche. Ainsi tu actives la force de l'avant-bras au lieu de tout faire avec la crispation des doigts. Évite de le mettre trop haut ou trop bas.</li>
-      <li><b>Appuie là où il le faut.</b> Dans la forme de E, l'index doit surtout tenir les cordes 6, 2 et 1. Sur les cordes tenues par les doigts 2, 3 et 4, il n'a pas besoin de forcer. Le tableau de l'onglet Accords animés indique, pour chaque forme, les cordes concernées.</li>
-      <li><b>Juste assez de pression.</b> Appuie seulement ce qu'il faut pour obtenir un son clair, sans créer de tension inutile dans la main. Si tu serres trop, tu te fatigues très vite. Quand le son est net, relâche un peu.</li>
-      <li><b>Utilise le poids du bras.</b> Tire très légèrement le manche vers toi avec le bras au lieu de serrer uniquement avec la main. Relâche la pression entre deux accords.</li>
-      <li><b>Coude proche du corps.</b> Un coude trop écarté fait tourner le poignet et affaiblit l'index.</li>
-      <li><b>Teste les cordes une par une.</b> Fais sonner chaque corde séparément. Si l'une grésille, décale ou fais pivoter légèrement l'index, sans serrer plus fort.</li>
-    </ol>
+  <div class="block step">
+    <h2><span class="sn">4</span>Le bras et la pression</h2>
+    <ul class="bl"><li><b>Juste assez de pression</b> pour un son clair, sans tension inutile. Si tu serres trop, tu te fatigues vite. Quand le son est net, relâche un peu.</li><li><b>Utilise le bras droit comme levier</b> : le coude et l'avant-bras plaquent le corps de la guitare contre toi, ce qui pousse le manche vers la main gauche et réduit la force de serrage.</li><li>Garde le coude gauche près du corps : trop écarté, il fait tourner le poignet.</li><li>Relâche la pression entre deux accords.</li></ul>
   </div>
 
-  <div class="block">
-    <h2>Où placer la paume et le poignet</h2>
-    <ol class="steps">
-      <li><b>La paume ne touche pas le manche.</b> Laisse un petit espace entre ta paume et le dessous du manche, comme si tu tenais une petite balle. Ça laisse tes doigts libres de s'arrondir.</li>
-      <li><b>Le poignet reste le plus droit possible.</b> Un poignet trop plié fatigue les tendons et fait perdre de la force à l'index.</li>
-      <li><b>Le bas de la main frôle le manche.</b> La base du pouce et le bord de la main peuvent effleurer le bas du manche, mais sans s'y appuyer.</li>
-      <li><b>Les doigts restent arrondis,</b> posés sur la pulpe, juste derrière les frettes, pour ne pas toucher les cordes voisines.</li>
-    </ol>
+  <div class="block step">
+    <h2><span class="sn">5</span>Quand une corde grésille</h2>
+    <ul class="bl"><li>Fais sonner <b>les cordes une par une</b> pour trouver laquelle pose problème.</li><li>Pivote ou décale légèrement l'index au lieu de serrer plus fort.</li><li>Dans un accord mineur comme F mineur, le majeur est libre : pose-le <b>par-dessus l'index</b> pour l'aider à presser.</li><li>Entraîne-toi plus haut sur le manche (vers la frette 7) ou avec un capo : la tension y est moindre. Le parcours est dans l'onglet S'entraîner.</li></ul>
   </div>
 
-  <div class="block">
-    <h2>Astuces pour y arriver</h2>
-    <p class="tip">Conseils courants chez les guitaristes. Le barré est une étape difficile par laquelle tout le monde passe : le succès vient du bon ajustement de la posture (pouce, bras, angle de l'index) plutôt que de la force brute.</p>
-    <ol class="steps">
-      <li><b>Redresse ton pouce.</b> Trop souvent il est à l'horizontale le long du manche. Mets-le vertical, perpendiculaire au manche, derrière le milieu de la main.</li>
-      <li><b>Travaille plus haut sur le manche, ou avec un capo.</b> La frette 1 (le F) est l'endroit le plus dur à cause de la tension des cordes près du sillet. Commence la forme vers la frette 7, où les frettes sont plus proches et la tension moindre, puis redescends peu à peu vers la frette 1 au fil des semaines.</li>
-      <li><b>Perfectionne l'index.</b> Pivote-le un peu pour t'appuyer sur sa tranche osseuse plutôt que sur la pulpe. Les cordes de Sol (G) et de Si (B) sont souvent étouffées dans les creux entre les phalanges : ajuste légèrement la torsion ou la hauteur. Ne pose pas le doigt sur la barre métallique de la frette, mais juste derrière.</li>
-      <li><b>Utilise le bras droit comme levier.</b> Avec le coude et l'avant-bras droit, plaque le corps de la guitare contre toi. Ce mouvement de balancier pousse le manche vers la main gauche, ce qui réduit la force de serrage nécessaire.</li>
-      <li><b>Aide l'index avec le majeur.</b> Dans les accords mineurs (F mineur par exemple), le majeur est libre : tu peux le poser par-dessus l'index pour l'aider à presser.</li>
-    </ol>
-    <p class="tip"><b>Par laquelle commencer ?</b> Je te conseille d'abord le pouce vertical, puis de travailler vers la frette 7, et enfin de régler l'angle de l'index.</p>
-  </div>
-
-  <div class="block">
-    <h2>Par où commencer</h2>
-    <ol class="steps">
-      <li><b>Le mini-barré de F.</b> L'index ne couvre que les deux cordes aiguës. C'est le barré le plus simple (forme 1 de l'onglet Accords animés).</li>
-      <li><b>Le barré de E mineur</b> (forme 2) : deux doigts seulement en plus de l'index.</li>
-      <li><b>La forme de A mineur</b> (forme 3), puis <b>A majeur</b> (forme 4).</li>
-      <li><b>Le grand barré de E majeur</b> (forme 5, le F majeur classique) : le plus exigeant, à garder pour la fin.</li>
-    </ol>
-    <p class="tip">Séances courtes (5 à 10 minutes) avec des pauses. Arrête-toi si tu as mal. Les exercices et deux morceaux sont dans l'onglet S'entraîner.</p>
-  </div>
 </section>
 
 <!-- ACCORDS -->
@@ -416,20 +379,39 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 <!-- S'ENTRAÎNER -->
 <section class="tab" id="train" hidden>
   <div class="block">
-    <h2>Petits exercices pour la main</h2>
+    <h2>Le parcours</h2>
+    <p class="tip">Dans l'ordre, du plus simple au plus exigeant. Séances courtes, 5 à 10 minutes, avec des pauses. Arrête-toi si tu as mal.</p>
     <ol class="steps">
-      <li><b>Les 4 positions, lentement (2 min chacune).</b> Joue chaque forme, E et A, majeure et mineure, vers la frette 7. Fais sonner les cordes une par une, très lentement, jusqu'à ce que chacune résonne parfaitement. Le tableau des cordes et des notes est dans l'onglet Accords animés.</li>
-      <li><b>Écrase-relâche (2 min).</b> Pose l'index à plat sur toutes les cordes vers la frette 7. Appuie 3 secondes, relâche 3 secondes, 10 fois, sans bouger la main. Tu cherches la bonne position.</li>
-      <li><b>Corde par corde (3 min).</b> Même barré vers la frette 7. Fais sonner chaque corde une par une. Note celle qui grésille, change légèrement l'angle de l'index, recommence.</li>
-      <li><b>Mini-barré de F (5 min).</b> Pose la forme 1 à la frette 1 et fais sonner les 4 cordes. Alterne avec un C majeur ouvert, 10 allers-retours lents.</li>
-      <li><b>Glissade (3 min).</b> Forme de E mineur : barré frette 2, puis 3, 5, 7. Dis le nom à voix haute : F♯ mineur, G mineur, A mineur, B mineur.</li>
-      <li><b>Changement (5 min).</b> E mineur ouvert, puis F♯ mineur en barré (même forme, glissée de 2 frettes). 10 allers-retours, lentement.</li>
+      <li><b>Mini-barré de F</b> (forme 1 de l'onglet Accords) : l'index ne couvre que les deux cordes aiguës.</li>
+      <li><b>Barré de E mineur</b> (forme 2) : deux doigts seulement en plus de l'index.</li>
+      <li><b>Formes de A mineur puis A majeur</b> (formes 3 et 4).</li>
+      <li><b>Grand barré de E majeur</b> (forme 5, le F majeur classique) : le plus exigeant.</li>
     </ol>
+    <p class="tip">Commence chaque forme vers la frette 7, où la tension est moindre (ou avec un capo), puis redescends peu à peu vers la frette 1 au fil des semaines.</p>
+  </div>
+
+  <div class="block">
+    <h2>Exercices pour la main</h2>
+    <ol class="steps">
+      <li><b>Les 4 positions, lentement (2 min chacune).</b> Joue chaque forme, E et A, majeure et mineure, vers la frette 7. Fais sonner les cordes une par une jusqu'à ce que chacune résonne parfaitement. Le tableau des cordes et des notes est dans l'onglet Accords.</li>
+      <li><b>Écrase, relâche (3 min).</b> Index à plat sur les cordes : appuie 3 secondes, relâche 3 secondes, 10 fois, sans bouger la main. Fais sonner chaque corde, change l'angle de l'index si l'une grésille.</li>
+      <li><b>Mini-barré de F et C (5 min).</b> Forme 1 à la frette 1, puis un C majeur ouvert. 10 allers-retours lents.</li>
+      <li><b>Glissade (3 min).</b> Forme de E mineur : barré frette 2, puis 3, 5, 7. Dis le nom à voix haute : F♯ mineur, G mineur, A mineur, B mineur.</li>
+      <li><b>Changement (5 min).</b> E mineur ouvert, puis F♯ mineur en barré (même forme, glissée de 2 frettes). 10 allers-retours lents.</li>
+    </ol>
+    <div class="rule">
+      <h3>Minuteur travail / repos</h3>
+      <p class="tip">30 secondes de travail, 15 secondes de repos pour les mains. Un bip marque chaque changement.</p>
+      <div class="controls">
+        <button class="btn" id="tmBtn" type="button">Démarrer</button>
+        <span class="count" style="font-size:1.4rem"><span id="tmLabel">Travail</span> <b id="tmSec">30</b> s</span>
+      </div>
+    </div>
   </div>
 
   <div class="block">
     <h2>Progression : plusieurs barrés, une seule forme</h2>
-    <p class="tip">Une fois les 4 positions maîtrisées, enchaîne plusieurs accords avec la même forme. Une bonne progression pour commencer : F, G, A, F. Tu glisses ta main, tu ne changes pas de forme.</p>
+    <p class="tip">Enchaîne plusieurs accords avec la même forme. Une bonne progression pour commencer : F, G, A, F. Tu glisses ta main, tu ne changes pas de forme.</p>
     <div class="controls">
       <label for="progSel">Forme
         <select id="progSel"></select>
@@ -439,40 +421,55 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     <div id="progOut" class="block"></div>
   </div>
 
-  <div class="rule">
-    <h3>Minuteur travail / repos</h3>
-    <p class="tip">30 secondes de travail, 15 secondes de repos pour les mains. Un bip marque chaque changement.</p>
-    <div class="controls">
-      <button class="btn" id="tmBtn" type="button">Démarrer</button>
-      <span class="count" style="font-size:1.4rem"><span id="tmLabel">Travail</span> <b id="tmSec">30</b> s</span>
-    </div>
-  </div>
-
   <div class="block">
     <h2>Morceaux pour s'entraîner aux barrés</h2>
-    <p class="tip">Clique sur un accord pour voir où le jouer en barré, puis ouvre-le sur le manche animé.</p>
+    <p class="tip">Clique sur un accord pour voir où le jouer en barré, puis ouvre-le sur le manche animé. Ralentis le tempo avec un métronome, et chante ou marque le temps du pied pour garder un rythme régulier. Les grilles viennent de guitaristes : vérifie-les sur une tablature.</p>
     <div id="songs" class="block"></div>
-    <div class="rule">
-      <h3>Conseils pour travailler ces morceaux</h3>
-      <ol class="steps">
-        <li><b>Ralentis le tempo.</b> Ne cherche pas la vitesse d'origine tout de suite. Utilise un métronome ou une version ralentie sur YouTube pour placer chaque doigt proprement.</li>
-        <li><b>Chante ou marque le temps du pied.</b> Ça évite de bloquer sa respiration et garde un rythme régulier quand les mains fatiguent.</li>
-      </ol>
-    </div>
-    <p class="tip">Les grilles d'accords sont celles des guitaristes qui les partagent. Vérifie-les sur une tablature avant de jouer.</p>
   </div>
 </section>
 
-<!-- EXERCICES -->
-<section class="tab" id="ex" hidden>
+<!-- ACCORDEUR -->
+<section class="tab" id="tune" hidden>
   <div class="block">
-    <h2>Entraîne ta logique du barré</h2>
-    <p class="tip">Ces exercices travaillent le raisonnement derrière le barré : retrouver les notes sur le manche, nommer l'accord, choisir les doigts et diagnostiquer un problème.</p>
-    <div class="chips" id="kinds" role="group" aria-label="Type d'exercice"></div>
-    <div class="score"><span>Score <b id="sc">0</b>/<b id="tot">0</b></span><span>Série <b id="stk">0</b></span></div>
+    <h2>Accordeur</h2>
+    <p class="tip">Joue une corde à vide et laisse-la sonner. L'accordeur te dit quoi faire. Il utilise le micro de ton appareil, et rien n'est enregistré.</p>
   </div>
-  <div class="card" id="exCard"></div>
+  <div class="tuner" id="tuner" data-state="idle">
+    <div class="tstate" id="tState" aria-live="polite">Appuie sur Démarrer</div>
+    <div class="tnote"><span id="tNote">–</span></div>
+    <div class="tstr" id="tStr">&nbsp;</div>
+    <div class="gauge" aria-hidden="true">
+      <svg viewBox="0 0 520 70" width="100%">
+        <rect x="10" y="30" width="500" height="10" rx="5" class="z0"/>
+        <rect x="130" y="30" width="260" height="10" rx="5" class="z1"/>
+        <rect x="220" y="26" width="80" height="18" rx="9" class="z2"/>
+        <g id="tMark" style="transform:translateX(260px)"><circle cy="35" r="14" class="mark"/></g>
+        <text x="10" y="64" class="gt">trop grave</text><text x="510" y="64" class="gt" text-anchor="end">trop aigu</text>
+      </svg>
+    </div>
+    <div class="tadvice" id="tAdvice">Joue la corde, puis regarde le curseur : vise le milieu.</div>
+    <div class="tcents" id="tCents">&nbsp;</div>
+    <button class="btn big" id="tBtn" type="button">Démarrer l'accordeur</button>
+  </div>
+
+  <div class="block">
+    <h3>Corde à accorder</h3>
+    <div class="chips" id="tStrings" role="group" aria-label="Choisir une corde"></div>
+    <p class="tip">« Auto » reconnaît la corde que tu joues. Touche une corde pour l'entendre, l'accorder à l'oreille et la cibler avec l'accordeur.</p>
+  </div>
+
+  <div class="rule">
+    <h3>Comment accorder, pas à pas</h3>
+    <ol class="steps">
+      <li>Commence par la corde la plus grave (6, E) et remonte jusqu'à la plus aiguë (1, e).</li>
+      <li>Joue la corde à vide, ni trop fort ni trop doucement, et laisse-la sonner.</li>
+      <li>Si c'est <b>trop grave</b>, tends la corde en tournant la clé tout doucement. Si c'est <b>trop aigu</b>, détends-la.</li>
+      <li>Rejoue la corde à chaque petit tour. Quand le cercle est vert, la corde est accordée.</li>
+      <li>Reprends la première corde à la fin : accorder les autres la décale un peu.</li>
+    </ol>
+  </div>
 </section>
+
 </div>
 
 <script>
@@ -495,11 +492,14 @@ const SHAPES={
 const chordName=(sh,b)=>NOTES[(OPEN[SHAPES[sh].root]+SHAPES[sh].rootOff+b)%12]+(SHAPES[sh].minor?' mineur':' majeur');
 
 /* ---------- onglets ---------- */
-const tabs=['pos','acc','train','ex'];
+const tabs=['pos','acc','train','tune'];
 function show(id){
   tabs.forEach(t=>{$('#'+t).hidden=t!==id;$('#t-'+t).setAttribute('aria-selected',String(t===id))});
+  if(id!=='tune'&&typeof stopTuner==='function')stopTuner();
+  try{localStorage.setItem('barre-tab',id)}catch(e){}
   window.scrollTo(0,0);
 }
+document.addEventListener('click',e=>{const g=e.target.closest('[data-goto]');if(g)show(g.dataset.goto)});
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));
 
 /* ---------- manche animé ---------- */
@@ -709,33 +709,40 @@ $('#progPlay').addEventListener('click',()=>{
 drawProg();
 
 /* ---------- morceaux ---------- */
+const TABS=t=>`https://www.ultimate-guitar.com/search.php?search_type=title&value=${encodeURIComponent(t)}`;
 const SONGS=[
-  {t:'Radiohead, « Creep »',why:'La grille G, B, C, Cm t\'entraîne à passer d\'un accord majeur à un accord mineur avec la même forme de barré, et à enchaîner vers le Cm.',ch:['G','B','C','Cm']},
-  {t:'Pixies, « Where Is My Mind? »',why:'Une suite d\'accords hypnotique, idéale pour apprivoiser le barré sur le manche tout en gardant un jeu fluide et mélodique.',ch:['E','G♯','C♯m','A']},
-  {t:'The Cranberries, « Zombie »',why:'Une boucle de quatre accords. On peut les jouer ouverts, mais les jouer en barrés travaille la précision de la main gauche et la régularité du rythme.',ch:['Em','C','G','D']},
-  {t:'Green Day, « Basket Case »',why:'Un rythme rapide et soutenu : un bon exercice d\'endurance pour enchaîner des barrés (formes de E et de A) sans s\'arrêter.',ch:[]},
-  {t:'John Denver, « Take Me Home, Country Roads »',why:'Un seul barré à apprendre : F♯m, forme de E mineur à la frette 2.',ch:['A','E','F♯m','D']},
-  {t:'The Beatles, « Let It Be »',why:'Le F peut se jouer en mini-barré, donc sans le grand barré.',ch:['C','G','Am','F']}
+  {t:'The Beatles, « Let It Be »',lvl:1,why:'Le F peut se jouer en mini-barré, donc sans le grand barré.',ch:['C','G','Am','F'],q:'beatles let it be'},
+  {t:'Red Hot Chili Peppers, « Californication »',lvl:1,why:'Quatre accords simples, avec un seul F à barrer.',ch:['Am','F','C','G'],q:'red hot chili peppers californication'},
+  {t:'Leonard Cohen, « Hallelujah »',lvl:1,why:'Un morceau lent : idéal pour placer le F proprement.',ch:['C','Am','F','G'],q:'hallelujah leonard cohen'},
+  {t:'John Denver, « Take Me Home, Country Roads »',lvl:2,why:'Un seul barré à apprendre : F♯m, forme de E mineur à la frette 2.',ch:['A','E','F♯m','D'],q:'john denver country roads'},
+  {t:'Radiohead, « Creep »',lvl:2,why:'La grille G, B, C, Cm t\'entraîne à passer d\'un accord majeur à un accord mineur avec la même forme de barré.',ch:['G','B','C','Cm'],q:'radiohead creep'},
+  {t:'The Cranberries, « Zombie »',lvl:2,why:'Une boucle de quatre accords. On peut les jouer ouverts, mais les jouer en barrés travaille la précision de la main gauche.',ch:['Em','C','G','D'],q:'cranberries zombie'},
+  {t:'Pixies, « Where Is My Mind? »',lvl:2,why:'Une suite d\'accords hypnotique, idéale pour apprivoiser le barré sur le manche tout en gardant un jeu fluide et mélodique.',ch:['E','G♯','C♯m','A'],q:'pixies where is my mind'},
+  {t:'Eagles, « Hotel California »',lvl:3,why:'Plusieurs barrés (Bm, F♯) enchaînés : un bon test d\'endurance.',ch:['Bm','F♯','A','E','G','D','Em','F♯'],q:'eagles hotel california'},
+  {t:'Nirvana, « Smells Like Teen Spirit »',lvl:3,why:'Une boucle de quatre barrés, joués ici en accords complets (souvent en power chords).',ch:['F','B♭','A♭','D♭'],q:'nirvana smells like teen spirit'},
+  {t:'Green Day, « Basket Case »',lvl:3,why:'Un rythme rapide et soutenu : un bon exercice d\'endurance pour enchaîner des barrés (formes de E et de A) sans s\'arrêter.',ch:[],q:'green day basket case'}
 ];
+const LVL={1:'Facile',2:'Moyen',3:'Exigeant'};
+const FLAT={'B♭':'A♯','A♭':'G♯','D♭':'C♯','E♭':'D♯','G♭':'F♯'};
 const OPEN_MAJ=['C','D','E','G','A'],OPEN_MIN=['E','A','D'];
 function chordOptions(name){
-  const minor=name.endsWith('m'),root=NOTES.indexOf(minor?name.slice(0,-1):name);
+  const minor=name.endsWith('m'),base=minor?name.slice(0,-1):name,root=NOTES.indexOf(FLAT[base]||base);
   const opts=[];
   [['E',6,minor?'Emin':'Emaj'],['A',5,minor?'Amin':'Amaj']].forEach(([lab,str,k])=>{
     const f=(root-OPEN[str]+12)%12;
     if(f>=1&&f<=10)opts.push({k,f,label:`forme de ${lab}, frette ${f}`});
   });
   opts.sort((a,b)=>a.f-b.f);
-  const note=minor?name.slice(0,-1):name;
+  const note=FLAT[base]||base;
   const open=(minor?OPEN_MIN:OPEN_MAJ).includes(note);
-  return {minor,opts,open,full:note+(minor?' mineur':' majeur')};
+  return {minor,opts,open,full:base+(minor?' mineur':' majeur')};
 }
 function openOnNeck(k,f){
   ST.shape=k;ST.fret=f;$('#shape').value=k;$('#fret').value=f;render();show('acc');
 }
-$('#songs').innerHTML=SONGS.map((so,i)=>`<div class="card" data-song="${i}"><h3>${so.t}</h3><p class="tip">${so.why}</p>`+
+$('#songs').innerHTML=SONGS.map((so,i)=>`<div class="card" data-song="${i}"><h3>${so.t} <span class="level">${LVL[so.lvl]}</span></h3><p class="tip">${so.why}</p>`+
   (so.ch.length?`<div class="chips">${so.ch.map((c,j)=>`<button type="button" class="chip" data-i="${i}" data-j="${j}" aria-pressed="false">${c}</button>`).join('')}</div>`:`<p class="tip">Grille d'accords à compléter depuis une tablature.</p>`)+
-  `<div class="sinfo" aria-live="polite"></div></div>`).join('');
+  `<div class="sinfo" aria-live="polite"></div><p class="tip"><a href="${TABS(so.q)}" target="_blank" rel="noopener">Chercher la tablature</a></p></div>`).join('');
 $('#songs').addEventListener('click',e=>{
   const b=e.target.closest('.chip');
   if(b){
@@ -770,113 +777,113 @@ $('#tmBtn').addEventListener('click',()=>{
   },1000);
 });
 
-/* ---------- exercices ---------- */
-const KINDS=[['note','Notes du manche'],['name','Nommer l\'accord'],['fret','Trouver la frette'],['finger','Doigts'],['diag','Diagnostic'],['mix','Mélange']];
-const EX={kind:'mix',score:0,total:0,streak:0,cur:null,done:false};
-$('#kinds').innerHTML=KINDS.map(([k,l])=>`<button type="button" class="chip" data-k="${k}" aria-pressed="${k===EX.kind}">${l}</button>`).join('');
-const numChoices=(ans,lo,hi)=>{
-  const set=new Set([ans]);
-  while(set.size<4){const v=Math.max(lo,Math.min(hi,ans+rand(7)-3));set.add(v)}
-  return [...set].sort((a,b)=>a-b).map(v=>[String(v),String(v)]);
-};
-const SHKEYS=Object.keys(SHAPES);
 
-function genNote(){
-  const s=[6,5][rand(2)],f=1+rand(11),ans=NOTES[(OPEN[s]+f)%12];
-  const opts=new Set([ans]);while(opts.size<4)opts.add(NOTES[rand(12)]);
-  return {q:`Quelle note joues-tu sur la <b class="count">${s}e corde</b>, <b class="count">frette ${f}</b> ?`,
-    choices:shuffle([...opts]).map(n=>[n,n]),answer:ans,
-    explain:`La ${s}e corde à vide est ${NOTES[OPEN[s]]}. Chaque frette ajoute un demi-ton : ${f} demi-ton${f>1?'s':''} après ${NOTES[OPEN[s]]}, on arrive sur ${ans}.`};
+/* ---------- accordeur ---------- */
+const TSTR=[{n:6,note:'E',f:82.41},{n:5,note:'A',f:110},{n:4,note:'D',f:146.83},{n:3,note:'G',f:196},{n:2,note:'B',f:246.94},{n:1,note:'E',f:329.63}];
+const TU={on:false,stream:null,an:null,buf:null,raf:0,target:'auto',hist:[],okRun:0,pos:0,want:0,silent:0,frame:0,last:null};
+$('#tStrings').innerHTML=`<button type="button" class="chip str" data-s="auto" aria-pressed="true">Auto</button>`+TSTR.map(t=>`<button type="button" class="chip str" data-s="${t.n}" aria-pressed="false">${t.n} · ${t.note}</button>`).join('');
+function playTone(f){
+  audio();const t=ctx.currentTime,g=ctx.createGain();
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.22,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+3);
+  const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1800;
+  [['triangle',1],['sine',.5]].forEach(([ty,k])=>{const o=ctx.createOscillator(),og=ctx.createGain();o.type=ty;o.frequency.value=f;og.gain.value=k;o.connect(og).connect(lp);o.start(t);o.stop(t+3.1)});
+  lp.connect(g).connect(ctx.destination);
 }
-function genName(){
-  const k=SHKEYS[rand(SHKEYS.length)],sh=SHAPES[k],b=1+rand(10),rf=b+sh.rootOff,ans=chordName(k,b);
-  const note=OPEN[sh.root]+rf,opts=new Set([ans]);
-  opts.add(NOTES[note%12]+(sh.minor?' majeur':' mineur'));
-  while(opts.size<4){const d=[-2,-1,1,2][rand(4)];opts.add(NOTES[(note+d+12)%12]+(sh.minor?' mineur':' majeur'))}
-  return {q:`Tu joues la <b class="count">${sh.label}</b>, avec le barré à la <b class="count">frette ${b}</b>. Quel accord est-ce ?`,
-    choices:shuffle([...opts]).map(n=>[n,n]),answer:ans,
-    explain:`La racine est sur la ${sh.root}e corde, frette ${rf} : ${NOTES[OPEN[sh.root]]} + ${rf} demi-ton${rf>1?'s':''} = ${NOTES[note%12]}. La forme est ${sh.minor?'mineure':'majeure'} : ${ans}.`};
-}
-function genFret(){
-  let k,b,r;
-  do{k=SHKEYS[rand(SHKEYS.length)];r=rand(12);b=(r-OPEN[SHAPES[k].root]-SHAPES[k].rootOff+24)%12}while(b<1||b>10);
-  const sh=SHAPES[k],rf=b+sh.rootOff,name=NOTES[r]+(sh.minor?' mineur':' majeur');
-  return {q:`Où poses-tu le barré pour jouer <b class="count">${name}</b> avec la <b class="count">${sh.label}</b> ?`,
-    choices:numChoices(b,1,10).map(([v])=>[v,`Frette ${v}`]),answer:String(b),
-    explain:`Il faut que la ${sh.root}e corde donne ${NOTES[r]}. Depuis ${NOTES[OPEN[sh.root]]} à vide, ${NOTES[r]} est ${rf} demi-ton${rf>1?'s':''} plus haut (frette ${rf}).${sh.rootOff?` Cette note est ${sh.rootOff} frettes après le barré : le barré est donc à la frette ${b}.`:''}`};
-}
-function genFinger(){
-  const k=SHKEYS[rand(SHKEYS.length)],sh=SHAPES[k],d=sh.dots[rand(sh.dots.length)];
-  return {q:`Dans la <b class="count">${sh.label}</b>, quel doigt va sur la <b class="count">${d[0]}e corde</b>, <b class="count">${d[1]} frette${d[1]>1?'s':''} après le barré</b> ?`,
-    choices:FINGER.map((n,i)=>[String(i+1),n]),answer:String(d[2]),
-    explain:`${FINGER[d[2]-1]} (doigt ${d[2]}). L'index (1) fait le barré, le majeur est le 2, l'annulaire le 3 et l'auriculaire le 4. Regarde le schéma dans l'onglet Accords animés.`};
-}
-const DIAG=[
-  {q:'Une seule corde (la 3e) grésille, les autres sonnent bien. Que fais-tu en premier ?',
-   good:'Je fais pivoter ou je décale légèrement l\'index : un pli de peau tombe sans doute sur cette corde.',
-   bad:['Je serre beaucoup plus fort avec tout le bras.','Je change la corde.','Je gratte plus fort pour la faire sonner.'],
-   explain:'Un grésillement isolé vient presque toujours d\'un point faible de l\'index (pli de peau, trou entre deux phalanges). Un petit changement d\'angle règle souvent le problème sans force en plus.'},
-  {q:'Ton index est posé au milieu de la case, loin de la frette. Qu\'est-ce qui va probablement se passer ?',
-   good:'Les cordes sonnent sourdes ou grésillent : il faut rapprocher l\'index de la frette, juste derrière.',
-   bad:['Le son sera plus clair car la corde est plus libre.','Rien, c\'est la bonne position.','Le son sera plus aigu.'],
-   explain:'Plus l\'index est loin de la frette, plus il faut de force pour plaquer la corde, et plus le grésillement est probable.'},
-  {q:'Après 30 secondes, ta main et ton avant-bras sont crispés. Que faire ?',
-   good:'Relâcher la pression entre deux accords, rapprocher le coude du corps et tirer légèrement le manche avec le poids du bras.',
-   bad:['Serrer encore plus fort pour que ça sonne tout de suite.','Jouer plus vite pour finir plus tôt.','Remonter le pouce au-dessus du manche.'],
-   explain:'Le barré se fait avec une pression juste suffisante. Serrer en continu fatigue vite. Alterne l\'effort et le relâchement.'},
-  {q:'Où est-il généralement plus facile de s\'exercer au barré au début ?',
-   good:'Vers les frettes 5 à 7, avant d\'aller vers la frette 1 (F majeur).',
-   bad:['Uniquement à la frette 1, c\'est la plus facile.','Au-delà de la frette 12 uniquement.','Peu importe, la difficulté est identique partout.'],
-   explain:'À la frette 1, la corde est plus tendue et plus difficile à plaquer. Les frettes 5 à 7 demandent en général moins de force, ce qui aide à trouver la bonne position.'},
-  {q:'Ton pouce est couché à l\'horizontale le long du manche et ta main se crispe. Que corriger ?',
-   good:'Redresser le pouce : bien vertical, perpendiculaire au manche, derrière le milieu de la main.',
-   bad:['Le coucher encore plus à plat pour mieux tenir le manche.','Serrer le manche plus fort avec les autres doigts.','Le passer au-dessus du manche.'],
-   explain:'Un pouce vertical active la force de l\'avant-bras au lieu de tout faire avec la crispation des doigts.'},
-  {q:'Dans un accord mineur comme F mineur, ton majeur est libre. Comment l\'utiliser ?',
-   good:'Le poser par-dessus l\'index pour l\'aider à presser.',
-   bad:['Le lever pour qu\'il ne gêne pas.','Le poser sur la corde grave pour la couper.','L\'utiliser pour appuyer sur la frette métallique.'],
-   explain:'Le majeur posé sur l\'index ajoute de la puissance au barré quand il n\'est pas utilisé par la forme de l\'accord.'},
-  {q:'Où doit se placer ton pouce pour avoir le plus de force ?',
-   good:'Derrière le manche, vers le milieu, en opposition à l\'index.',
-   bad:['Au-dessus du manche, sur la corde grave.','Sous le manche, tout près de la tête.','Il n\'a pas d\'importance.'],
-   explain:'Le pouce et l\'index forment une pince. Un pouce derrière le manche, vers le milieu, transmet mieux la force qu\'un pouce qui dépasse sur le dessus.'}
-];
-function genDiag(){
-  const d=DIAG[rand(DIAG.length)];
-  return {q:d.q,choices:shuffle([['g',d.good],...d.bad.slice(0,2).map((b,i)=>['b'+i,b])]),answer:'g',explain:d.explain};
-}
-const GEN={note:genNote,name:genName,fret:genFret,finger:genFinger,diag:genDiag};
-function nextEx(){
-  const k=EX.kind==='mix'?['note','name','fret','finger','diag'][rand(5)]:EX.kind;
-  EX.cur=GEN[k]();EX.done=false;renderEx();
-}
-function renderEx(){
-  const c=EX.cur;
-  $('#exCard').innerHTML=`<p class="q">${c.q}</p><div class="choices">${c.choices.map(([v,l])=>`<button class="choice" type="button" data-v="${v}">${l}</button>`).join('')}</div><div id="fb" hidden></div>`;
-}
-function finish(ok){
-  EX.done=true;EX.total++;
-  if(ok){EX.score++;EX.streak++}else EX.streak=0;
-  $('#sc').textContent=EX.score;$('#tot').textContent=EX.total;$('#stk').textContent=EX.streak;
-  const fb=$('#fb');fb.hidden=false;fb.className='fb '+(ok?'ok':'ko');
-  fb.innerHTML=`<p><strong class="${ok?'ok':'ko'}">${ok?'Bien joué.':'Pas tout à fait.'}</strong> ${EX.cur.explain}</p><p style="margin-top:10px"><button class="btn" type="button" data-act="next">Exercice suivant</button></p>`;
-}
-$('#kinds').addEventListener('click',e=>{
+$('#tStrings').addEventListener('click',e=>{
   const b=e.target.closest('.chip');if(!b)return;
-  EX.kind=b.dataset.k;
-  document.querySelectorAll('#kinds .chip').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
-  nextEx();
+  TU.target=b.dataset.s;
+  document.querySelectorAll('#tStrings .chip').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  if(TU.target!=='auto')playTone(TSTR.find(t=>t.n===+TU.target).f);
+  TU.hist=[];TU.okRun=0;
 });
-$('#exCard').addEventListener('click',e=>{
-  const t=e.target.closest('button');if(!t)return;
-  if(t.dataset.act==='next')return nextEx();
-  if(EX.done||!t.classList.contains('choice'))return;
-  const ok=t.dataset.v===EX.cur.answer;
-  document.querySelectorAll('.choice').forEach(c=>{c.disabled=true;if(c.dataset.v===EX.cur.answer)c.classList.add('ok')});
-  if(!ok)t.classList.add('ko');
-  finish(ok);
-});
-nextEx();
+/* détection de hauteur (méthode YIN) */
+function detectPitch(buf,sr){
+  const N=buf.length;let rms=0;for(let i=0;i<N;i++)rms+=buf[i]*buf[i];rms=Math.sqrt(rms/N);
+  if(rms<.008)return {f:null,rms};
+  const maxTau=Math.floor(sr/70),minTau=Math.floor(sr/420),W=N-maxTau,d=new Float32Array(maxTau+1);
+  for(let tau=1;tau<=maxTau;tau++){let sum=0;for(let j=0;j<W;j++){const x=buf[j]-buf[j+tau];sum+=x*x}d[tau]=sum}
+  let run=0;d[0]=1;for(let tau=1;tau<=maxTau;tau++){run+=d[tau];d[tau]=run?d[tau]*tau/run:1}
+  let tau=-1;
+  for(let t=minTau;t<=maxTau;t++){if(d[t]<.15){while(t+1<=maxTau&&d[t+1]<d[t])t++;tau=t;break}}
+  if(tau<0){let best=minTau;for(let t=minTau;t<=maxTau;t++)if(d[t]<d[best])best=t;if(d[best]<.3)tau=best;else return {f:null,rms}}
+  const a=d[tau-1]||d[tau],b=d[tau],c=d[tau+1]||d[tau],den=a+c-2*b,shift=den?(a-c)/(2*den):0;
+  return {f:sr/(tau+shift),rms};
+}
+const centsOf=(f,ref)=>1200*Math.log2(f/ref);
+function setTuner(state,msg,advice){
+  $('#tuner').dataset.state=state;$('#tState').textContent=msg;if(advice!=null)$('#tAdvice').textContent=advice;
+}
+function tick(){
+  if(!TU.on)return;
+  TU.raf=requestAnimationFrame(tick);
+  TU.frame++;
+  TU.pos+=(TU.want-TU.pos)*.18;                       /* curseur fluide */
+  $('#tMark').style.transform=`translateX(${260+TU.pos*4.8}px)`;
+  if(TU.frame%3)return;
+  TU.an.getFloatTimeDomainData(TU.buf);
+  const {f}=detectPitch(TU.buf,ctx.sampleRate);
+  if(!f){
+    if(++TU.silent>14){
+      TU.hist=[];TU.okRun=0;TU.want=0;
+      setTuner('listen','J\'écoute…',"Joue une corde à vide et laisse-la sonner.");
+      $('#tNote').textContent='–';$('#tStr').innerHTML='&nbsp;';$('#tCents').innerHTML='&nbsp;';
+    }
+    return;
+  }
+  TU.silent=0;
+  TU.hist.push(f);if(TU.hist.length>6)TU.hist.shift();
+  const sorted=TU.hist.slice().sort((a,b)=>a-b),med=sorted[sorted.length>>1];
+  const tgt=TU.target==='auto'?TSTR.reduce((b,t)=>Math.abs(centsOf(med,t.f))<Math.abs(centsOf(med,b.f))?t:b):TSTR.find(t=>t.n===+TU.target);
+  const c=centsOf(med,tgt.f);
+  document.querySelectorAll('#tStrings .chip').forEach(x=>x.classList.toggle('det',TU.target==='auto'&&+x.dataset.s===tgt.n));
+  $('#tNote').textContent=tgt.note;
+  $('#tStr').textContent=`Corde ${tgt.n}`;
+  $('#tCents').textContent=(c>0?'+':'')+Math.round(c)+' cents';
+  TU.want=Math.max(-50,Math.min(50,c));
+  if(Math.abs(c)>150){setTuner('listen','Ce n\'est pas la bonne corde',TU.target==='auto'?'Joue une corde à vide.':'Joue la corde '+tgt.n+' à vide.');TU.okRun=0;return}
+  if(Math.abs(c)<=5){
+    if(++TU.okRun>=3)setTuner('ok','Accordée ✓','Parfait. Passe à la corde suivante.');
+  }else{
+    TU.okRun=0;
+    if(c<0)setTuner('low','Trop grave','Tends la corde en tournant la clé tout doucement, puis rejoue la corde.');
+    else setTuner('high','Trop aigu','Détends la corde en tournant la clé tout doucement, puis rejoue la corde.');
+  }
+}
+async function startTuner(){
+  if(TU.on)return;
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    setTuner('idle','Micro indisponible ici','Ouvre le site sur GitHub Pages pour utiliser le micro, ou accorde à l\'oreille avec les boutons de cordes.');return;
+  }
+  try{
+    audio();
+    TU.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+  }catch(e){
+    const denied=e&&(e.name==='NotAllowedError'||e.name==='SecurityError');
+    setTuner('idle',denied?'Micro refusé':'Micro introuvable',denied?'Autorise le micro dans ton navigateur (icône de cadenas près de l\'adresse), puis réessaie. Tu peux aussi accorder à l\'oreille avec les boutons de cordes.':'Branche ou active un micro, puis réessaie. Tu peux aussi accorder à l\'oreille avec les boutons de cordes.');
+    return;
+  }
+  const src=ctx.createMediaStreamSource(TU.stream);
+  TU.an=ctx.createAnalyser();TU.an.fftSize=4096;TU.buf=new Float32Array(TU.an.fftSize);src.connect(TU.an);
+  TU.on=true;TU.hist=[];TU.okRun=0;TU.silent=0;TU.pos=0;TU.want=0;TU.frame=0;
+  $('#tBtn').textContent='Arrêter l\'accordeur';
+  setTuner('listen','J\'écoute…','Joue une corde à vide et laisse-la sonner.');
+  tick();
+}
+function stopTuner(){
+  if(!TU.on&&!TU.stream)return;
+  TU.on=false;cancelAnimationFrame(TU.raf);
+  if(TU.stream){TU.stream.getTracks().forEach(t=>t.stop());TU.stream=null}
+  $('#tBtn').textContent='Démarrer l\'accordeur';
+  setTuner('idle','Appuie sur Démarrer','Joue la corde, puis regarde le curseur : vise le milieu.');
+  $('#tNote').textContent='–';$('#tStr').innerHTML='&nbsp;';$('#tCents').innerHTML='&nbsp;';
+  $('#tMark').style.transform='translateX(260px)';
+  document.querySelectorAll('#tStrings .chip').forEach(x=>x.classList.remove('det'));
+}
+$('#tBtn').addEventListener('click',()=>TU.on?stopTuner():startTuner());
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopTuner()});
+
+/* dernier onglet ouvert */
+try{const t=localStorage.getItem('barre-tab');if(t&&tabs.includes(t)&&t!=='tune')show(t)}catch(e){}
 </script>
 </body>
 </html>
