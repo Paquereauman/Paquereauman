@@ -11,6 +11,7 @@
 ![Claude Code](https://img.shields.io/badge/builds%20with-Claude-D97757?style=for-the-badge)
 
 <p align="center">
+<a href="https://paquereauman.github.io/Paquereauman/">🌐 Website</a> ·
 <a href="https://paquereauman.github.io/Paquereauman/barre-guitare/">🎸 Live demo</a> ·
 <a href="#-projects">🚀 Projects</a> ·
 <a href="#-get-in-touch">📫 Contact</a>
