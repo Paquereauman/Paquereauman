@@ -12,7 +12,7 @@
 
 <p align="center">
 <a href="https://paquereauman.github.io/Paquereauman/">🌐 Website</a> ·
-<a href="https://paquereauman.github.io/Paquereauman/barre-guitare/">🎸 Live demo</a> ·
+<a href="https://github.com/Paquereauman/stickaru/releases/latest">📥 Download Stickaru</a> ·
 <a href="#-projects">🚀 Projects</a> ·
 <a href="#-get-in-touch">📫 Contact</a>
 </p>
@@ -21,15 +21,15 @@
 
 ---
 
-## 🎸 Featured project: Barré guitare
+## 🐱 Featured project: Stickaru
 
-A web app that teaches **barre chords**, one of the hardest steps for guitar beginners. Chords go from the easiest (the 4-string mini-barre) to the hardest, with hand and palm placement, drills with a timer and two songs to practise. The interface is in French.
+A **Windows desktop app** that puts a sticker and meme library one click away. Search animated stickers (Tenor, GIPHY), Telegram packs and RisiBank with **no API key**, click any image to copy it, transparency included, straight into WhatsApp, Discord or WeChat, keep your favourites in your own collection, or let a **flying cat** wander across your desktop. The interface comes in French, English and Chinese.
 
 <p align="center">
-<a href="https://paquereauman.github.io/Paquereauman/barre-guitare/"><img src="assets/barre-demo.gif" alt="Animated chord shape sliding along the guitar neck, the chord name changing at each fret" width="720"></a>
+<a href="https://github.com/Paquereauman/stickaru"><img src="assets/stickaru-capture.png" alt="Stickaru search window: a search bar, theme chips (Cats, Dogs, Memes, Funny, Love) and a side menu with Search, Shop, Import URL and My stickers" width="720"></a>
 </p>
 
-**[Open the app →](https://paquereauman.github.io/Paquereauman/barre-guitare/)**
+**[Download the installer →](https://github.com/Paquereauman/stickaru/releases/latest)** · [Source code](https://github.com/Paquereauman/stickaru)
 
 ---
 
@@ -61,6 +61,7 @@ Today I mostly code **with Claude**. What I enjoy is starting from a real proble
 
 | Project | Description |
 |---|---|
+| 🐱 [**Stickaru**](https://github.com/Paquereauman/stickaru) ([installer](https://github.com/Paquereauman/stickaru/releases/latest)) | A Windows sticker and meme library: keyless search (Tenor, GIPHY, Telegram, RisiBank), one-click copy with transparency, favourites and a flying desktop cat. Python and pygame, in French, English and Chinese. |
 | 🎸 [**Barré guitare**](https://paquereauman.github.io/Paquereauman/barre-guitare/) ([code](./barre-guitare)) | A web app to learn barre chords on guitar: hand position, animated chords that slide along the neck, practice drills, songs and a tuner. In French. |
 
 *More projects are coming. I add them here as I go.*
