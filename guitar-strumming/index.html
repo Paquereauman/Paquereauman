@@ -1,0 +1,442 @@
+<title>Battements guitare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: une colonne étroite, onglets collants en haut, le geste (SVG animé) au centre de chaque écran. */
+:root{
+  --bg:#eef1ec; --surface:#f8faf6; --fg:#16201b; --muted:#56665d; --line:#cbd5ca;
+  --down:#b4510c; --up:#0b7a8c; --good:#1f7a43; --bad:#b3261e;
+  --skin:#e3b48d; --skin2:#d29b72; --wood:#d3995a; --hole:#2a1d12; --pick:#d9a21b;
+  --display:'Familjen Grotesk',system-ui,sans-serif; --body:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#101613; --surface:#172019; --fg:#e8efe9; --muted:#93a69a; --line:#2b3a31;
+  --down:#f29a4a; --up:#4cc7da; --good:#4cc27a; --bad:#ff7b72;
+  --skin:#c99671; --skin2:#b07f5b; --wood:#8a5a2b; --hole:#0b0705; --pick:#e8b53a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101613; --surface:#172019; --fg:#e8efe9; --muted:#93a69a; --line:#2b3a31;
+  --down:#f29a4a; --up:#4cc7da; --good:#4cc27a; --bad:#ff7b72;
+  --skin:#c99671; --skin2:#b07f5b; --wood:#8a5a2b; --hole:#0b0705; --pick:#e8b53a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 var(--body);padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:880px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(1.9rem,6vw,2.8rem);letter-spacing:-.01em}
+h2{font-size:1.45rem}
+h3{font-size:1.1rem}
+p{margin:0}
+header{padding-block:28px 14px;display:grid;gap:8px}
+header p{color:var(--muted);max-width:60ch}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:4px;padding-block:8px;overflow-x:auto}
+nav button{font:600 .95rem var(--body);color:var(--muted);background:none;border:0;border-radius:8px;padding:10px 14px;cursor:pointer;white-space:nowrap}
+nav button[aria-selected="true"]{color:var(--bg);background:var(--fg)}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--up);outline-offset:2px}
+section.tab{display:grid;gap:28px;padding-block:24px}
+.block{display:grid;gap:12px}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:6px}
+.rule b{font-family:var(--display)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px}
+.two>*{min-width:0}
+figure{margin:0;display:grid;gap:8px}
+figcaption{color:var(--muted);font-size:.9rem}
+svg{max-width:100%;height:auto;display:block}
+svg text{font-family:var(--body);font-size:11px;fill:var(--fg)}
+.steps{margin:0;padding-left:1.2em;display:grid;gap:10px}
+.steps li::marker{font-family:var(--mono);color:var(--muted)}
+.d{color:var(--down);font-weight:600}.u{color:var(--up);font-weight:600}
+/* lecteur de rythme */
+.controls{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
+.controls label{display:flex;gap:8px;align-items:center;font-size:.92rem;color:var(--muted)}
+select,input[type=range]{font:inherit}
+select{background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+input[type=range]{accent-color:var(--up);width:150px}
+.bpm{font-family:var(--mono);color:var(--fg);min-width:3.4ch;text-align:right}
+.btn{font:600 1rem var(--body);background:var(--fg);color:var(--bg);border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+.btn.alt{background:var(--surface);color:var(--fg);border:1px solid var(--line)}
+.row{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px}
+.slot{display:grid;justify-items:center;gap:2px;padding:8px 0 6px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font:inherit;color:inherit}
+.slot.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.slot .cnt{font:500 .85rem var(--mono);color:var(--muted)}
+.slot.on .cnt{color:var(--bg)}
+.slot .arr{font-size:clamp(1.3rem,6vw,2rem);line-height:1.1;font-weight:700}
+.slot .arr.D{color:var(--down)}.slot .arr.U{color:var(--up)}
+.slot.on .arr.D{color:#ffb878}.slot.on .arr.U{color:#7fe3f2}
+.slot .arr.none{color:var(--muted);font-weight:400}
+.slot .hand{font-size:.8rem;color:var(--muted)}
+.slot.on .hand{color:var(--bg)}
+button.slot{cursor:pointer}
+.rowlabel{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+#strumSvg{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+#hand{transform-box:view-box;transform-origin:320px 100px;transition:transform .3s cubic-bezier(.45,.05,.55,.95)}
+.str{stroke:var(--muted);stroke-width:1.4;transition:stroke .08s,stroke-width .08s}
+.str.hit{stroke:var(--pick);stroke-width:3}
+.tip{color:var(--muted);font-size:.95rem}
+.level{font:500 .75rem var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:1px 8px;margin-left:6px}
+/* exercices */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 .9rem var(--body);background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:99px;padding:7px 14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.score{display:flex;gap:22px;font-family:var(--mono);font-size:.95rem;color:var(--muted)}
+.score b{color:var(--fg);font-size:1.2rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:16px}
+.q{font-size:1.15rem}
+.count{font-family:var(--mono);font-weight:500}
+.choices{display:flex;flex-wrap:wrap;gap:10px}
+.choice{font:500 1rem var(--body);background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:12px 18px;cursor:pointer;min-width:64px}
+.choice.ok{border-color:var(--good);background:color-mix(in srgb,var(--good) 18%,var(--bg))}
+.choice.ko{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 18%,var(--bg))}
+.choice:disabled{cursor:default}
+.fb{padding:12px 14px;border-radius:10px;border:1px solid var(--line)}
+.fb.ok{border-color:var(--good)}.fb.ko{border-color:var(--bad)}
+.fb strong.ok{color:var(--good)}.fb strong.ko{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){#hand{transition-duration:.01s!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Battements guitare</h1>
+  <p>Apprends le rythme de la main droite : la position, le geste en animation, puis des exercices pour comprendre la logique des patterns.</p>
+</header>
+<nav role="tablist" aria-label="Sections">
+  <button role="tab" id="t-pos" aria-selected="true" data-tab="pos">Position</button>
+  <button role="tab" id="t-rit" aria-selected="false" data-tab="rit">Rythmes animés</button>
+  <button role="tab" id="t-ex" aria-selected="false" data-tab="ex">Exercices</button>
+</nav>
+
+<!-- POSITION -->
+<section class="tab" id="pos">
+  <div class="rule">
+    <h3>La règle d'or</h3>
+    <p>Ta main ne s'arrête jamais. Elle descend <span class="d">↓</span> sur les temps (1, 2, 3, 4) et remonte <span class="u">↑</span> sur les « et ». Tu décides seulement quand elle touche les cordes ou passe dans le vide.</p>
+  </div>
+
+  <div class="two">
+    <figure>
+      <svg viewBox="0 0 360 250" role="img" aria-label="Schéma de la prise du médiator entre le pouce et l'index">
+        <rect x="40" y="108" width="210" height="46" rx="23" fill="var(--skin)" stroke="var(--skin2)" stroke-width="2"/>
+        <path d="M95 112v38M150 112v38" stroke="var(--skin2)" stroke-width="2" opacity=".7"/>
+        <path d="M222 104L222 150L318 127Z" fill="var(--pick)" stroke="var(--fg)" stroke-width="1.5" stroke-linejoin="round"/>
+        <ellipse cx="238" cy="102" rx="52" ry="21" transform="rotate(-8 238 102)" fill="var(--skin)" stroke="var(--skin2)" stroke-width="2"/>
+        <path d="M40 131H18" stroke="var(--skin2)" stroke-width="2"/>
+        <path d="M238 80V40" stroke="var(--fg)" stroke-width="1"/><text x="238" y="32" text-anchor="middle">Pouce à plat sur le médiator</text>
+        <path d="M120 154V205" stroke="var(--fg)" stroke-width="1"/><text x="120" y="222" text-anchor="middle">Index replié : le médiator repose sur le côté</text>
+        <path d="M312 130L335 190" stroke="var(--fg)" stroke-width="1"/><text x="335" y="206" text-anchor="end">2-3 mm de pointe</text>
+        <text x="335" y="220" text-anchor="end">qui dépassent</text>
+      </svg>
+      <figcaption>Prise du médiator, vue de côté. Schéma simplifié.</figcaption>
+    </figure>
+
+    <figure>
+      <svg viewBox="0 0 360 250" role="img" aria-label="Schéma de la position du bras droit sur la guitare">
+        <rect x="0" y="116" width="110" height="36" fill="var(--wood)" opacity=".75"/>
+        <ellipse cx="165" cy="134" rx="66" ry="60" fill="var(--wood)"/>
+        <ellipse cx="248" cy="134" rx="82" ry="76" fill="var(--wood)"/>
+        <circle cx="196" cy="134" r="26" fill="var(--hole)"/>
+        <rect x="276" y="112" width="9" height="44" rx="2" fill="var(--hole)"/>
+        <g stroke="var(--fg)" stroke-width="1" opacity=".75">
+          <path d="M0 120H282M0 126H282M0 132H282M0 138H282M0 144H282M0 150H282"/>
+        </g>
+        <rect x="172" y="104" width="50" height="60" rx="6" fill="none" stroke="var(--pick)" stroke-width="2.5" stroke-dasharray="5 4"/>
+        <path d="M322 14L226 108" stroke="var(--skin)" stroke-width="40" stroke-linecap="round"/>
+        <path d="M322 14L226 108" stroke="var(--skin2)" stroke-width="2" opacity=".6"/>
+        <ellipse cx="205" cy="124" rx="24" ry="17" transform="rotate(35 205 124)" fill="var(--skin)" stroke="var(--skin2)" stroke-width="2"/>
+        <path d="M298 38H340" stroke="var(--fg)" stroke-width="1"/><text x="352" y="52" text-anchor="end">Avant-bras posé sur</text><text x="352" y="65" text-anchor="end">le bord de la caisse</text>
+        <path d="M222 108L250 196" stroke="var(--fg)" stroke-width="1"/><text x="250" y="212">Poignet souple : la main pivote</text>
+        <path d="M196 164V228" stroke="var(--pick)" stroke-width="1"/><text x="196" y="242" text-anchor="middle" style="fill:var(--fg)">Zone de frappe, au-dessus du trou</text>
+      </svg>
+      <figcaption>Guitare vue de face, manche à gauche. Schéma simplifié.</figcaption>
+    </figure>
+  </div>
+
+  <div class="block">
+    <h2>Les 6 réglages à vérifier</h2>
+    <ol class="steps">
+      <li><b>Assis, guitare calée.</b> La caisse repose sur ta cuisse et contre ton ventre. Elle ne bouge pas quand tu frappes.</li>
+      <li><b>Avant-bras sur la caisse.</b> Le poids du bras tient la guitare. Ton coude ne travaille pas.</li>
+      <li><b>Le mouvement vient du poignet.</b> Imagine que tu secoues une goutte d'eau au bout de ta main. Un bras qui monte et descend en entier fatigue vite et sonne raide.</li>
+      <li><b>Médiator tenu léger.</b> Assez serré pour ne pas tomber, assez souple pour glisser sur les cordes. Incline-le très légèrement pour qu'il glisse au lieu d'accrocher.</li>
+      <li><b>Frappe au-dessus du trou.</b> Plus près du manche le son est doux, plus près du chevalet il est sec. Commence par le trou.</li>
+      <li><b>Travaille d'abord à vide.</b> Pose légèrement ta main gauche sur les cordes pour les étouffer et concentre-toi seulement sur le geste.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- RYTHMES -->
+<section class="tab" id="rit" hidden>
+  <div class="block">
+    <h2>Regarde le geste, puis joue-le</h2>
+    <p class="tip">Appuie sur Lecture. La main descend sur les chiffres et remonte sur les « & ». Les cases vides sont les moments où la main passe sans toucher les cordes. Le son est un accord de Mi mineur (cordes à vide).</p>
+  </div>
+
+  <svg id="strumSvg" viewBox="0 0 360 200" role="img" aria-label="Animation du geste de la main droite sur les cordes">
+    <g id="strings"></g>
+    <g id="hand">
+      <rect x="318" y="82" width="60" height="36" rx="18" fill="var(--skin)"/>
+      <ellipse cx="272" cy="100" rx="50" ry="21" fill="var(--skin)" stroke="var(--skin2)" stroke-width="1.5"/>
+      <path d="M222 91L222 109L190 100Z" fill="var(--pick)" stroke="var(--fg)" stroke-width="1.2" stroke-linejoin="round"/>
+      <ellipse cx="236" cy="94" rx="17" ry="8" fill="var(--skin2)"/>
+    </g>
+  </svg>
+
+  <div class="controls">
+    <button class="btn" id="play" type="button">Lecture</button>
+    <label for="pat">Rythme
+      <select id="pat"></select>
+    </label>
+    <label for="bpm">Tempo
+      <input type="range" id="bpm" min="40" max="140" value="70"><span class="bpm" id="bpmv">70</span>
+    </label>
+    <label for="snd"><input type="checkbox" id="snd" checked>Son</label>
+    <label for="met"><input type="checkbox" id="met" checked>Métronome</label>
+  </div>
+
+  <div class="block" id="grid"></div>
+  <p class="tip" id="ptip"></p>
+
+  <div class="block">
+    <h2>Progression conseillée</h2>
+    <ol class="steps" id="prog"></ol>
+  </div>
+</section>
+
+<!-- EXERCICES -->
+<section class="tab" id="ex" hidden>
+  <div class="block">
+    <h2>Entraîne ta logique du rythme</h2>
+    <p class="tip">Ces exercices travaillent le raisonnement derrière les patterns : savoir où va la main, compter les coups, relier ce que tu comptes à ce que tu notes.</p>
+    <div class="chips" id="kinds" role="group" aria-label="Type d'exercice"></div>
+    <div class="score"><span>Score <b id="sc">0</b>/<b id="tot">0</b></span><span>Série <b id="stk">0</b></span></div>
+  </div>
+  <div class="card" id="exCard"></div>
+</section>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const rand=n=>Math.floor(Math.random()*n);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rand(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const CNT=['1','&','2','&','3','&','4','&'];
+const dirOf=i=>i%2?'U':'D';
+const ARR={D:'↓',U:'↑'};
+const NAME=i=>i%2?`le « et » du ${(i-1)/2+1}`:`le temps ${i/2+1}`;
+const SHORT=i=>i%2?`${(i-1)/2+1} et`:`${i/2+1}`;
+const maskText=m=>[...m].map((c,i)=>c==='x'?ARR[dirOf(i)]:'·').join(' ');
+
+const PATTERNS=[
+ {id:'bas',name:'Tout en bas',level:1,mask:'x-x-x-x-',tip:'Un coup vers le bas sur chaque temps. Ta main remonte dans le vide entre deux coups : c\'est le mouvement continu en version la plus simple.'},
+ {id:'croches',name:'Bas-haut continu',level:1,mask:'xxxxxxxx',tip:'Huit coups, un à chaque case. Garde un poignet léger et régulier, c\'est la base de tous les autres rythmes.'},
+ {id:'reggae',name:'Contretemps (reggae)',level:2,mask:'-x-x-x-x',tip:'Tu ne frappes que vers le haut, sur les « et ». La main descend dans le vide sur chaque temps.'},
+ {id:'folk',name:'Folk / pop',level:2,mask:'x-xx-xxx',tip:'Le rythme le plus courant : bas, bas-haut, haut-bas-haut. Il manque un coup sur le temps 3 : la main descend quand même, sans toucher.'},
+ {id:'rock',name:'Rock',level:3,mask:'x-xxx-xx',tip:'Comme le folk avec un coup de plus sur le temps 3. Ne perds pas le va-et-vient du poignet quand tu ajoutes ou retires un coup.'},
+ {id:'balade',name:'Ballade',level:3,mask:'x-x-xxxx',tip:'Deux temps calmes, puis un bas-haut régulier pour finir la mesure. Garde la même force à chaque coup.'}
+];
+
+/* ---------- audio ---------- */
+let ctx=null;
+function audio(){if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();return ctx}
+const CH=[82.41,123.47,164.81,196,246.94,329.63];
+function strum(t,dir){
+  const notes=dir==='D'?CH:CH.slice(2).reverse();
+  const vol=dir==='D'?.17:.11;
+  notes.forEach((f,i)=>{
+    const t0=t+i*.011;
+    const g=ctx.createGain(),lp=ctx.createBiquadFilter();
+    lp.type='lowpass';lp.frequency.value=2400;
+    g.gain.setValueAtTime(0,t0);
+    g.gain.linearRampToValueAtTime(vol,t0+.004);
+    g.gain.exponentialRampToValueAtTime(.001,t0+1.1);
+    [['triangle',1],['sawtooth',.25]].forEach(([type,k])=>{
+      const o=ctx.createOscillator(),og=ctx.createGain();
+      o.type=type;o.frequency.value=f;og.gain.value=k;
+      o.connect(og).connect(lp);o.start(t0);o.stop(t0+1.15);
+    });
+    lp.connect(g).connect(ctx.destination);
+  });
+}
+function click(t,accent){
+  const o=ctx.createOscillator(),g=ctx.createGain();
+  o.type='square';o.frequency.value=accent?1800:1300;
+  g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.001,t+.04);
+  o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+.05);
+}
+
+/* ---------- rendu des grilles ---------- */
+function slotInner(i,mask,hand){
+  const strike=mask[i]==='x';
+  return `<span class="cnt">${CNT[i]}</span><span class="arr ${strike?dirOf(i):'none'}">${strike?ARR[dirOf(i)]:'·'}</span>`+(hand?`<span class="hand">${ARR[dirOf(i)]}</span>`:'');
+}
+function rowHTML(mask,hand){
+  return `<div class="row">${[...Array(8)].map((_,i)=>`<div class="slot" data-i="${i}">${slotInner(i,mask,hand)}</div>`).join('')}</div>`;
+}
+
+/* ---------- onglets ---------- */
+const tabs=['pos','rit','ex'];
+function show(id){
+  tabs.forEach(t=>{$('#'+t).hidden=t!==id;$('#t-'+t).setAttribute('aria-selected',String(t===id))});
+  if(id!=='rit')stopP();
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));
+
+/* ---------- lecteur de rythmes ---------- */
+const P={playing:false,slot:0,next:0,timer:null,pat:PATTERNS[3]};
+const STR_Y=[48,66,84,102,120,138],STR_N=['E','A','D','G','B','e'];
+$('#strings').innerHTML=STR_Y.map((y,i)=>`<line class="str" id="s${i}" x1="40" x2="330" y1="${y}" y2="${y}"/><text x="14" y="${y+4}">${STR_N[i]}</text>`).join('');
+$('#pat').innerHTML=PATTERNS.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+$('#pat').value=P.pat.id;
+$('#prog').innerHTML=PATTERNS.map(p=>`<li><b>${p.name}</b><span class="level">niveau ${p.level}</span><br><span class="count">${maskText(p.mask)}</span><br><span class="tip">${p.tip}</span></li>`).join('');
+
+function drawPattern(){
+  $('#grid').innerHTML=`<span class="rowlabel">Ce que tu joues</span>${rowHTML(P.pat.mask,true)}<span class="rowlabel">Petite flèche = sens de la main, toujours présent</span>`;
+  $('#ptip').textContent=P.pat.tip;
+}
+function setHand(dir,dur){
+  const h=$('#hand');
+  h.style.transitionDuration=Math.max(.05,dur*.9)+'s';
+  h.style.transform=`rotate(${dir==='D'?-26:26}deg)`;
+}
+function flashStrings(dir,dur){
+  const idx=dir==='D'?[0,1,2,3,4,5]:[5,4,3,2];
+  const span=dur*.5*1000;
+  idx.forEach((s,k)=>{
+    setTimeout(()=>{const el=$('#s'+s);el.classList.add('hit');setTimeout(()=>el.classList.remove('hit'),140)},span*.6+k*(span*.5/idx.length));
+  });
+}
+function visual(s,strike,dur){
+  if(!P.playing)return;
+  document.querySelectorAll('#grid .slot').forEach(el=>el.classList.toggle('on',+el.dataset.i===s));
+  setHand(dirOf(s),dur);
+  if(strike)flashStrings(dirOf(s),dur);
+}
+function sched(){
+  const dur=30/(+$('#bpm').value);
+  while(P.next<ctx.currentTime+.12){
+    const s=P.slot,t=P.next,strike=P.pat.mask[s]==='x';
+    if($('#snd').checked&&strike)strum(t,dirOf(s));
+    if($('#met').checked&&s%2===0)click(t,s===0);
+    setTimeout(()=>visual(s,strike,dur),Math.max(0,(t-ctx.currentTime)*1000));
+    P.slot=(s+1)%8;P.next+=dur;
+  }
+}
+function startP(){
+  audio();P.playing=true;P.slot=0;P.next=ctx.currentTime+.1;
+  $('#hand').style.transform='rotate(26deg)';
+  sched();P.timer=setInterval(sched,25);
+  $('#play').textContent='Arrêter';
+}
+function stopP(){
+  if(!P.playing)return;
+  P.playing=false;clearInterval(P.timer);
+  document.querySelectorAll('#grid .slot').forEach(el=>el.classList.remove('on'));
+  $('#hand').style.transform='rotate(0deg)';
+  $('#play').textContent='Lecture';
+}
+$('#play').addEventListener('click',()=>P.playing?stopP():startP());
+$('#pat').addEventListener('change',e=>{P.pat=PATTERNS.find(p=>p.id===e.target.value);drawPattern()});
+$('#bpm').addEventListener('input',e=>{$('#bpmv').textContent=e.target.value});
+drawPattern();
+
+/* écoute d'un pattern, sans interface (exercice « oreille ») */
+function playOnce(mask,bpm,bars){
+  audio();
+  const dur=30/bpm;let t=ctx.currentTime+.1;
+  for(let b=0;b<bars;b++)for(let s=0;s<8;s++){
+    if(s%2===0)click(t,s===0);
+    if(mask[s]==='x')strum(t,dirOf(s));
+    t+=dur;
+  }
+}
+
+/* ---------- exercices ---------- */
+const KINDS=[['rule','Sens de la main'],['count','Compter'],['ear','Oreille'],['build','Construire'],['mix','Mélange']];
+const EX={kind:'mix',score:0,total:0,streak:0,cur:null,done:false};
+$('#kinds').innerHTML=KINDS.map(([k,l])=>`<button type="button" class="chip" data-k="${k}" aria-pressed="${k===EX.kind}">${l}</button>`).join('');
+
+function randMask(min,max){
+  let m;
+  do{m=[...Array(8)].map(()=>Math.random()<.6?'x':'-').join('')}
+  while([...m].filter(c=>c==='x').length<min||[...m].filter(c=>c==='x').length>max);
+  return m;
+}
+function numChoices(ans){
+  const set=new Set([ans]);
+  while(set.size<4){const v=Math.max(0,Math.min(8,ans+rand(5)-2));set.add(v)}
+  return [...set].sort((a,b)=>a-b).map(v=>[String(v),String(v)]);
+}
+function genRule(){
+  const i=rand(8);
+  return {kind:'choice',q:`Ta main passe sur <b class="count">${NAME(i)}</b>. Elle va…`,visual:rowHTML('--------',false).replace(`data-i="${i}">`,`data-i="${i}" style="outline:2px solid var(--pick)">`),
+    choices:[['D','Vers le bas ↓'],['U','Vers le haut ↑']],answer:dirOf(i),
+    explain:'Sur les temps (1, 2, 3, 4) la main descend. Sur les « et » elle remonte. Cette règle ne change jamais, même quand tu ne touches pas les cordes.'};
+}
+function genCount(){
+  const m=randMask(3,7),arr=[...m];
+  const ups=arr.filter((c,i)=>c==='x'&&i%2).length,downs=arr.filter((c,i)=>c==='x'&&i%2===0).length,air=8-ups-downs;
+  const v=rand(3);
+  const [txt,ans]=v===0?['Combien de coups vers le haut ?',ups]:v===1?['Combien de coups vers le bas ?',downs]:['Combien de fois la main passe-t-elle dans le vide ?',air];
+  return {kind:'choice',q:txt,visual:rowHTML(m,false),choices:numChoices(ans),answer:String(ans),
+    explain:`Dans ce pattern : ${downs} coup${downs>1?'s':''} vers le bas, ${ups} vers le haut, ${air} case${air>1?'s':''} dans le vide (8 au total).`};
+}
+function genEar(){
+  const ans=PATTERNS[rand(PATTERNS.length)];
+  const opts=shuffle([ans,...shuffle(PATTERNS.filter(p=>p.id!==ans.id)).slice(0,2)]);
+  return {kind:'choice',ear:ans.mask,q:'Écoute le rythme (appuie sur Écouter), puis choisis la bonne notation.',
+    choices:opts.map(p=>[p.id,`<span class="count">${maskText(p.mask)}</span>`]),answer:ans.id,
+    explain:`C'était « ${ans.name} » : ${maskText(ans.mask)}`};
+}
+function genBuild(){
+  const m=randMask(3,5),list=[...m].map((c,i)=>c==='x'?SHORT(i):null).filter(Boolean).join(' · ');
+  return {kind:'build',q:`Place les coups : <b class="count">${list}</b>`,answer:m,
+    explain:`Les coups tombent sur ${list}. En notation : ${maskText(m)}`};
+}
+const GEN={rule:genRule,count:genCount,ear:genEar,build:genBuild};
+function nextEx(){
+  const k=EX.kind==='mix'?['rule','count','ear','build'][rand(4)]:EX.kind;
+  EX.cur=GEN[k]();EX.done=false;EX.build='--------';renderEx();
+}
+function renderEx(){
+  const c=EX.cur;let h=`<p class="q">${c.q}</p>`;
+  if(c.visual)h+=c.visual;
+  if(c.ear)h+=`<div><button class="btn alt" type="button" data-act="listen">Écouter</button></div>`;
+  if(c.kind==='choice')h+=`<div class="choices">${c.choices.map(([v,l])=>`<button class="choice" type="button" data-v="${v}">${l}</button>`).join('')}</div>`;
+  if(c.kind==='build')h+=`<div class="row" id="buildRow">${[...Array(8)].map((_,i)=>`<button type="button" class="slot" data-i="${i}" aria-label="Case ${CNT[i]}">${slotInner(i,EX.build,false)}</button>`).join('')}</div><div><button class="btn" type="button" data-act="check">Vérifier</button></div>`;
+  h+=`<div id="fb" hidden></div>`;
+  $('#exCard').innerHTML=h;
+}
+function finish(ok){
+  EX.done=true;EX.total++;
+  if(ok){EX.score++;EX.streak++}else EX.streak=0;
+  $('#sc').textContent=EX.score;$('#tot').textContent=EX.total;$('#stk').textContent=EX.streak;
+  const fb=$('#fb');fb.hidden=false;fb.className='fb '+(ok?'ok':'ko');
+  fb.innerHTML=`<p><strong class="${ok?'ok':'ko'}">${ok?'Bien joué.':'Pas tout à fait.'}</strong> ${EX.cur.explain}</p><p style="margin-top:10px"><button class="btn" type="button" data-act="next">Exercice suivant</button></p>`;
+}
+$('#kinds').addEventListener('click',e=>{
+  const b=e.target.closest('.chip');if(!b)return;
+  EX.kind=b.dataset.k;
+  document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  nextEx();
+});
+$('#exCard').addEventListener('click',e=>{
+  const t=e.target.closest('button');if(!t)return;
+  if(t.dataset.act==='next')return nextEx();
+  if(t.dataset.act==='listen')return playOnce(EX.cur.ear,70,2);
+  if(EX.done)return;
+  if(t.dataset.act==='check'){
+    const ok=EX.build===EX.cur.answer;
+    document.querySelectorAll('#buildRow .slot').forEach(s=>s.disabled=true);
+    return finish(ok);
+  }
+  if(t.classList.contains('slot')){
+    const i=+t.dataset.i,a=[...EX.build];a[i]=a[i]==='x'?'-':'x';EX.build=a.join('');
+    t.innerHTML=slotInner(i,EX.build,false);return;
+  }
+  if(t.classList.contains('choice')){
+    const ok=t.dataset.v===EX.cur.answer;
+    document.querySelectorAll('.choice').forEach(c=>{c.disabled=true;if(c.dataset.v===EX.cur.answer)c.classList.add('ok')});
+    if(!ok)t.classList.add('ko');
+    finish(ok);
+  }
+});
+nextEx();
+</script>
