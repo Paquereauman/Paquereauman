@@ -104,7 +104,8 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 <nav role="tablist" aria-label="Sections">
   <button role="tab" id="t-pos" aria-selected="true" data-tab="pos">Position</button>
   <button role="tab" id="t-acc" aria-selected="false" data-tab="acc">Accords animés</button>
-  <button role="tab" id="t-ex" aria-selected="false" data-tab="ex">Exercices</button>
+  <button role="tab" id="t-train" aria-selected="false" data-tab="train">S'entraîner</button>
+  <button role="tab" id="t-ex" aria-selected="false" data-tab="ex">Quiz</button>
 </nav>
 
 <!-- POSITION -->
@@ -178,14 +179,33 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
   </div>
 
   <div class="block">
-    <h2>S'entraîner par étapes</h2>
+    <h2>Où placer la paume et le poignet</h2>
     <ol class="steps">
-      <li><b>Barré seul.</b> Pose uniquement l'index entre les frettes 5 et 7, gratte les six cordes, vérifie que chaque corde sonne. En général c'est plus facile à ces frettes qu'à la frette 1.</li>
-      <li><b>Ajoute la forme.</b> Pose les autres doigts de la forme de Mi majeur (voir l'onglet Accords animés).</li>
-      <li><b>Descends vers la frette 1.</b> Le Fa majeur est le barré classique, et le plus exigeant.</li>
-      <li><b>Change de frette.</b> Fais glisser toute la forme sans la défaire, et dis le nom de chaque accord.</li>
+      <li><b>La paume ne touche pas le manche.</b> Laisse un petit espace entre ta paume et le dessous du manche, comme si tu tenais une petite balle. Ça laisse tes doigts libres de s'arrondir.</li>
+      <li><b>Le poignet reste le plus droit possible.</b> Un poignet trop plié fatigue les tendons et fait perdre de la force à l'index.</li>
+      <li><b>Le bas de la main frôle le manche.</b> La base du pouce et le bord de la main peuvent effleurer le bas du manche, mais sans s'y appuyer.</li>
+      <li><b>Les doigts restent arrondis,</b> posés sur la pulpe, juste derrière les frettes, pour ne pas toucher les cordes voisines.</li>
     </ol>
-    <p class="tip">Séances courtes (5 à 10 minutes) avec des pauses. Le barré demande de la force et de la précision, ça se construit avec les jours.</p>
+    <figure data-photo="palm">
+      <svg viewBox="0 0 360 120" role="img" aria-label="Emplacement pour ta photo de la paume">
+        <rect x="2" y="2" width="356" height="116" rx="12" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/>
+        <text x="180" y="58" text-anchor="middle">Photo de la paume et du poignet</text>
+        <text x="180" y="78" text-anchor="middle" style="fill:var(--muted)">Ajoute la tienne avec le bouton ci-dessous</text>
+      </svg>
+      <img class="photo" alt="Photo : position de la paume et du poignet" hidden>
+      <div class="photoctl"><label class="chip" for="ph-palm">Mettre ma photo<input id="ph-palm" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer la photo</button></div>
+    </figure>
+  </div>
+
+  <div class="block">
+    <h2>Par où commencer</h2>
+    <ol class="steps">
+      <li><b>Le mini-barré de Fa.</b> L'index ne couvre que les deux cordes aiguës. C'est le barré le plus simple (forme 1 de l'onglet Accords animés).</li>
+      <li><b>Le barré de Mi mineur</b> (forme 2) : deux doigts seulement en plus de l'index.</li>
+      <li><b>La forme de La mineur</b> (forme 3), puis <b>La majeur</b> (forme 4).</li>
+      <li><b>Le grand barré de Mi majeur</b> (forme 5, le Fa majeur classique) : le plus exigeant, à garder pour la fin.</li>
+    </ol>
+    <p class="tip">Séances courtes (5 à 10 minutes) avec des pauses. Arrête-toi si tu as mal. Les exercices et deux morceaux sont dans l'onglet S'entraîner.</p>
   </div>
 </section>
 
@@ -193,7 +213,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 <section class="tab" id="acc" hidden>
   <div class="block">
     <h2>La même forme, un autre nom à chaque frette</h2>
-    <p class="tip">Choisis une forme et déplace le curseur. La barre bleue est ton index, les ronds orange sont les autres doigts. Le nom de l'accord est celui de la note de la corde racine (la 6e pour les formes de Mi, la 5e pour les formes de La) à la frette du barré.</p>
+    <p class="tip">Les formes sont classées de la plus simple à la plus exigeante : commence par la 1. Choisis-en une et déplace le curseur. La barre bleue est ton index, les ronds orange sont les autres doigts. Le nom de l'accord est celui de la note de la corde racine (la 6e corde pour les formes de Mi, la 5e pour les formes de La, la 4e pour le mini-barré) à la frette du barré.</p>
   </div>
 
   <div class="block">
@@ -227,6 +247,38 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
   <p class="tip">Notes d'une frette à l'autre : Do, Do♯, Ré, Ré♯, Mi, Fa, Fa♯, Sol, Sol♯, La, La♯, Si. Chaque frette monte d'un demi-ton.</p>
 </section>
 
+<!-- S'ENTRAÎNER -->
+<section class="tab" id="train" hidden>
+  <div class="block">
+    <h2>Petits exercices pour la main</h2>
+    <ol class="steps">
+      <li><b>Écrase-relâche (2 min).</b> Pose l'index à plat sur toutes les cordes à la frette 5. Appuie 3 secondes, relâche 3 secondes, 10 fois, sans bouger la main. Tu cherches la bonne position.</li>
+      <li><b>Corde par corde (3 min).</b> Même barré frette 5. Fais sonner chaque corde une par une. Note celle qui grésille, change légèrement l'angle de l'index, recommence.</li>
+      <li><b>Mini-barré de Fa (5 min).</b> Pose la forme 1 à la frette 1 et fais sonner les 4 cordes. Alterne avec un Do majeur ouvert, 10 allers-retours lents.</li>
+      <li><b>Glissade (3 min).</b> Forme de Mi mineur : barré frette 2, puis 3, 5, 7. Dis le nom à voix haute : Fa♯ mineur, Sol mineur, La mineur, Si mineur.</li>
+      <li><b>Changement (5 min).</b> Mi mineur ouvert, puis Fa♯ mineur en barré (même forme, glissée de 2 frettes). 10 allers-retours, lentement.</li>
+    </ol>
+  </div>
+
+  <div class="rule">
+    <h3>Minuteur travail / repos</h3>
+    <p class="tip">30 secondes de travail, 15 secondes de repos pour les mains. Un bip marque chaque changement.</p>
+    <div class="controls">
+      <button class="btn" id="tmBtn" type="button">Démarrer</button>
+      <span class="count" style="font-size:1.4rem"><span id="tmLabel">Travail</span> <b id="tmSec">30</b> s</span>
+    </div>
+  </div>
+
+  <div class="block">
+    <h2>Deux morceaux pour s'entraîner</h2>
+    <ol class="steps">
+      <li><b>Take Me Home, Country Roads</b> (John Denver). En La : La, Mi, Fa♯ mineur, Ré. Un seul barré : Fa♯ mineur, forme de Mi mineur à la frette 2.</li>
+      <li><b>Let It Be</b> (The Beatles). Do, Sol, La mineur, Fa. Le Fa se joue en mini-barré (forme 1), donc sans le grand barré.</li>
+    </ol>
+    <p class="tip">Les accords sont donnés de mémoire. Vérifie la grille exacte et l'ordre sur une tablature avant de jouer.</p>
+  </div>
+</section>
+
 <!-- EXERCICES -->
 <section class="tab" id="ex" hidden>
   <div class="block">
@@ -249,15 +301,16 @@ const F0={6:82.41,5:110,4:146.83,3:196,2:246.94,1:329.63}; /* fréquences à vid
 const FINGER=['Index','Majeur','Annulaire','Auriculaire'];
 /* [corde, décalage de frette après le barré, doigt] */
 const SHAPES={
-  Emaj:{label:'forme de Mi majeur',root:6,minor:false,bar:[6,1],dots:[[3,1,2],[5,2,3],[4,2,4]],muted:[]},
-  Emin:{label:'forme de Mi mineur',root:6,minor:true,bar:[6,1],dots:[[5,2,3],[4,2,4]],muted:[]},
-  Amaj:{label:'forme de La majeur',root:5,minor:false,bar:[5,1],dots:[[4,2,2],[3,2,3],[2,2,4]],muted:[6]},
-  Amin:{label:'forme de La mineur',root:5,minor:true,bar:[5,1],dots:[[4,2,3],[3,2,4],[2,1,2]],muted:[6]}
+  Mini:{label:'forme mini-barré (Fa, 4 cordes)',root:4,rootOff:2,minor:false,bar:[2,1],dots:[[4,2,3],[3,1,2]],muted:[6,5]},
+  Emin:{label:'forme de Mi mineur',root:6,rootOff:0,minor:true,bar:[6,1],dots:[[5,2,3],[4,2,4]],muted:[]},
+  Amin:{label:'forme de La mineur',root:5,rootOff:0,minor:true,bar:[5,1],dots:[[4,2,3],[3,2,4],[2,1,2]],muted:[6]},
+  Amaj:{label:'forme de La majeur',root:5,rootOff:0,minor:false,bar:[5,1],dots:[[4,2,2],[3,2,3],[2,2,4]],muted:[6]},
+  Emaj:{label:'forme de Mi majeur',root:6,rootOff:0,minor:false,bar:[6,1],dots:[[3,1,2],[5,2,3],[4,2,4]],muted:[]}
 };
-const chordName=(sh,b)=>NOTES[(OPEN[SHAPES[sh].root]+b)%12]+(SHAPES[sh].minor?' mineur':' majeur');
+const chordName=(sh,b)=>NOTES[(OPEN[SHAPES[sh].root]+SHAPES[sh].rootOff+b)%12]+(SHAPES[sh].minor?' mineur':' majeur');
 
 /* ---------- onglets ---------- */
-const tabs=['pos','acc','ex'];
+const tabs=['pos','acc','train','ex'];
 function show(id){
   tabs.forEach(t=>{$('#'+t).hidden=t!==id;$('#t-'+t).setAttribute('aria-selected',String(t===id))});
   window.scrollTo(0,0);
@@ -279,9 +332,9 @@ const Y=s=>34+(6-s)*20;                        /* 6e corde en haut, 1re en bas *
   $('#dots').innerHTML=[0,1,2].map(i=>`<g class="dot mv" id="d${i}" style="opacity:0"><circle r="8.5"/><text y="4">2</text></g>`).join('');
   $('#mutes').innerHTML=[6,5,4,3,2,1].map(s=>`<text class="mx" id="mx${s}" x="9" y="${Y(s)+5}" style="opacity:0">×</text>`).join('');
 })();
-$('#shape').innerHTML=Object.entries(SHAPES).map(([k,v])=>`<option value="${k}">${v.label[0].toUpperCase()+v.label.slice(1)}</option>`).join('');
+$('#shape').innerHTML=Object.entries(SHAPES).map(([k,v],i)=>`<option value="${k}">${i+1}. ${v.label[0].toUpperCase()+v.label.slice(1)}</option>`).join('');
 
-const ST={shape:'Emaj',fret:1};
+const ST={shape:'Mini',fret:1};
 function fretsOf(){
   const sh=SHAPES[ST.shape],b=ST.fret,res={};
   for(let s=sh.bar[0];s>=sh.bar[1];s--)res[s]=b;
@@ -303,10 +356,10 @@ function render(){
     g.style.transform=`translate(${MID(b+d[1])}px,${Y(d[0])}px)`;
   });
   [6,5,4,3,2,1].forEach(s=>$('#mx'+s).style.opacity=sh.muted.includes(s)?1:0);
-  const note=NOTES[(OPEN[sh.root]+b)%12],name=chordName(ST.shape,b);
+  const rf=b+sh.rootOff,note=NOTES[(OPEN[sh.root]+rf)%12],name=chordName(ST.shape,b);
   $('#cname').textContent=name;
-  $('#csub').textContent=`Racine : ${note}, sur la ${sh.root}e corde à la frette ${b}.`;
-  $('#how').textContent=`À vide, la ${sh.root}e corde est ${NOTES[OPEN[sh.root]]}. À la frette ${b}, on monte de ${b} demi-ton${b>1?'s':''} : ${note}. La ${sh.label} est ${sh.minor?'mineure':'majeure'}, donc l'accord est ${name}.`;
+  $('#csub').textContent=`Racine : ${note}, sur la ${sh.root}e corde à la frette ${rf}.`;
+  $('#how').textContent=`À vide, la ${sh.root}e corde est ${NOTES[OPEN[sh.root]]}. À la frette ${rf}, on monte de ${rf} demi-ton${rf>1?'s':''} : ${note}. La ${sh.label} est ${sh.minor?'mineure':'majeure'}, donc l'accord est ${name}.`;
 }
 $('#shape').addEventListener('change',e=>{ST.shape=e.target.value;render()});
 $('#fret').addEventListener('input',e=>{ST.fret=+e.target.value;render()});
@@ -355,6 +408,24 @@ document.querySelectorAll('figure[data-photo]').forEach(fig=>{
   rst.addEventListener('click',()=>{set(null);try{localStorage.removeItem(key)}catch(e){}});
 });
 
+/* ---------- minuteur ---------- */
+const TM={on:false,phase:'work',left:30,id:null};
+function tmDraw(){$('#tmLabel').textContent=TM.phase==='work'?'Travail':'Repos';$('#tmSec').textContent=TM.left;$('#tmBtn').textContent=TM.on?'Arrêter':'Démarrer'}
+function tmBeep(){
+  try{audio();const o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime;
+    o.frequency.value=TM.phase==='work'?880:520;g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+.25);
+    o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+.3)}catch(e){}
+}
+$('#tmBtn').addEventListener('click',()=>{
+  if(TM.on){TM.on=false;clearInterval(TM.id);TM.phase='work';TM.left=30;tmDraw();return}
+  TM.on=true;TM.phase='work';TM.left=30;tmBeep();tmDraw();
+  TM.id=setInterval(()=>{
+    TM.left--;
+    if(TM.left<=0){TM.phase=TM.phase==='work'?'rest':'work';TM.left=TM.phase==='work'?30:15;tmBeep()}
+    tmDraw();
+  },1000);
+});
+
 /* ---------- exercices ---------- */
 const KINDS=[['note','Notes du manche'],['name','Nommer l\'accord'],['fret','Trouver la frette'],['finger','Doigts'],['diag','Diagnostic'],['mix','Mélange']];
 const EX={kind:'mix',score:0,total:0,streak:0,cur:null,done:false};
@@ -374,24 +445,24 @@ function genNote(){
     explain:`La ${s}e corde à vide est ${NOTES[OPEN[s]]}. Chaque frette ajoute un demi-ton : ${f} demi-ton${f>1?'s':''} après ${NOTES[OPEN[s]]}, on arrive sur ${ans}.`};
 }
 function genName(){
-  const k=SHKEYS[rand(4)],sh=SHAPES[k],b=1+rand(10),ans=chordName(k,b);
-  const note=OPEN[sh.root]+b,opts=new Set([ans]);
+  const k=SHKEYS[rand(SHKEYS.length)],sh=SHAPES[k],b=1+rand(10),rf=b+sh.rootOff,ans=chordName(k,b);
+  const note=OPEN[sh.root]+rf,opts=new Set([ans]);
   opts.add(NOTES[note%12]+(sh.minor?' majeur':' mineur'));
   while(opts.size<4){const d=[-2,-1,1,2][rand(4)];opts.add(NOTES[(note+d+12)%12]+(sh.minor?' mineur':' majeur'))}
   return {q:`Tu joues la <b class="count">${sh.label}</b>, avec le barré à la <b class="count">frette ${b}</b>. Quel accord est-ce ?`,
     choices:shuffle([...opts]).map(n=>[n,n]),answer:ans,
-    explain:`La racine est sur la ${sh.root}e corde : ${NOTES[OPEN[sh.root]]} + ${b} demi-ton${b>1?'s':''} = ${NOTES[note%12]}. La forme est ${sh.minor?'mineure':'majeure'} : ${ans}.`};
+    explain:`La racine est sur la ${sh.root}e corde, frette ${rf} : ${NOTES[OPEN[sh.root]]} + ${rf} demi-ton${rf>1?'s':''} = ${NOTES[note%12]}. La forme est ${sh.minor?'mineure':'majeure'} : ${ans}.`};
 }
 function genFret(){
   let k,b,r;
-  do{k=SHKEYS[rand(4)];r=rand(12);b=(r-OPEN[SHAPES[k].root]+12)%12}while(b<1||b>10);
-  const sh=SHAPES[k],name=NOTES[r]+(sh.minor?' mineur':' majeur');
+  do{k=SHKEYS[rand(SHKEYS.length)];r=rand(12);b=(r-OPEN[SHAPES[k].root]-SHAPES[k].rootOff+24)%12}while(b<1||b>10);
+  const sh=SHAPES[k],rf=b+sh.rootOff,name=NOTES[r]+(sh.minor?' mineur':' majeur');
   return {q:`Où poses-tu le barré pour jouer <b class="count">${name}</b> avec la <b class="count">${sh.label}</b> ?`,
     choices:numChoices(b,1,10).map(([v])=>[v,`Frette ${v}`]),answer:String(b),
-    explain:`Il faut que la ${sh.root}e corde donne ${NOTES[r]}. Depuis ${NOTES[OPEN[sh.root]]} à vide, ${NOTES[r]} est ${b} demi-ton${b>1?'s':''} plus haut : frette ${b}.`};
+    explain:`Il faut que la ${sh.root}e corde donne ${NOTES[r]}. Depuis ${NOTES[OPEN[sh.root]]} à vide, ${NOTES[r]} est ${rf} demi-ton${rf>1?'s':''} plus haut (frette ${rf}).${sh.rootOff?` Cette note est ${sh.rootOff} frettes après le barré : le barré est donc à la frette ${b}.`:''}`};
 }
 function genFinger(){
-  const k=SHKEYS[rand(4)],sh=SHAPES[k],d=sh.dots[rand(sh.dots.length)];
+  const k=SHKEYS[rand(SHKEYS.length)],sh=SHAPES[k],d=sh.dots[rand(sh.dots.length)];
   return {q:`Dans la <b class="count">${sh.label}</b>, quel doigt va sur la <b class="count">${d[0]}e corde</b>, <b class="count">${d[1]} frette${d[1]>1?'s':''} après le barré</b> ?`,
     choices:FINGER.map((n,i)=>[String(i+1),n]),answer:String(d[2]),
     explain:`${FINGER[d[2]-1]} (doigt ${d[2]}). L'index (1) fait le barré, le majeur est le 2, l'annulaire le 3 et l'auriculaire le 4. Regarde le schéma dans l'onglet Accords animés.`};
