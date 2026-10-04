@@ -201,6 +201,21 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
   <details class="howto"><summary>Comment ajouter une photo ?</summary><p>Clique sur une case, puis colle l'image avec Ctrl+V (Cmd+V sur Mac), ou glisse-la dessus. Une photo collée reste dans ton navigateur. Pour la publier pour tout le monde, mets le fichier dans le dossier <code>photos/</code> du dépôt avec le nom indiqué dans <code>photos/README.md</code>.</p></details>
 
   <div class="block step">
+    <h2>Vue d'ensemble</h2>
+    <p class="tip">Regarde d'abord la main complète, puis détaille-la en cinq étapes : <a href="#st-index">1 · l'index</a>, <a href="#st-thumb">2 · le pouce</a>, <a href="#st-palm">3 · la paume</a>, <a href="#st-arm">4 · le bras</a>, <a href="#st-buzz">5 · les cordes qui grésillent</a>.</p>
+    <div class="tri">
+      <figure class="tp" data-photo="rear">
+        <div class="tpbox">
+          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Vue d'ensemble, de derrière : la main complète."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
+          <img class="photo" alt="Vue d'ensemble, de derrière : la main complète." hidden>
+        </div>
+        <figcaption>Vue d'ensemble, de derrière : la main complète.</figcaption>
+        <div class="photoctl"><label class="chip" for="ph-rear">Mettre ma photo<input id="ph-rear" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer</button></div>
+      </figure>
+    </div>
+  </div>
+
+  <div class="block step" id="st-index">
     <h2><span class="sn">1</span>L'index</h2>
     <ul class="bl"><li>À plat, un peu roulé : appuie avec sa <b>tranche osseuse</b> plutôt qu'avec la pulpe.</li><li><b>Juste derrière la frette</b>, jamais sur la barre métallique ni au milieu de la case.</li><li>Les cordes de G et de B s'étouffent souvent dans les creux entre les phalanges : ajuste la torsion ou la hauteur de l'index.</li><li>Il n'a besoin d'appuyer fort que sur les cordes qu'aucun autre doigt ne tient. Le tableau de l'onglet Accords te montre lesquelles.</li></ul>
     <div class="hero">
@@ -261,7 +276,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     </div>
   </div>
 
-  <div class="block step">
+  <div class="block step" id="st-thumb">
     <h2><span class="sn">2</span>Le pouce</h2>
     <ul class="bl"><li><b>Vertical</b>, perpendiculaire au manche, et non couché le long du manche.</li><li>Derrière le milieu de la main, à peu près en face du majeur ou de l'index : il soutient la pression de l'index.</li><li>Ainsi tu actives la force de l'avant-bras au lieu de tout faire avec la crispation des doigts.</li><li>Ni trop haut ni trop bas : l'index perdrait son appui.</li></ul>
     <div class="tri">
@@ -292,18 +307,10 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
         <figcaption>Le pouce est trop haut ou trop bas : l'index perd son appui.</figcaption>
         <div class="photoctl"><label class="chip" for="ph-th-low">Mettre ma photo<input id="ph-th-low" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer</button></div>
       </figure>
-      <figure class="tp" data-photo="rear">
-        <div class="tpbox">
-          <svg viewBox="0 0 240 180" role="img" aria-label="Emplacement photo : Vue d'ensemble, de derrière : la main complète."><rect x="2" y="2" width="236" height="176" rx="10" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="94" text-anchor="middle" style="fill:var(--muted)">Clique ici, puis Ctrl+V</text></svg>
-          <img class="photo" alt="Vue d'ensemble, de derrière : la main complète." hidden>
-        </div>
-        <figcaption>Vue d'ensemble, de derrière : la main complète.</figcaption>
-        <div class="photoctl"><label class="chip" for="ph-rear">Mettre ma photo<input id="ph-rear" type="file" accept="image/*" hidden></label><button class="chip" type="button" hidden>Retirer</button></div>
-      </figure>
     </div>
   </div>
 
-  <div class="block step">
+  <div class="block step" id="st-palm">
     <h2><span class="sn">3</span>La paume et le poignet</h2>
     <ul class="bl"><li>La paume <b>ne touche pas le manche</b> : laisse un petit espace, comme si tu tenais une petite balle. Les doigts peuvent ainsi s'arrondir.</li><li>Le poignet reste le plus <b>droit</b> possible. Trop plié, il fatigue les tendons et affaiblit l'index.</li><li>La base du pouce peut effleurer le bas du manche, sans s'y appuyer.</li></ul>
     <div class="tri">
@@ -337,12 +344,12 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     </div>
   </div>
 
-  <div class="block step">
+  <div class="block step" id="st-arm">
     <h2><span class="sn">4</span>Le bras et la pression</h2>
     <ul class="bl"><li><b>Juste assez de pression</b> pour un son clair, sans tension inutile. Si tu serres trop, tu te fatigues vite. Quand le son est net, relâche un peu.</li><li><b>Utilise le bras droit comme levier</b> : le coude et l'avant-bras plaquent le corps de la guitare contre toi, ce qui pousse le manche vers la main gauche et réduit la force de serrage.</li><li>Garde le coude gauche près du corps : trop écarté, il fait tourner le poignet.</li><li>Relâche la pression entre deux accords.</li></ul>
   </div>
 
-  <div class="block step">
+  <div class="block step" id="st-buzz">
     <h2><span class="sn">5</span>Quand une corde grésille</h2>
     <ul class="bl"><li>Fais sonner <b>les cordes une par une</b> pour trouver laquelle pose problème.</li><li>Pivote ou décale légèrement l'index au lieu de serrer plus fort.</li><li>Dans un accord mineur comme F mineur, le majeur est libre : pose-le <b>par-dessus l'index</b> pour l'aider à presser.</li><li>Entraîne-toi plus haut sur le manche (vers la frette 7) ou avec un capo : la tension y est moindre. Le parcours est dans l'onglet S'entraîner.</li></ul>
   </div>
@@ -830,6 +837,8 @@ function detectPitch(buf,sr){
   return {f:sr/(tau+shift),rms};
 }
 const centsOf=(f,ref)=>1200*Math.log2(f/ref);
+/* les cordes graves donnent souvent l'octave ou la quinte au-dessus (2e, 3e harmonique) : on replie vers la corde visée */
+function fold(f,refs){let best=f,bc=1e9;[f,f/2,f/3,f*2].forEach(x=>refs.forEach(r=>{const d=Math.abs(centsOf(x,r));if(d<bc){bc=d;best=x}}));return best}
 function setTuner(state,msg,advice){
   $('#tuner').dataset.state=state;$('#tState').textContent=msg;if(advice!=null)$('#tAdvice').textContent=advice;
 }
@@ -857,9 +866,9 @@ function tick(){
   if(++TU.age<8){setTuner('listen','Laisse sonner…','Ne touche plus la corde, la mesure se stabilise.');return}
   TU.hist.push(f);if(TU.hist.length>9)TU.hist.shift();
   if(TU.hist.length<5)return;
-  const cs=TU.hist.slice(-5).map(x=>1200*Math.log2(x/TU.hist[TU.hist.length-1]));
+  const rf=TU.target==='auto'?TSTR.map(t=>t.f):[TSTR.find(t=>t.n===+TU.target).f],fl=TU.hist.map(x=>fold(x,rf)),cs=fl.slice(-5).map(x=>1200*Math.log2(x/fl[fl.length-1]));
   if(Math.max(...cs)-Math.min(...cs)>25)return;        /* lecture pas encore stable : on garde l'affichage */
-  const sorted=TU.hist.slice().sort((a,b)=>a-b),med=sorted[sorted.length>>1];
+  const sorted=TU.hist.map(x=>fold(x,TU.target==='auto'?TSTR.map(t=>t.f):[TSTR.find(t=>t.n===+TU.target).f])).sort((a,b)=>a-b),med=sorted[sorted.length>>1];
   if(TU.target==='auto'){if(!TU.lock)TU.lock=TSTR.reduce((b,t)=>Math.abs(centsOf(med,t.f))<Math.abs(centsOf(med,b.f))?t:b)}
   const tgt=TU.target==='auto'?TU.lock:TSTR.find(t=>t.n===+TU.target);
   const raw=centsOf(med,tgt.f);
@@ -869,7 +878,7 @@ function tick(){
   $('#tNote').textContent=tgt.note;
   $('#tStr').textContent=`Corde ${tgt.n}`;
   $('#tCents').textContent=(c>0?'+':'')+Math.round(c)+' cents';
-  TU.want=Math.max(-50,Math.min(50,c));
+  if(Math.abs(c)<=150)TU.want=Math.max(-50,Math.min(50,c));
   if(Math.abs(c)>150){setTuner('listen','Ce n\'est pas la bonne corde',TU.target==='auto'?'Joue une corde à vide.':'Joue la corde '+tgt.n+' à vide.');TU.okRun=0;TU.lock=null;return}
   const inTol=Math.abs(c)<=(TU.okRun>0?8:5);
   if(inTol){
