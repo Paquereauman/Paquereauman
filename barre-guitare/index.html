@@ -84,6 +84,8 @@ svg text{font-family:var(--body);font-size:11px;fill:var(--fg)}
 .tbl td.soft{color:var(--muted)}
 .tbl td.off{color:var(--muted);font-size:.72rem;white-space:normal}
 .fr{font-family:var(--body);font-weight:400;font-size:.85rem;color:var(--muted)}
+.sinfo{display:grid;gap:8px}
+.sinfo:empty{display:none}
 /* manche animé */
 #neck{background:var(--surface);border:1px solid var(--line);border-radius:12px}
 .mv{transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .3s}
@@ -428,13 +430,17 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
   </div>
 
   <div class="block">
-    <h2>Deux morceaux pour s'entraîner</h2>
-    <ol class="steps">
-      <li><b>Take Me Home, Country Roads</b> (John Denver). En A : A, E, F♯ mineur, D. Un seul barré : F♯ mineur, forme de E mineur à la frette 2.</li>
-      <li><b>Let It Be</b> (The Beatles). C, G, A mineur, F. Le F se joue en mini-barré (forme 1), donc sans le grand barré.</li>
-    </ol>
-    <p class="tip"><b>Morceau objectif : Where Is My Mind?</b> (Pixies). Sa grille d'accords n'est pas encore ajoutée : je ne l'ai pas de façon fiable, à compléter depuis une tablature.</p>
-    <p class="tip">Les accords sont donnés de mémoire. Vérifie la grille exacte et l'ordre sur une tablature avant de jouer.</p>
+    <h2>Morceaux pour s'entraîner aux barrés</h2>
+    <p class="tip">Clique sur un accord pour voir où le jouer en barré, puis ouvre-le sur le manche animé.</p>
+    <div id="songs" class="block"></div>
+    <div class="rule">
+      <h3>Conseils pour travailler ces morceaux</h3>
+      <ol class="steps">
+        <li><b>Ralentis le tempo.</b> Ne cherche pas la vitesse d'origine tout de suite. Utilise un métronome ou une version ralentie sur YouTube pour placer chaque doigt proprement.</li>
+        <li><b>Chante ou marque le temps du pied.</b> Ça évite de bloquer sa respiration et garde un rythme régulier quand les mains fatiguent.</li>
+      </ol>
+    </div>
+    <p class="tip">Les grilles d'accords sont celles des guitaristes qui les partagent. Vérifie-les sur une tablature avant de jouer.</p>
   </div>
 </section>
 
@@ -641,6 +647,50 @@ $('#progPlay').addEventListener('click',()=>{
   p.frets.forEach((b,i)=>strumFrets(chordFrets(p.k,b),t+i*1.7));
 });
 drawProg();
+
+/* ---------- morceaux ---------- */
+const SONGS=[
+  {t:'Radiohead, « Creep »',why:'La grille G, B, C, Cm t\'entraîne à passer d\'un accord majeur à un accord mineur avec la même forme de barré, et à enchaîner vers le Cm.',ch:['G','B','C','Cm']},
+  {t:'Pixies, « Where Is My Mind? »',why:'Une suite d\'accords hypnotique, idéale pour apprivoiser le barré sur le manche tout en gardant un jeu fluide et mélodique.',ch:['E','G♯','C♯m','A']},
+  {t:'The Cranberries, « Zombie »',why:'Une boucle de quatre accords. On peut les jouer ouverts, mais les jouer en barrés travaille la précision de la main gauche et la régularité du rythme.',ch:['Em','C','G','D']},
+  {t:'Green Day, « Basket Case »',why:'Un rythme rapide et soutenu : un bon exercice d\'endurance pour enchaîner des barrés (formes de E et de A) sans s\'arrêter.',ch:[]},
+  {t:'John Denver, « Take Me Home, Country Roads »',why:'Un seul barré à apprendre : F♯m, forme de E mineur à la frette 2.',ch:['A','E','F♯m','D']},
+  {t:'The Beatles, « Let It Be »',why:'Le F peut se jouer en mini-barré, donc sans le grand barré.',ch:['C','G','Am','F']}
+];
+const OPEN_MAJ=['C','D','E','G','A'],OPEN_MIN=['E','A','D'];
+function chordOptions(name){
+  const minor=name.endsWith('m'),root=NOTES.indexOf(minor?name.slice(0,-1):name);
+  const opts=[];
+  [['E',6,minor?'Emin':'Emaj'],['A',5,minor?'Amin':'Amaj']].forEach(([lab,str,k])=>{
+    const f=(root-OPEN[str]+12)%12;
+    if(f>=1&&f<=10)opts.push({k,f,label:`forme de ${lab}, frette ${f}`});
+  });
+  opts.sort((a,b)=>a.f-b.f);
+  const note=minor?name.slice(0,-1):name;
+  const open=(minor?OPEN_MIN:OPEN_MAJ).includes(note);
+  return {minor,opts,open,full:note+(minor?' mineur':' majeur')};
+}
+function openOnNeck(k,f){
+  ST.shape=k;ST.fret=f;$('#shape').value=k;$('#fret').value=f;render();show('acc');
+}
+$('#songs').innerHTML=SONGS.map((so,i)=>`<div class="card" data-song="${i}"><h3>${so.t}</h3><p class="tip">${so.why}</p>`+
+  (so.ch.length?`<div class="chips">${so.ch.map((c,j)=>`<button type="button" class="chip" data-i="${i}" data-j="${j}" aria-pressed="false">${c}</button>`).join('')}</div>`:`<p class="tip">Grille d'accords à compléter depuis une tablature.</p>`)+
+  `<div class="sinfo" aria-live="polite"></div></div>`).join('');
+$('#songs').addEventListener('click',e=>{
+  const b=e.target.closest('.chip');
+  if(b){
+    const card=b.closest('.card'),name=SONGS[b.dataset.i].ch[b.dataset.j],o=chordOptions(name);
+    card.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+    const lines=[`<b>${o.full}</b>`];
+    lines.push(o.opts.length?'En barré : '+o.opts.map(x=>x.label).join(' ou ')+'.':'Aucun barré dans la zone des frettes 1 à 10.');
+    if(o.open)lines.push('Aussi jouable en accord ouvert.');
+    const first=o.opts[0];
+    card.querySelector('.sinfo').innerHTML=`<p>${lines.join(' ')}</p>`+(first?`<p><button class="btn" type="button" data-k="${first.k}" data-f="${first.f}">Voir sur le manche</button></p>`:'');
+    return;
+  }
+  const v=e.target.closest('button[data-k]');
+  if(v)openOnNeck(v.dataset.k,+v.dataset.f);
+});
 
 /* ---------- minuteur ---------- */
 const TM={on:false,phase:'work',left:30,id:null};
