@@ -8,7 +8,6 @@ Format conseillé : paysage 4:3, 1000 à 1600 px de large, moins de 300 Ko, bien
 | Nom du fichier | Ce que montre la photo |
 |---|---|
 | `front.jpg` | L'index à plat sur les cordes, vu de face |
-| `cross.jpg` | Le barré vu du dessus : l'index roulé sur son côté osseux, le pouce derrière |
 | `idx-ok.jpg` | Index au bon endroit, juste derrière la frette ✓ |
 | `idx-far.jpg` | Index trop loin de la frette ✗ |
 | `idx-on.jpg` | Index sur la frette ✗ |
