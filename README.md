@@ -1,10 +1,11 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="Paquereauman, anthropologist, teacher, I build useful tools with Claude" width="100%">
+<img src="assets/banner.svg" alt="Paquereauman, techno-anthropologist, teacher, I build useful tools with Claude" width="100%">
 
 <br>
 
-![Anthropology](https://img.shields.io/badge/background-anthropology-14524c?style=for-the-badge)
+![Techno-Anthropology](https://img.shields.io/badge/background-techno--anthropology-14524c?style=for-the-badge)
+![Copenhagen](https://img.shields.io/badge/trained%20in-Copenhagen-c8102e?style=for-the-badge)
 ![Teacher](https://img.shields.io/badge/job-teacher-f5b942?style=for-the-badge&labelColor=333)
 ![Python](https://img.shields.io/badge/Python-3-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Claude Code](https://img.shields.io/badge/builds%20with-Claude-D97757?style=for-the-badge)
@@ -15,7 +16,7 @@
 
 ## 👋 Hi, I'm Paquereauman
 
-I trained as an **anthropologist** and I now work as a **teacher**. I originally learned Python to do **web scraping**: collecting data for my research.
+I trained in **techno-anthropology** in **Copenhagen**, the study of how people and technology shape each other, and I now work as a **teacher**. I originally learned Python to do **web scraping**: collecting data for my research.
 
 Today I mostly code **with Claude**. What I enjoy is starting from a real problem I see around me and turning it into a tool that helps someone.
 
@@ -23,7 +24,7 @@ Today I mostly code **with Claude**. What I enjoy is starting from a real proble
 
 - 🦽 **Accessibility tools**: finding solutions for people with reduced mobility.
 - 🎓 **Tools for my work**: making what I do in class and day to day simpler.
-- 🔎 **Observing before building**: my anthropologist's eye helps me understand what people actually need.
+- 🔎 **Observing before building**: my techno-anthropology training helps me understand what people actually need.
 - 🌱 **Learning by doing**: every project teaches me something new.
 
 ## 🛠️ Toolbox
