@@ -26,7 +26,7 @@
 A **Windows desktop app** that puts a sticker and meme library one click away. Search animated stickers (Tenor, GIPHY), Telegram packs and RisiBank with **no API key**, click any image to copy it, transparency included, straight into WhatsApp, Discord or WeChat, keep your favourites in your own collection, or let a **flying cat** wander across your desktop. It is also handy for **slideshows and presentations**: drop a transparent sticker or animated GIF onto a slide in PowerPoint or Google Slides with a simple paste, no cropping or background removal needed. The interface comes in French, English and Chinese.
 
 <p align="center">
-<a href="https://github.com/Paquereauman/stickaru"><img src="assets/stickaru-capture.png" alt="Stickaru search window: a search bar, theme chips (Cats, Dogs, Memes, Funny, Love) and a side menu with Search, Shop, Import URL and My stickers" width="860"></a>
+<a href="https://github.com/Paquereauman/stickaru"><img src="assets/stickaru-window.png" alt="Stickaru search window: a search bar, theme chips (Cats, Dogs, Memes, Funny, Love) and a side menu with Search, Shop, Import URL and My stickers" width="860"></a>
 </p>
 
 **[Download the installer →](https://github.com/Paquereauman/stickaru/releases/latest)** · [Source code](https://github.com/Paquereauman/stickaru)

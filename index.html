@@ -68,6 +68,8 @@ section>h2{font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:22px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:grid;grid-template-rows:auto 1fr}
 .card .media{background:#e6ebe4;display:grid;place-items:center;border-bottom:1px solid var(--line);aspect-ratio:16/9;overflow:hidden}
 .card .media img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
+.card .media.shot{padding:14px}
+.card .media.shot img{object-fit:contain;object-position:center}
 .card .body{padding:20px 22px 24px;display:grid;gap:12px;align-content:start}
 .card h3{font-size:1.5rem}
 .card p{color:var(--muted)}
@@ -148,7 +150,7 @@ footer{padding-block:56px 40px;color:var(--muted);font-size:.9rem}
       <h2><span lang="en">Projects</span><span lang="fr">Projets</span></h2>
       <div class="cards">
         <article class="card">
-          <div class="media"><img src="assets/stickaru-capture.png" alt="Stickaru search window with theme chips and a side menu" width="720" height="360" loading="lazy"></div>
+          <div class="media shot"><img src="assets/stickaru-window.png" alt="Stickaru search window with theme chips and a side menu" width="720" height="357" loading="lazy"></div>
           <div class="body">
             <h3><img src="assets/stickaru-logo.png" alt="" width="26" height="26" style="vertical-align:-6px;margin-right:6px">Stickaru</h3>
             <p lang="en">A Windows sticker and meme library: keyless search (Tenor, GIPHY, Telegram, RisiBank), one-click copy with transparency, favourites and a flying cat on your desktop. Handy for slideshows: paste transparent stickers and animated GIFs straight into PowerPoint or Google Slides.</p>
