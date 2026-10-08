@@ -179,6 +179,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 .tlinks{display:flex;flex-wrap:wrap;gap:4px 14px}.vids summary{cursor:pointer;font-weight:600;padding:6px 0}.vlist{list-style:none;margin:8px 0;padding:0;display:grid;gap:6px}.vlist li{display:flex;gap:6px;align-items:center}.vform{margin-top:10px}.vplayer{margin:8px 0}.vform input,#sForm input{font:inherit;padding:8px 10px;border:1px solid var(--strg,#bbb);border-radius:8px;background:transparent;color:inherit;max-width:100%}
 .cdiags{display:flex;flex-wrap:wrap;gap:6px 10px}.cfig{margin:0;text-align:center;color:var(--fg)}.cfig figcaption{font-weight:600;font-size:.95rem}.cfig.on{outline:2px solid var(--fg);outline-offset:2px;border-radius:8px}.fnote{font-size:.85rem}
 .song>summary{cursor:pointer;list-style:none;display:block;font-weight:600;padding:2px 0}.song>summary .level{display:inline-block;font-size:.78rem;font-weight:500;color:var(--muted);border:1px solid currentColor;border-radius:99px;padding:0 8px;margin:4px 6px 0 0}.song>summary .stitle{display:inline}.song>summary::-webkit-details-marker{display:none}.song>summary::before{content:'▸';margin-right:4px}.song[open]>summary::before{content:'▾'}.song[open]>summary{margin-bottom:10px}.song{padding:12px 14px}.catpick{border:1px solid var(--strg,#bbb);border-radius:10px;padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px 14px}.catpick label{display:flex;gap:6px;align-items:center}.addsong>summary{cursor:pointer}
+.tabtxt{font:12px/1.35 ui-monospace,Menlo,Consolas,monospace;white-space:pre;overflow:auto;max-height:65vh;padding:10px;border:1px solid var(--strg,#bbb);border-radius:10px;margin:8px 0}.tabarea{width:100%;font:12px ui-monospace,Menlo,Consolas,monospace;padding:8px;border:1px solid var(--strg,#bbb);border-radius:8px;background:transparent;color:inherit;box-sizing:border-box}.tabpick{display:block;margin:6px 0}
 </style>
 </head>
 <body>
@@ -294,11 +295,12 @@ const SONGS=[
   {t:'Leonard Cohen, « Hallelujah »',lang:'en',lvl:1,why:'Un morceau lent : idéal pour placer le F proprement.',ch:['C','Am','F','G'],q:'hallelujah leonard cohen'},
   {t:'John Denver, « Take Me Home, Country Roads »',lang:'en',lvl:2,why:'Un seul barré à apprendre : F♯m, forme de E mineur à la frette 2.',ch:['A','E','F♯m','D'],q:'john denver country roads'},
   {t:'Radiohead, « Creep »',lang:'en',lvl:2,why:'La grille G, B, C, Cm t\'entraîne à passer d\'un accord majeur à un accord mineur avec la même forme de barré.',ch:['G','B','C','Cm'],q:'radiohead creep'},
-  {t:'The Cranberries, « Zombie »',lang:'en',lvl:2,why:'Une boucle de quatre accords. On peut les jouer ouverts, mais les jouer en barrés travaille la précision de la main gauche.',ch:['Em','C','G','D'],q:'cranberries zombie'},
-  {t:'Pixies, « Where Is My Mind? »',lang:'en',lvl:2,why:'Une suite d\'accords hypnotique, idéale pour apprivoiser le barré sur le manche tout en gardant un jeu fluide et mélodique.',ch:['E','G♯','C♯m','A'],q:'pixies where is my mind'},
+  {t:'The Cranberries, « Zombie »',lang:'en',lvl:2,why:'Une boucle de quatre accords. On peut les jouer ouverts, mais les jouer en barrés travaille la précision de la main gauche.',ch:['Em','C','G','D/F♯'],q:'cranberries zombie'},
+  {t:'Pixies, « Where Is My Mind? »',lang:'en',lvl:2,why:'Une suite d\'accords hypnotique, idéale pour apprivoiser le barré sur le manche tout en gardant un jeu fluide et mélodique.',ch:['E','C♯m','G♯','A'],q:'pixies where is my mind'},
   {t:'Eagles, « Hotel California »',lang:'en',lvl:3,why:'Plusieurs barrés (Bm, F♯) enchaînés : un bon test d\'endurance.',ch:['Bm','F♯','A','E','G','D','Em','F♯'],q:'eagles hotel california'},
   {t:'Nirvana, « Smells Like Teen Spirit »',lang:'en',lvl:3,why:'Une boucle de quatre barrés, joués ici en accords complets (souvent en power chords).',ch:['F','B♭','A♭','D♭'],q:'nirvana smells like teen spirit'},
   {t:'Green Day, « Basket Case »',lang:'en',lvl:3,why:'Un rythme rapide et soutenu : un bon exercice d\'endurance pour enchaîner des barrés (formes de E et de A) sans s\'arrêter.',ch:[],q:'green day basket case'},
+  {t:'Lomepal, « 1000°C »',lang:'fr',lvl:3,why:'La boucle Gm, F, Fm, C enchaîne trois barrés : Gm à la frette 3, F et Fm à la frette 1.',ch:['Gm','F','Fm','C'],q:'lomepal 1000 degres'},
   {t:'Georges Brassens, « Les copains d\'abord »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'brassens les copains d abord'},
   {t:'Jacques Brel, « Ne me quitte pas »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'brel ne me quitte pas'},
   {t:'Francis Cabrel, « Petite Marie »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'cabrel petite marie'},
@@ -318,7 +320,7 @@ let curCat='all';try{const c=localStorage.getItem('barre-cat');if(CAT_LABEL[c])c
 const FLAT={'B♭':'A♯','A♭':'G♯','D♭':'C♯','E♭':'D♯','G♭':'F♯'};
 const OPEN_MAJ=['C','D','E','G','A'],OPEN_MIN=['E','A','D'];
 function chordOptions(name){
-  const shown=name;name=name.replace(/m7$/,'m').replace(/(maj7|7|9|sus[24]?|add\d+)$/,'');
+  const shown=name;name=name.replace(/\/.*$/,'').replace(/m7$/,'m').replace(/(maj7|7|9|sus[24]?|add\d+)$/,'');
   const minor=name.endsWith('m'),base=minor?name.slice(0,-1):name,root=NOTES.indexOf(FLAT[base]||base);
   const opts=[];
   if(root<0)return {minor,opts,open:false,known:false,full:shown};
@@ -329,7 +331,7 @@ function chordOptions(name){
   opts.sort((a,b)=>a.f-b.f);
   const note=FLAT[base]||base;
   const open=(minor?OPEN_MIN:OPEN_MAJ).includes(note);
-  return {minor,opts,open,known:true,full:base+(minor?' mineur':' majeur')+(shown!==name?` (${shown} : même forme de barré)`:'')};
+  return {minor,opts,open,known:true,full:base+(minor?' mineur':' majeur')+(shown!==name?(shown.includes('/')?` (${shown} : avec ${shown.split('/')[1]} à la basse)`:` (${shown} : même forme de barré)`):'')};
 }
 
 const FLATS=s=>s.replace(/#/g,'♯').replace(/^([A-G])b/,'$1♭');
@@ -353,7 +355,8 @@ const CHORDS={
   D7:{frets:[-1,-1,0,2,1,2],fingers:[0,0,0,2,1,3]},
   G7:{frets:[3,2,0,0,0,1],fingers:[3,2,0,0,0,1]},
   C7:{frets:[-1,3,2,3,1,0],fingers:[0,3,2,4,1,0]},
-  B7:{frets:[-1,2,1,2,0,2],fingers:[0,2,1,3,0,4]}
+  B7:{frets:[-1,2,1,2,0,2],fingers:[0,2,1,3,0,4]},
+  'D/F♯':{frets:[2,-1,0,2,3,-1],fingers:[2,0,0,1,3,0]}
 };
 function chordShape(name){
   if(CHORDS[name])return CHORDS[name];
@@ -401,8 +404,8 @@ function chordFigs(names){
     return sh?`<figure class="cfig" data-chord="${esc(n)}"><figcaption>${esc(n)}</figcaption>${chordSvg(sh)}</figure>`:'';
   }).join('');
 }
-let USER={songs:[],vids:{}};
-try{const u=JSON.parse(localStorage.getItem('barre-user')||'null');if(u&&Array.isArray(u.songs))USER={songs:u.songs,vids:u.vids||{}}}catch(e){}
+let USER={songs:[],vids:{},tabs:{}};
+try{const u=JSON.parse(localStorage.getItem('barre-user')||'null');if(u&&Array.isArray(u.songs))USER={songs:u.songs,vids:u.vids||{},tabs:u.tabs||{}}}catch(e){}
 const saveUser=()=>{try{localStorage.setItem('barre-user',JSON.stringify(USER))}catch(e){}};
 const allSongs=()=>USER.songs.map(s=>({...s,key:'u'+s.id,mine:true})).concat(SONGS.map((s,i)=>({...s,key:'b'+i})));
 const ytId=u=>{
@@ -429,6 +432,8 @@ function renderSongs(){
       `<div class="vplayer" aria-live="polite"></div>`+
       (vids.length?`<ul class="vlist">${vlist}</ul>`:'<p class="tip">Aucune vidéo pour l\'instant.</p>')+
       `<form class="vform controls" data-key="${so.key}" autocomplete="off"><label>Lien YouTube <input class="vurl" type="url" required placeholder="https://www.youtube.com/watch?v=…"></label><label>Nom (facultatif) <input class="vname" type="text" maxlength="60" placeholder="Ex. Cours du refrain"></label><button class="btn" type="submit">Ajouter la vidéo</button></form></details>`+
+      `<details class="vids mytab" data-key="${so.key}"${openSongs.has('t'+so.key)?' open':''}><summary>Ma tablature${USER.tabs[so.key]?' ✓':''}</summary>`+
+      (USER.tabs[so.key]?`<pre class="tabtxt" tabindex="0">${esc(USER.tabs[so.key])}</pre><p><button type="button" class="chip tabdel" data-key="${so.key}">Retirer ma tablature</button></p>`:`<p class="tip">Ajoute ta propre tablature (fichier .txt ou texte collé). Elle reste sur cet appareil et n'est pas publiée.</p><label class="tabpick">Fichier .txt <input class="tabfile" type="file" accept=".txt,text/plain" data-key="${so.key}"></label><label>Ou colle le texte <textarea class="tabarea" rows="5" placeholder="Colle ici ta tablature"></textarea></label><p><button type="button" class="btn tabsave" data-key="${so.key}">Enregistrer</button></p>`)+`</details>`+
       (so.mine?`<p><button type="button" class="chip sdel" data-id="${so.id}">Supprimer cette chanson</button></p>`:'')+`</details>`;
   }).join('');
 }
@@ -436,9 +441,20 @@ function showVideo(card,id){
   card.querySelector('.vplayer').innerHTML=`<div style="position:relative;aspect-ratio:16/9"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="Vidéo YouTube" style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
 }
 $('#catBar').addEventListener('click',e=>{const b=e.target.closest('[data-cat]');if(!b)return;curCat=b.dataset.cat;try{localStorage.setItem('barre-cat',curCat)}catch(x){}renderSongs()});
+function saveTab(key,text){
+  USER.tabs[key]=text.slice(0,200000);openSongs.add('t'+key);saveUser();renderSongs();
+}
+$('#songs-list').addEventListener('change',e=>{
+  const i=e.target.closest('.tabfile');if(!i||!i.files[0])return;
+  const key=i.dataset.key,r=new FileReader();
+  r.onload=()=>saveTab(key,String(r.result).replace(/\r\n/g,'\n'));
+  r.readAsText(i.files[0]);
+});
 $('#songs-list').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   const card=b.closest('.card');
+  if(b.classList.contains('tabsave')){const t=card.querySelector('.tabarea').value.trim();if(t)saveTab(b.dataset.key,t);return}
+  if(b.classList.contains('tabdel')){if(confirm('Retirer cette tablature ?')){delete USER.tabs[b.dataset.key];saveUser();renderSongs()}return}
   if(b.classList.contains('vplay')){const v=USER.vids[b.dataset.key][+b.dataset.n];if(v)showVideo(card,v.id);return}
   if(b.classList.contains('vdel')){USER.vids[b.dataset.key].splice(+b.dataset.n,1);saveUser();renderSongs();return}
   if(b.classList.contains('sdel')){
@@ -459,7 +475,7 @@ $('#songs-list').addEventListener('click',e=>{
 });
 $('#songs-list').addEventListener('toggle',e=>{
   const d=e.target;if(!d.classList)return;
-  const k=d.classList.contains('vids')?'v'+d.dataset.key:d.classList.contains('song')?'s'+d.dataset.key:null;
+  const k=d.classList.contains('mytab')?'t'+d.dataset.key:d.classList.contains('vids')?'v'+d.dataset.key:d.classList.contains('song')?'s'+d.dataset.key:null;
   if(k)d.open?openSongs.add(k):openSongs.delete(k);
 },true);
 $('#songs-list').addEventListener('submit',e=>{
