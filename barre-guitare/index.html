@@ -178,6 +178,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 @media (prefers-reduced-motion:reduce){.mv{transition-duration:.01s!important}}
 .tlinks{display:flex;flex-wrap:wrap;gap:4px 14px}.vids summary{cursor:pointer;font-weight:600;padding:6px 0}.vlist{list-style:none;margin:8px 0;padding:0;display:grid;gap:6px}.vlist li{display:flex;gap:6px;align-items:center}.vform{margin-top:10px}.vplayer{margin:8px 0}.vform input,#sForm input{font:inherit;padding:8px 10px;border:1px solid var(--strg,#bbb);border-radius:8px;background:transparent;color:inherit;max-width:100%}
 .cdiags{display:flex;flex-wrap:wrap;gap:6px 10px}.cfig{margin:0;text-align:center;color:var(--fg)}.cfig figcaption{font-weight:600;font-size:.95rem}.cfig.on{outline:2px solid var(--fg);outline-offset:2px;border-radius:8px}.fnote{font-size:.85rem}
+.song>summary{cursor:pointer;list-style:none;display:block;font-weight:600;padding:2px 0}.song>summary .level{display:inline-block;font-size:.78rem;font-weight:500;color:var(--muted);border:1px solid currentColor;border-radius:99px;padding:0 8px;margin:4px 6px 0 0}.song>summary .stitle{display:inline}.song>summary::-webkit-details-marker{display:none}.song>summary::before{content:'▸';margin-right:4px}.song[open]>summary::before{content:'▾'}.song[open]>summary{margin-bottom:10px}.song{padding:12px 14px}.catpick{border:1px solid var(--strg,#bbb);border-radius:10px;padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px 14px}.catpick label{display:flex;gap:6px;align-items:center}.addsong>summary{cursor:pointer}
 </style>
 </head>
 <body>
@@ -194,19 +195,27 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 <!-- CHANSONS -->
 <section class="tab" id="songs">
   <div class="block">
-    <h2>Ajouter une chanson</h2>
-    <p class="tip">Note le titre et, si tu veux, les accords. Ta liste reste sur cet appareil. Sur chaque chanson, tu peux coller des liens de vidéos YouTube utiles (cours, tuto, version lente) et les regarder ici.</p>
+    <h2>Chansons</h2>
+    <div class="chips" id="catBar" role="group" aria-label="Catégories"></div>
+    <p class="tip" id="catInfo"></p>
+    <div id="songs-list" class="block"></div>
+  </div>
+  <details class="block addsong" id="addSong">
+    <summary><h2 style="display:inline">Ajouter une chanson</h2></summary>
+    <p class="tip">Note le titre et, si tu veux, les accords. Choisis les catégories : une chanson peut être dans plusieurs. Ta liste reste sur cet appareil. Sur chaque chanson, tu peux coller des liens de vidéos YouTube et les regarder ici.</p>
     <form id="sForm" class="controls" autocomplete="off">
       <label>Titre et artiste <input id="sTitle" type="text" required maxlength="120" placeholder="Ex. Oasis, Wonderwall"></label>
       <label>Accords (facultatif) <input id="sChords" type="text" maxlength="120" placeholder="Ex. Em G D A7"></label>
+      <fieldset class="catpick"><legend>Catégories</legend>
+        <label><input type="checkbox" name="cat" value="facile"> Barré facile</label>
+        <label><input type="checkbox" name="cat" value="moyen"> Barré moyen</label>
+        <label><input type="checkbox" name="cat" value="dur"> Barré exigeant</label>
+        <label><input type="checkbox" name="cat" value="fr"> Française</label>
+        <label><input type="checkbox" name="cat" value="en"> Anglaise</label>
+      </fieldset>
       <button class="btn" type="submit">Ajouter</button>
     </form>
-  </div>
-  <div class="block">
-    <h2>Mes chansons et morceaux pour s'entraîner aux barrés</h2>
-    <p class="tip">Clique sur un accord pour voir où le jouer en barré. Ouvre « Vidéos » pour coller un lien YouTube et le regarder ici.</p>
-    <div id="songs-list" class="block"></div>
-  </div>
+  </details>
 </section>
 
 <section class="tab" id="tune" hidden>
@@ -280,18 +289,32 @@ function audio(){if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext
 const TABS=t=>`https://www.ultimate-guitar.com/search.php?search_type=title&value=${encodeURIComponent(t)}`;
 const SONGSTERR=t=>`https://www.songsterr.com/?pattern=${encodeURIComponent(t)}`;
 const SONGS=[
-  {t:'The Beatles, « Let It Be »',lvl:1,why:'Le F peut se jouer en mini-barré, donc sans le grand barré.',ch:['C','G','Am','F'],q:'beatles let it be'},
-  {t:'Red Hot Chili Peppers, « Californication »',lvl:1,why:'Quatre accords simples, avec un seul F à barrer.',ch:['Am','F','C','G'],q:'red hot chili peppers californication'},
-  {t:'Leonard Cohen, « Hallelujah »',lvl:1,why:'Un morceau lent : idéal pour placer le F proprement.',ch:['C','Am','F','G'],q:'hallelujah leonard cohen'},
-  {t:'John Denver, « Take Me Home, Country Roads »',lvl:2,why:'Un seul barré à apprendre : F♯m, forme de E mineur à la frette 2.',ch:['A','E','F♯m','D'],q:'john denver country roads'},
-  {t:'Radiohead, « Creep »',lvl:2,why:'La grille G, B, C, Cm t\'entraîne à passer d\'un accord majeur à un accord mineur avec la même forme de barré.',ch:['G','B','C','Cm'],q:'radiohead creep'},
-  {t:'The Cranberries, « Zombie »',lvl:2,why:'Une boucle de quatre accords. On peut les jouer ouverts, mais les jouer en barrés travaille la précision de la main gauche.',ch:['Em','C','G','D'],q:'cranberries zombie'},
-  {t:'Pixies, « Where Is My Mind? »',lvl:2,why:'Une suite d\'accords hypnotique, idéale pour apprivoiser le barré sur le manche tout en gardant un jeu fluide et mélodique.',ch:['E','G♯','C♯m','A'],q:'pixies where is my mind'},
-  {t:'Eagles, « Hotel California »',lvl:3,why:'Plusieurs barrés (Bm, F♯) enchaînés : un bon test d\'endurance.',ch:['Bm','F♯','A','E','G','D','Em','F♯'],q:'eagles hotel california'},
-  {t:'Nirvana, « Smells Like Teen Spirit »',lvl:3,why:'Une boucle de quatre barrés, joués ici en accords complets (souvent en power chords).',ch:['F','B♭','A♭','D♭'],q:'nirvana smells like teen spirit'},
-  {t:'Green Day, « Basket Case »',lvl:3,why:'Un rythme rapide et soutenu : un bon exercice d\'endurance pour enchaîner des barrés (formes de E et de A) sans s\'arrêter.',ch:[],q:'green day basket case'}
+  {t:'The Beatles, « Let It Be »',lang:'en',lvl:1,why:'Le F peut se jouer en mini-barré, donc sans le grand barré.',ch:['C','G','Am','F'],q:'beatles let it be'},
+  {t:'Red Hot Chili Peppers, « Californication »',lang:'en',lvl:1,why:'Quatre accords simples, avec un seul F à barrer.',ch:['Am','F','C','G'],q:'red hot chili peppers californication'},
+  {t:'Leonard Cohen, « Hallelujah »',lang:'en',lvl:1,why:'Un morceau lent : idéal pour placer le F proprement.',ch:['C','Am','F','G'],q:'hallelujah leonard cohen'},
+  {t:'John Denver, « Take Me Home, Country Roads »',lang:'en',lvl:2,why:'Un seul barré à apprendre : F♯m, forme de E mineur à la frette 2.',ch:['A','E','F♯m','D'],q:'john denver country roads'},
+  {t:'Radiohead, « Creep »',lang:'en',lvl:2,why:'La grille G, B, C, Cm t\'entraîne à passer d\'un accord majeur à un accord mineur avec la même forme de barré.',ch:['G','B','C','Cm'],q:'radiohead creep'},
+  {t:'The Cranberries, « Zombie »',lang:'en',lvl:2,why:'Une boucle de quatre accords. On peut les jouer ouverts, mais les jouer en barrés travaille la précision de la main gauche.',ch:['Em','C','G','D'],q:'cranberries zombie'},
+  {t:'Pixies, « Where Is My Mind? »',lang:'en',lvl:2,why:'Une suite d\'accords hypnotique, idéale pour apprivoiser le barré sur le manche tout en gardant un jeu fluide et mélodique.',ch:['E','G♯','C♯m','A'],q:'pixies where is my mind'},
+  {t:'Eagles, « Hotel California »',lang:'en',lvl:3,why:'Plusieurs barrés (Bm, F♯) enchaînés : un bon test d\'endurance.',ch:['Bm','F♯','A','E','G','D','Em','F♯'],q:'eagles hotel california'},
+  {t:'Nirvana, « Smells Like Teen Spirit »',lang:'en',lvl:3,why:'Une boucle de quatre barrés, joués ici en accords complets (souvent en power chords).',ch:['F','B♭','A♭','D♭'],q:'nirvana smells like teen spirit'},
+  {t:'Green Day, « Basket Case »',lang:'en',lvl:3,why:'Un rythme rapide et soutenu : un bon exercice d\'endurance pour enchaîner des barrés (formes de E et de A) sans s\'arrêter.',ch:[],q:'green day basket case'},
+  {t:'Georges Brassens, « Les copains d\'abord »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'brassens les copains d abord'},
+  {t:'Jacques Brel, « Ne me quitte pas »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'brel ne me quitte pas'},
+  {t:'Francis Cabrel, « Petite Marie »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'cabrel petite marie'},
+  {t:'Francis Cabrel, « Je l\'aime à mourir »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'cabrel je l aime a mourir'},
+  {t:'Maxime Le Forestier, « San Francisco »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'le forestier san francisco'},
+  {t:'Renaud, « Mistral gagnant »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'renaud mistral gagnant'},
+  {t:'Noir Désir, « Le vent nous portera »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'noir desir le vent nous portera'},
+  {t:'Téléphone, « Cendrillon »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'telephone cendrillon'},
+  {t:'Alain Souchon, « Foule sentimentale »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'souchon foule sentimentale'},
+  {t:'Indochine, « L\'aventurier »',lang:'fr',why:'Chanson française : retrouve la grille et la tablature avec les liens ci-dessous.',ch:[],q:'indochine l aventurier'}
 ];
 const LVL={1:'Facile',2:'Moyen',3:'Exigeant'};
+const CATS=[['all','Toutes'],['facile','Barré facile'],['moyen','Barré moyen'],['dur','Barré exigeant'],['fr','Chansons françaises'],['en','Chansons anglaises'],['mine','Mes chansons']];
+const CAT_LABEL=Object.fromEntries(CATS);
+const songCats=so=>{const c=new Set(so.cats||[]);if(so.lvl)c.add(['','facile','moyen','dur'][so.lvl]);if(so.lang)c.add(so.lang);if(so.mine)c.add('mine');return c};
+let curCat='all';try{const c=localStorage.getItem('barre-cat');if(CAT_LABEL[c])curCat=c}catch(e){}
 const FLAT={'B♭':'A♯','A♭':'G♯','D♭':'C♯','E♭':'D♯','G♭':'F♯'};
 const OPEN_MAJ=['C','D','E','G','A'],OPEN_MIN=['E','A','D'];
 function chordOptions(name){
@@ -390,24 +413,29 @@ const ytId=u=>{
 const YT_SEARCH=t=>`https://www.youtube.com/results?search_query=${encodeURIComponent(t+' guitare tuto')}`;
 const openSongs=new Set();
 function renderSongs(){
-  const list=$('#songs-list');
-  list.innerHTML=allSongs().map((so,i)=>{
+  const list=$('#songs-list'),all=allSongs();
+  $('#catBar').innerHTML=CATS.map(([k,l])=>`<button type="button" class="chip" data-cat="${k}" aria-pressed="${k===curCat}">${l} (${k==='all'?all.length:all.filter(x=>songCats(x).has(k)).length})</button>`).join('');
+  const shown=all.filter(x=>curCat==='all'||songCats(x).has(curCat));
+  $('#catInfo').textContent=shown.length?'Touche une chanson pour voir ses accords, les doigts et ses vidéos.':(curCat==='mine'?'Aucune chanson à toi pour l\'instant : ouvre « Ajouter une chanson » plus bas.':'Aucune chanson dans cette catégorie.');
+  list.innerHTML=shown.map((so,i)=>{
     const vids=USER.vids[so.key]||[];
     const chips=so.ch.length?`<div class="chips">${so.ch.map((c,j)=>`<button type="button" class="chip" data-key="${so.key}" data-j="${j}" aria-pressed="false">${esc(c)}</button>`).join('')}</div>`:`<p class="tip">Grille d'accords à compléter depuis une tablature.</p>`;
     const links=`<p class="tip tlinks">Tablature : <a href="${SONGSTERR(so.q)}" target="_blank" rel="noopener">Songsterr</a> · <a href="${TABS(so.q)}" target="_blank" rel="noopener">Ultimate Guitar</a> · <a href="${YT_SEARCH(so.q)}" target="_blank" rel="noopener">Chercher sur YouTube</a></p>`;
     const vlist=vids.map((v,n)=>`<li><button type="button" class="chip vplay" data-key="${so.key}" data-n="${n}">▶ ${esc(v.title||'Vidéo '+(n+1))}</button> <button type="button" class="chip vdel" data-key="${so.key}" data-n="${n}" aria-label="Retirer cette vidéo">×</button></li>`).join('');
-    return `<div class="card" data-key="${so.key}"><h3>${esc(so.t)} ${so.lvl?`<span class="level">${LVL[so.lvl]}</span>`:'<span class="level">Ma chanson</span>'}</h3>`+
+    const tags=[...songCats(so)].filter(c=>c!=='all'&&c!=='mine').map(c=>`<span class="level">${CAT_LABEL[c]}</span>`).join(' ');
+    return `<details class="card song" data-key="${so.key}"${openSongs.has('s'+so.key)?' open':''}><summary><span class="stitle">${esc(so.t)}</span> ${tags}</summary>`+
       (so.why?`<p class="tip">${esc(so.why)}</p>`:'')+chips+`<div class="cdiags">${chordFigs(so.ch)}</div><p class="tip fnote">Les chiffres sont les doigts : 1 index, 2 majeur, 3 annulaire, 4 auriculaire. × = corde non jouée, ○ = corde à vide.</p><div class="sinfo" aria-live="polite"></div>${links}`+
-      `<details class="vids" data-key="${so.key}"${openSongs.has(so.key)?' open':''}><summary>Vidéos${vids.length?' ('+vids.length+')':''}</summary>`+
+      `<details class="vids" data-key="${so.key}"${openSongs.has('v'+so.key)?' open':''}><summary>Vidéos${vids.length?' ('+vids.length+')':''}</summary>`+
       `<div class="vplayer" aria-live="polite"></div>`+
       (vids.length?`<ul class="vlist">${vlist}</ul>`:'<p class="tip">Aucune vidéo pour l\'instant.</p>')+
       `<form class="vform controls" data-key="${so.key}" autocomplete="off"><label>Lien YouTube <input class="vurl" type="url" required placeholder="https://www.youtube.com/watch?v=…"></label><label>Nom (facultatif) <input class="vname" type="text" maxlength="60" placeholder="Ex. Cours du refrain"></label><button class="btn" type="submit">Ajouter la vidéo</button></form></details>`+
-      (so.mine?`<p><button type="button" class="chip sdel" data-id="${so.id}">Supprimer cette chanson</button></p>`:'')+`</div>`;
+      (so.mine?`<p><button type="button" class="chip sdel" data-id="${so.id}">Supprimer cette chanson</button></p>`:'')+`</details>`;
   }).join('');
 }
 function showVideo(card,id){
   card.querySelector('.vplayer').innerHTML=`<div style="position:relative;aspect-ratio:16/9"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="Vidéo YouTube" style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
 }
+$('#catBar').addEventListener('click',e=>{const b=e.target.closest('[data-cat]');if(!b)return;curCat=b.dataset.cat;try{localStorage.setItem('barre-cat',curCat)}catch(x){}renderSongs()});
 $('#songs-list').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   const card=b.closest('.card');
@@ -430,8 +458,9 @@ $('#songs-list').addEventListener('click',e=>{
   }
 });
 $('#songs-list').addEventListener('toggle',e=>{
-  const d=e.target;if(!d.classList||!d.classList.contains('vids'))return;
-  d.open?openSongs.add(d.dataset.key):openSongs.delete(d.dataset.key);
+  const d=e.target;if(!d.classList)return;
+  const k=d.classList.contains('vids')?'v'+d.dataset.key:d.classList.contains('song')?'s'+d.dataset.key:null;
+  if(k)d.open?openSongs.add(k):openSongs.delete(k);
 },true);
 $('#songs-list').addEventListener('submit',e=>{
   const f=e.target.closest('.vform');if(!f)return;
@@ -440,15 +469,15 @@ $('#songs-list').addEventListener('submit',e=>{
   if(!id){alert('Lien YouTube non reconnu. Colle le lien de la vidéo (youtube.com/watch?v=… ou youtu.be/…).');return}
   const key=f.dataset.key;
   (USER.vids[key]=USER.vids[key]||[]).push({id,title:f.querySelector('.vname').value.trim()});
-  openSongs.add(key);saveUser();renderSongs();
+  openSongs.add('v'+key);saveUser();renderSongs();
   const card=document.querySelector(`.card[data-key="${key}"]`);if(card)showVideo(card,id);
 });
 $('#sForm').addEventListener('submit',e=>{
   e.preventDefault();
   const t=$('#sTitle').value.trim();if(!t)return;
   const ch=$('#sChords').value.split(/[\s,;]+/).map(x=>FLATS(x.trim())).filter(Boolean);
-  USER.songs.unshift({id:Date.now().toString(36),t,ch,q:t});
-  saveUser();$('#sForm').reset();renderSongs();
+  USER.songs.unshift({id:Date.now().toString(36),t,ch,q:t,cats:[...document.querySelectorAll('#sForm input[name=cat]:checked')].map(x=>x.value)});
+  saveUser();$('#sForm').reset();$('#addSong').open=false;curCat='mine';renderSongs();
 });
 renderSongs();
 
