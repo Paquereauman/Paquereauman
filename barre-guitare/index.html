@@ -180,6 +180,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 .cdiags{display:flex;flex-wrap:wrap;gap:6px 10px}.cfig{margin:0;text-align:center;color:var(--fg)}.cfig figcaption{font-weight:600;font-size:.95rem}.cfig.on{outline:2px solid var(--fg);outline-offset:2px;border-radius:8px}.fnote{font-size:.85rem}
 .song>summary{cursor:pointer;list-style:none;display:block;font-weight:600;padding:2px 0}.song>summary .level{display:inline-block;font-size:.78rem;font-weight:500;color:var(--muted);border:1px solid currentColor;border-radius:99px;padding:0 8px;margin:4px 6px 0 0}.song>summary .stitle{display:inline}.song>summary::-webkit-details-marker{display:none}.song>summary::before{content:'▸';margin-right:4px}.song[open]>summary::before{content:'▾'}.song[open]>summary{margin-bottom:10px}.song{padding:12px 14px}.catpick{border:1px solid var(--strg,#bbb);border-radius:10px;padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px 14px}.catpick label{display:flex;gap:6px;align-items:center}.addsong>summary{cursor:pointer}
 .tabtxt{font:12px/1.35 ui-monospace,Menlo,Consolas,monospace;white-space:pre;overflow:auto;max-height:65vh;padding:10px;border:1px solid var(--strg,#bbb);border-radius:10px;margin:8px 0}.tabarea{width:100%;font:12px ui-monospace,Menlo,Consolas,monospace;padding:8px;border:1px solid var(--strg,#bbb);border-radius:8px;background:transparent;color:inherit;box-sizing:border-box}.tabpick{display:block;margin:6px 0}
+.bulk{display:grid;gap:6px}.bulkbtn{cursor:pointer;justify-self:start}
 </style>
 </head>
 <body>
@@ -199,6 +200,10 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     <h2>Chansons</h2>
     <div class="chips" id="catBar" role="group" aria-label="Catégories"></div>
     <p class="tip" id="catInfo"></p>
+    <div class="bulk">
+      <label class="btn bulkbtn">Importer mes tablatures (.txt)<input id="bulkFiles" type="file" accept=".txt,text/plain" multiple hidden></label>
+      <p class="tip" id="bulkInfo">Choisis plusieurs fichiers à la fois : chaque tablature est rattachée à la bonne chanson d'après le nom du fichier (ex. « Zombie - The Cranberries.txt »). Elles restent sur cet appareil.</p>
+    </div>
     <div id="songs-list" class="block"></div>
   </div>
   <details class="block addsong" id="addSong">
@@ -505,6 +510,30 @@ $('#sForm').addEventListener('submit',e=>{
   saveUser();$('#sForm').reset();$('#addSong').open=false;curCat='mine';renderSongs();
 });
 renderSongs();
+
+/* import groupé de tablatures : le fichier est relié à la chanson dont le titre et l'artiste ressemblent le plus à son nom */
+const norm=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').split(' ').filter(w=>w.length>2);
+function matchSong(name){
+  const fw=new Set(norm(name.replace(/\.[^.]+$/,'')));let best=null,bs=0;
+  allSongs().forEach(so=>{
+    const w=norm(so.t);if(!w.length)return;
+    const sc=w.filter(x=>fw.has(x)).length/w.length;
+    if(sc>bs){bs=sc;best=so}
+  });
+  return bs>=.6?best:null;
+}
+$('#bulkFiles').addEventListener('change',async e=>{
+  const files=[...e.target.files],ok=[],ko=[];
+  for(const f of files){
+    const so=matchSong(f.name);
+    if(!so){ko.push(f.name);continue}
+    USER.tabs[so.key]=(await f.text()).replace(/\r\n/g,'\n').slice(0,200000);
+    openSongs.add('t'+so.key);ok.push(so.t);
+  }
+  e.target.value='';
+  saveUser();renderSongs();
+  $('#bulkInfo').textContent=(ok.length?ok.length+' tablature(s) importée(s) : '+ok.join(' ; ')+'. ':'')+(ko.length?'Non reconnue(s) : '+ko.join(', ')+' (ajoute d\'abord la chanson, ou importe-la depuis sa fiche).':'');
+});
 
 
 /* ---------- accordeur ---------- */
