@@ -183,6 +183,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 .bulk{display:grid;gap:6px}.bulkbtn{cursor:pointer;justify-self:start}
 .onlytabs{display:flex;gap:8px;align-items:center;font-weight:500}
 .unlock{display:grid;gap:6px;justify-items:start}.unlock input{font:inherit;padding:8px 10px;border:1px solid var(--strg,#bbb);border-radius:8px;background:transparent;color:inherit}
+.bulkrow{display:flex;flex-wrap:wrap;gap:8px}.bulk.over{outline:2px dashed var(--fg);outline-offset:6px;border-radius:10px}.tsec{font-weight:700;display:inline-block;margin-top:6px}.tchord{font-weight:700;color:var(--accent,#b3420f)}.tstaff{letter-spacing:0}.thead{font-weight:700}
 </style>
 </head>
 <body>
@@ -208,9 +209,12 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
       <p class="tip" id="unlockInfo"></p>
     </form>
     <label class="onlytabs"><input type="checkbox" id="onlyTabs" checked> Seulement les chansons avec tablature</label>
-    <div class="bulk">
-      <label class="btn bulkbtn">Importer mes tablatures (.txt)<input id="bulkFiles" type="file" accept=".txt,text/plain" multiple hidden></label>
-      <p class="tip" id="bulkInfo">Choisis plusieurs fichiers à la fois : chaque tablature est rattachée à la bonne chanson d'après le nom du fichier (ex. « Zombie - The Cranberries.txt »). Elles restent sur cet appareil.</p>
+    <div class="bulk" id="dropZone">
+      <div class="bulkrow">
+        <label class="btn bulkbtn">Importer des fichiers .txt<input id="bulkFiles" type="file" accept=".txt,text/plain" multiple hidden></label>
+        <label class="btn bulkbtn">Importer un dossier<input id="bulkDir" type="file" webkitdirectory multiple hidden></label>
+      </div>
+      <p class="tip" id="bulkInfo">Ajoute autant de fichiers texte que tu veux, ou glisse-les ici. Chaque fichier est rattaché à sa chanson d'après son nom (ex. « Zombie - The Cranberries.txt »), et si la chanson n'existe pas, elle est créée. Tout reste sur cet appareil.</p>
     </div>
     <div id="songs-list" class="block"></div>
   </div>
@@ -429,7 +433,26 @@ function chordFigs(names){
 }
 let USER={songs:[],vids:{},tabs:{}};
 try{const u=JSON.parse(localStorage.getItem('barre-user')||'null');if(u&&Array.isArray(u.songs))USER={songs:u.songs,vids:u.vids||{},tabs:u.tabs||{}}}catch(e){}
-const saveUser=()=>{try{localStorage.setItem('barre-user',JSON.stringify(USER))}catch(e){}};
+const saveUser=()=>{
+  try{localStorage.setItem('barre-user',JSON.stringify({songs:USER.songs,vids:USER.vids}))}catch(e){}
+  idbSet('tabs',USER.tabs);
+};
+/* les tablatures sont stockées dans IndexedDB (beaucoup plus de place que localStorage) */
+const idbOpen=()=>new Promise((ok,ko)=>{const r=indexedDB.open('barre-guitare',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>ok(r.result);r.onerror=()=>ko(r.error)});
+async function idbSet(k,v){try{const d=await idbOpen();d.transaction('kv','readwrite').objectStore('kv').put(v,k)}catch(e){}}
+async function idbGet(k){try{const d=await idbOpen();return await new Promise((ok,ko)=>{const r=d.transaction('kv').objectStore('kv').get(k);r.onsuccess=()=>ok(r.result);r.onerror=()=>ko(r.error)})}catch(e){return undefined}}
+const CHORD_RE=/^[A-G][#b♯♭]?(?:m|maj|min|dim|aug|sus|add)?\d*(?:\/[A-G][#b♯♭]?)?$/;
+const isChordLine=l=>{const t=l.trim().split(/\s+/).filter(x=>x&&!/^[|\/()x×0-9]+$/.test(x)||CHORD_RE.test(x));return l.trim()&&t.length&&t.every(x=>CHORD_RE.test(x))};
+function fmtTab(t){
+  return t.split('\n').map(l=>{
+    const e=esc(l);
+    if(/^\s*\[[^\]]+\]/.test(l))return `<span class="tsec">${e}</span>`;
+    if(/^\s*[eEBGDAa-g]?\|?[-0-9hpbr\/\\^~xX()|.\s]*\|/.test(l)&&/[-|]{3,}/.test(l))return `<span class="tstaff">${e}</span>`;
+    if(isChordLine(l))return `<span class="tchord">${e}</span>`;
+    if(/^[A-ZÀ-Ý0-9 \-—:°'’]{6,}$/.test(l.trim())||/^(ACCORDS|Capo|Tonalité|Accordage|Source)\b/i.test(l.trim()))return `<span class="thead">${e}</span>`;
+    return e;
+  }).join('\n');
+}
 let DEC={};
 const tabOf=so=>USER.tabs[so.key]||DEC[so.t]||'';
 const allSongs=()=>USER.songs.map(s=>({...s,key:'u'+s.id,mine:true})).concat(SONGS.map((s,i)=>({...s,key:'b'+i})));
@@ -459,7 +482,7 @@ function renderSongs(){
       (vids.length?`<ul class="vlist">${vlist}</ul>`:'<p class="tip">Aucune vidéo pour l\'instant.</p>')+
       `<form class="vform controls" data-key="${so.key}" autocomplete="off"><label>Lien YouTube <input class="vurl" type="url" required placeholder="https://www.youtube.com/watch?v=…"></label><label>Nom (facultatif) <input class="vname" type="text" maxlength="60" placeholder="Ex. Cours du refrain"></label><button class="btn" type="submit">Ajouter la vidéo</button></form></details>`+
       `<details class="vids mytab" data-key="${so.key}"${openSongs.has('t'+so.key)?' open':''}><summary>Ma tablature${tabOf(so)?' ✓':''}</summary>`+
-      (tabOf(so)?`<pre class="tabtxt" tabindex="0">${esc(tabOf(so))}</pre>${USER.tabs[so.key]?`<p><button type="button" class="chip tabdel" data-key="${so.key}">Retirer ma tablature</button></p>`:''}`:`<p class="tip">Ajoute ta propre tablature (fichier .txt ou texte collé). Elle reste sur cet appareil et n'est pas publiée.</p><label class="tabpick">Fichier .txt <input class="tabfile" type="file" accept=".txt,text/plain" data-key="${so.key}"></label><label>Ou colle le texte <textarea class="tabarea" rows="5" placeholder="Colle ici ta tablature"></textarea></label><p><button type="button" class="btn tabsave" data-key="${so.key}">Enregistrer</button></p>`)+`</details>`+
+      (tabOf(so)?`<pre class="tabtxt" tabindex="0">${fmtTab(tabOf(so))}</pre>${USER.tabs[so.key]?`<p><button type="button" class="chip tabdel" data-key="${so.key}">Retirer ma tablature</button></p>`:''}`:`<p class="tip">Ajoute ta propre tablature (fichier .txt ou texte collé). Elle reste sur cet appareil et n'est pas publiée.</p><label class="tabpick">Fichier .txt <input class="tabfile" type="file" accept=".txt,text/plain" data-key="${so.key}"></label><label>Ou colle le texte <textarea class="tabarea" rows="5" placeholder="Colle ici ta tablature"></textarea></label><p><button type="button" class="btn tabsave" data-key="${so.key}">Enregistrer</button></p>`)+`</details>`+
       (so.mine?`<p><button type="button" class="chip sdel" data-id="${so.id}">Supprimer cette chanson</button></p>`:'')+`</details>`;
   }).join('');
 }
@@ -524,6 +547,8 @@ $('#sForm').addEventListener('submit',e=>{
 });
 renderSongs();
 
+idbGet('tabs').then(t=>{if(t&&typeof t==='object'){USER.tabs={...USER.tabs,...t};renderSongs()}else if(Object.keys(USER.tabs).length)idbSet('tabs',USER.tabs)});
+
 /* import groupé de tablatures : le fichier est relié à la chanson dont le titre et l'artiste ressemblent le plus à son nom */
 const norm=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').split(' ').filter(w=>w.length>2);
 function matchSong(name){
@@ -535,18 +560,34 @@ function matchSong(name){
   });
   return bs>=.6?best:null;
 }
-$('#bulkFiles').addEventListener('change',async e=>{
-  const files=[...e.target.files],ok=[],ko=[];
+function songFromFile(name,text){
+  let base=name.replace(/\.[^.]+$/,'').replace(/_/g,' ').replace(/^[0-9a-f]{8}-/,'').trim();
+  let [title,artist]=base.split(/\s+-\s+|\s+—\s+/);
+  if(!artist){const m=(text.split('\n')[0]||'').split(/\s+[—–-]\s+/);if(m.length>1){title=m[0].trim();artist=m[1].trim()}}
+  title=(title||base).trim();artist=(artist||'').trim();
+  const cap=w=>w.replace(/\b([a-zà-ÿ])/g,c=>c.toUpperCase());
+  const T=/^[^a-z]*$/.test(title)?cap(title.toLowerCase()):title,A=/^[^a-z]*$/.test(artist)?cap(artist.toLowerCase()):artist;
+  const ch=[];text.split('\n').forEach(l=>{if(isChordLine(l))l.trim().split(/\s+/).forEach(x=>{x=FLATS(x);if(CHORD_RE.test(x.replace('♯','#').replace('♭','b'))&&!ch.includes(x)&&ch.length<8)ch.push(x)})});
+  return {id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),t:A?`${A}, « ${T} »`:T,ch,q:`${A} ${T}`.trim(),cats:[]};
+}
+async function importFiles(list){
+  const files=[...list].filter(f=>/\.txt$/i.test(f.name)||f.type==='text/plain'),ok=[],made=[];
   for(const f of files){
-    const so=matchSong(f.name);
-    if(!so){ko.push(f.name);continue}
-    USER.tabs[so.key]=(await f.text()).replace(/\r\n/g,'\n').slice(0,200000);
-    openSongs.add('t'+so.key);ok.push(so.t);
+    const text=(await f.text()).replace(/\r\n/g,'\n').slice(0,200000);
+    let so=matchSong(f.name);
+    if(!so){const n=songFromFile(f.name,text);USER.songs.unshift(n);so={...n,key:'u'+n.id};made.push(n.t)}
+    USER.tabs[so.key]=text;openSongs.add('t'+so.key);ok.push(so.t);
   }
-  e.target.value='';
   saveUser();renderSongs();
-  $('#bulkInfo').textContent=(ok.length?ok.length+' tablature(s) importée(s) : '+ok.join(' ; ')+'. ':'')+(ko.length?'Non reconnue(s) : '+ko.join(', ')+' (ajoute d\'abord la chanson, ou importe-la depuis sa fiche).':'');
-});
+  $('#bulkInfo').textContent=files.length?`${ok.length} tablature(s) importée(s)`+(made.length?`, dont ${made.length} nouvelle(s) chanson(s) ajoutée(s) : ${made.join(' ; ')}`:'')+'.':'Aucun fichier .txt trouvé.';
+}
+$('#bulkFiles').addEventListener('change',async e=>{await importFiles(e.target.files);e.target.value=''});
+$('#bulkDir').addEventListener('change',async e=>{await importFiles(e.target.files);e.target.value=''});
+const dz=$('#dropZone');
+['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('over')}));
+['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('over')}));
+dz.addEventListener('drop',e=>importFiles(e.dataTransfer.files));
+
 
 /* ---------- tablatures chiffrées (tabs.enc.json : AES-GCM, clé PBKDF2 dérivée du code) ---------- */
 const b64=x=>Uint8Array.from(atob(x),c=>c.charCodeAt(0));
