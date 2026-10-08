@@ -182,6 +182,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 .tabtxt{font:12px/1.35 ui-monospace,Menlo,Consolas,monospace;white-space:pre;overflow:auto;max-height:65vh;padding:10px;border:1px solid var(--strg,#bbb);border-radius:10px;margin:8px 0}.tabarea{width:100%;font:12px ui-monospace,Menlo,Consolas,monospace;padding:8px;border:1px solid var(--strg,#bbb);border-radius:8px;background:transparent;color:inherit;box-sizing:border-box}.tabpick{display:block;margin:6px 0}
 .bulk{display:grid;gap:6px}.bulkbtn{cursor:pointer;justify-self:start}
 .onlytabs{display:flex;gap:8px;align-items:center;font-weight:500}
+.unlock{display:grid;gap:6px;justify-items:start}.unlock input{font:inherit;padding:8px 10px;border:1px solid var(--strg,#bbb);border-radius:8px;background:transparent;color:inherit}
 </style>
 </head>
 <body>
@@ -201,6 +202,11 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     <h2>Chansons</h2>
     <div class="chips" id="catBar" role="group" aria-label="Catégories"></div>
     <p class="tip" id="catInfo"></p>
+    <form class="unlock" id="unlockForm" autocomplete="off" hidden>
+      <label>Code des tablatures <input id="unlockCode" type="password" autocomplete="off" placeholder="Code"></label>
+      <button class="btn" type="submit">Déverrouiller</button>
+      <p class="tip" id="unlockInfo"></p>
+    </form>
     <label class="onlytabs"><input type="checkbox" id="onlyTabs" checked> Seulement les chansons avec tablature</label>
     <div class="bulk">
       <label class="btn bulkbtn">Importer mes tablatures (.txt)<input id="bulkFiles" type="file" accept=".txt,text/plain" multiple hidden></label>
@@ -424,6 +430,8 @@ function chordFigs(names){
 let USER={songs:[],vids:{},tabs:{}};
 try{const u=JSON.parse(localStorage.getItem('barre-user')||'null');if(u&&Array.isArray(u.songs))USER={songs:u.songs,vids:u.vids||{},tabs:u.tabs||{}}}catch(e){}
 const saveUser=()=>{try{localStorage.setItem('barre-user',JSON.stringify(USER))}catch(e){}};
+let DEC={};
+const tabOf=so=>USER.tabs[so.key]||DEC[so.t]||'';
 const allSongs=()=>USER.songs.map(s=>({...s,key:'u'+s.id,mine:true})).concat(SONGS.map((s,i)=>({...s,key:'b'+i})));
 const ytId=u=>{
   u=String(u).trim();
@@ -433,11 +441,11 @@ const ytId=u=>{
 const YT_SEARCH=t=>`https://www.youtube.com/results?search_query=${encodeURIComponent(t+' guitare tuto')}`;
 const openSongs=new Set();
 function renderSongs(){
-  const list=$('#songs-list'),all=allSongs().filter(x=>!onlyTabs||x.mine||USER.tabs[x.key]);
+  const list=$('#songs-list'),all=allSongs().filter(x=>!onlyTabs||x.mine||tabOf(x));
   $('#onlyTabs').checked=onlyTabs;
   $('#catBar').innerHTML=CATS.map(([k,l])=>`<button type="button" class="chip" data-cat="${k}" aria-pressed="${k===curCat}">${l} (${k==='all'?all.length:all.filter(x=>songCats(x).has(k)).length})</button>`).join('');
   const shown=all.filter(x=>curCat==='all'||songCats(x).has(curCat));
-  $('#catInfo').textContent=shown.length?'Touche une chanson pour voir ses accords, les doigts et ses vidéos.':(onlyTabs?'Aucune chanson avec tablature ici pour l\'instant : importe tes fichiers avec le bouton « Importer mes tablatures », ou décoche « Seulement les chansons avec tablature ».':curCat==='mine'?'Aucune chanson à toi pour l\'instant : ouvre « Ajouter une chanson » plus bas.':'Aucune chanson dans cette catégorie.');
+  $('#catInfo').textContent=shown.length?'Touche une chanson pour voir ses accords, les doigts et ses vidéos.':(onlyTabs?'Aucune chanson avec tablature ici pour l\'instant : déverrouille les tablatures avec ton code (ou importe tes fichiers avec le bouton « Importer mes tablatures »), ou décoche « Seulement les chansons avec tablature ».':curCat==='mine'?'Aucune chanson à toi pour l\'instant : ouvre « Ajouter une chanson » plus bas.':'Aucune chanson dans cette catégorie.');
   list.innerHTML=shown.map((so,i)=>{
     const vids=USER.vids[so.key]||[];
     const chips=so.ch.length?`<div class="chips">${so.ch.map((c,j)=>`<button type="button" class="chip" data-key="${so.key}" data-j="${j}" aria-pressed="false">${esc(c)}</button>`).join('')}</div>`:`<p class="tip">Grille d'accords à compléter depuis une tablature.</p>`;
@@ -450,8 +458,8 @@ function renderSongs(){
       `<div class="vplayer" aria-live="polite"></div>`+
       (vids.length?`<ul class="vlist">${vlist}</ul>`:'<p class="tip">Aucune vidéo pour l\'instant.</p>')+
       `<form class="vform controls" data-key="${so.key}" autocomplete="off"><label>Lien YouTube <input class="vurl" type="url" required placeholder="https://www.youtube.com/watch?v=…"></label><label>Nom (facultatif) <input class="vname" type="text" maxlength="60" placeholder="Ex. Cours du refrain"></label><button class="btn" type="submit">Ajouter la vidéo</button></form></details>`+
-      `<details class="vids mytab" data-key="${so.key}"${openSongs.has('t'+so.key)?' open':''}><summary>Ma tablature${USER.tabs[so.key]?' ✓':''}</summary>`+
-      (USER.tabs[so.key]?`<pre class="tabtxt" tabindex="0">${esc(USER.tabs[so.key])}</pre><p><button type="button" class="chip tabdel" data-key="${so.key}">Retirer ma tablature</button></p>`:`<p class="tip">Ajoute ta propre tablature (fichier .txt ou texte collé). Elle reste sur cet appareil et n'est pas publiée.</p><label class="tabpick">Fichier .txt <input class="tabfile" type="file" accept=".txt,text/plain" data-key="${so.key}"></label><label>Ou colle le texte <textarea class="tabarea" rows="5" placeholder="Colle ici ta tablature"></textarea></label><p><button type="button" class="btn tabsave" data-key="${so.key}">Enregistrer</button></p>`)+`</details>`+
+      `<details class="vids mytab" data-key="${so.key}"${openSongs.has('t'+so.key)?' open':''}><summary>Ma tablature${tabOf(so)?' ✓':''}</summary>`+
+      (tabOf(so)?`<pre class="tabtxt" tabindex="0">${esc(tabOf(so))}</pre>${USER.tabs[so.key]?`<p><button type="button" class="chip tabdel" data-key="${so.key}">Retirer ma tablature</button></p>`:''}`:`<p class="tip">Ajoute ta propre tablature (fichier .txt ou texte collé). Elle reste sur cet appareil et n'est pas publiée.</p><label class="tabpick">Fichier .txt <input class="tabfile" type="file" accept=".txt,text/plain" data-key="${so.key}"></label><label>Ou colle le texte <textarea class="tabarea" rows="5" placeholder="Colle ici ta tablature"></textarea></label><p><button type="button" class="btn tabsave" data-key="${so.key}">Enregistrer</button></p>`)+`</details>`+
       (so.mine?`<p><button type="button" class="chip sdel" data-id="${so.id}">Supprimer cette chanson</button></p>`:'')+`</details>`;
   }).join('');
 }
@@ -539,6 +547,35 @@ $('#bulkFiles').addEventListener('change',async e=>{
   saveUser();renderSongs();
   $('#bulkInfo').textContent=(ok.length?ok.length+' tablature(s) importée(s) : '+ok.join(' ; ')+'. ':'')+(ko.length?'Non reconnue(s) : '+ko.join(', ')+' (ajoute d\'abord la chanson, ou importe-la depuis sa fiche).':'');
 });
+
+/* ---------- tablatures chiffrées (tabs.enc.json : AES-GCM, clé PBKDF2 dérivée du code) ---------- */
+const b64=x=>Uint8Array.from(atob(x),c=>c.charCodeAt(0));
+let ENC=null;
+async function decryptTabs(code){
+  const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(code),'PBKDF2',false,['deriveKey']);
+  const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b64(ENC.salt),iterations:ENC.iter,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['decrypt']);
+  const buf=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(ENC.iv)},key,b64(ENC.data));
+  return JSON.parse(new TextDecoder().decode(buf));
+}
+async function tryUnlock(code,remember){
+  const info=$('#unlockInfo');info.textContent='Déverrouillage…';
+  try{
+    DEC=await decryptTabs(code);
+    if(remember){try{localStorage.setItem('barre-code',code)}catch(e){}}
+    $('#unlockForm').hidden=true;renderSongs();return true;
+  }catch(e){
+    info.textContent=window.crypto&&crypto.subtle?'Code incorrect.':'Le déverrouillage demande une connexion sécurisée (https).';
+    try{localStorage.removeItem('barre-code')}catch(x){}
+    return false;
+  }
+}
+$('#unlockForm').addEventListener('submit',e=>{e.preventDefault();const c=$('#unlockCode').value.trim();if(c)tryUnlock(c,true)});
+fetch('tabs.enc.json').then(r=>r.ok?r.json():null).then(j=>{
+  if(!j)return;
+  ENC=j;$('#unlockForm').hidden=false;
+  let c=null;try{c=localStorage.getItem('barre-code')}catch(e){}
+  if(c)tryUnlock(c,false);
+}).catch(()=>{});
 
 
 /* ---------- accordeur ---------- */
