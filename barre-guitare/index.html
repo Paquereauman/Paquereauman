@@ -181,6 +181,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
 .song>summary{cursor:pointer;list-style:none;display:block;font-weight:600;padding:2px 0}.song>summary .level{display:inline-block;font-size:.78rem;font-weight:500;color:var(--muted);border:1px solid currentColor;border-radius:99px;padding:0 8px;margin:4px 6px 0 0}.song>summary .stitle{display:inline}.song>summary::-webkit-details-marker{display:none}.song>summary::before{content:'▸';margin-right:4px}.song[open]>summary::before{content:'▾'}.song[open]>summary{margin-bottom:10px}.song{padding:12px 14px}.catpick{border:1px solid var(--strg,#bbb);border-radius:10px;padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px 14px}.catpick label{display:flex;gap:6px;align-items:center}.addsong>summary{cursor:pointer}
 .tabtxt{font:12px/1.35 ui-monospace,Menlo,Consolas,monospace;white-space:pre;overflow:auto;max-height:65vh;padding:10px;border:1px solid var(--strg,#bbb);border-radius:10px;margin:8px 0}.tabarea{width:100%;font:12px ui-monospace,Menlo,Consolas,monospace;padding:8px;border:1px solid var(--strg,#bbb);border-radius:8px;background:transparent;color:inherit;box-sizing:border-box}.tabpick{display:block;margin:6px 0}
 .bulk{display:grid;gap:6px}.bulkbtn{cursor:pointer;justify-self:start}
+.onlytabs{display:flex;gap:8px;align-items:center;font-weight:500}
 </style>
 </head>
 <body>
@@ -200,6 +201,7 @@ input[type=range]{accent-color:var(--up);width:min(260px,60vw)}
     <h2>Chansons</h2>
     <div class="chips" id="catBar" role="group" aria-label="Catégories"></div>
     <p class="tip" id="catInfo"></p>
+    <label class="onlytabs"><input type="checkbox" id="onlyTabs" checked> Seulement les chansons avec tablature</label>
     <div class="bulk">
       <label class="btn bulkbtn">Importer mes tablatures (.txt)<input id="bulkFiles" type="file" accept=".txt,text/plain" multiple hidden></label>
       <p class="tip" id="bulkInfo">Choisis plusieurs fichiers à la fois : chaque tablature est rattachée à la bonne chanson d'après le nom du fichier (ex. « Zombie - The Cranberries.txt »). Elles restent sur cet appareil.</p>
@@ -324,6 +326,7 @@ const LVL={1:'Facile',2:'Moyen',3:'Exigeant'};
 const CATS=[['all','Toutes'],['facile','Barré facile'],['moyen','Barré moyen'],['dur','Barré exigeant'],['fr','Chansons françaises'],['en','Chansons anglaises'],['mine','Mes chansons']];
 const CAT_LABEL=Object.fromEntries(CATS);
 const songCats=so=>{const c=new Set(so.cats||[]);if(so.lvl)c.add(['','facile','moyen','dur'][so.lvl]);if(so.lang)c.add(so.lang);if(so.mine)c.add('mine');return c};
+let onlyTabs=true;try{if(localStorage.getItem('barre-onlytabs')==='0')onlyTabs=false}catch(e){}
 let curCat='all';try{const c=localStorage.getItem('barre-cat');if(CAT_LABEL[c])curCat=c}catch(e){}
 const FLAT={'B♭':'A♯','A♭':'G♯','D♭':'C♯','E♭':'D♯','G♭':'F♯'};
 const OPEN_MAJ=['C','D','E','G','A'],OPEN_MIN=['E','A','D'];
@@ -430,10 +433,11 @@ const ytId=u=>{
 const YT_SEARCH=t=>`https://www.youtube.com/results?search_query=${encodeURIComponent(t+' guitare tuto')}`;
 const openSongs=new Set();
 function renderSongs(){
-  const list=$('#songs-list'),all=allSongs();
+  const list=$('#songs-list'),all=allSongs().filter(x=>!onlyTabs||x.mine||USER.tabs[x.key]);
+  $('#onlyTabs').checked=onlyTabs;
   $('#catBar').innerHTML=CATS.map(([k,l])=>`<button type="button" class="chip" data-cat="${k}" aria-pressed="${k===curCat}">${l} (${k==='all'?all.length:all.filter(x=>songCats(x).has(k)).length})</button>`).join('');
   const shown=all.filter(x=>curCat==='all'||songCats(x).has(curCat));
-  $('#catInfo').textContent=shown.length?'Touche une chanson pour voir ses accords, les doigts et ses vidéos.':(curCat==='mine'?'Aucune chanson à toi pour l\'instant : ouvre « Ajouter une chanson » plus bas.':'Aucune chanson dans cette catégorie.');
+  $('#catInfo').textContent=shown.length?'Touche une chanson pour voir ses accords, les doigts et ses vidéos.':(onlyTabs?'Aucune chanson avec tablature ici pour l\'instant : importe tes fichiers avec le bouton « Importer mes tablatures », ou décoche « Seulement les chansons avec tablature ».':curCat==='mine'?'Aucune chanson à toi pour l\'instant : ouvre « Ajouter une chanson » plus bas.':'Aucune chanson dans cette catégorie.');
   list.innerHTML=shown.map((so,i)=>{
     const vids=USER.vids[so.key]||[];
     const chips=so.ch.length?`<div class="chips">${so.ch.map((c,j)=>`<button type="button" class="chip" data-key="${so.key}" data-j="${j}" aria-pressed="false">${esc(c)}</button>`).join('')}</div>`:`<p class="tip">Grille d'accords à compléter depuis une tablature.</p>`;
@@ -454,6 +458,7 @@ function renderSongs(){
 function showVideo(card,id){
   card.querySelector('.vplayer').innerHTML=`<div style="position:relative;aspect-ratio:16/9"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="Vidéo YouTube" style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
 }
+$('#onlyTabs').addEventListener('change',e=>{onlyTabs=e.target.checked;try{localStorage.setItem('barre-onlytabs',onlyTabs?'1':'0')}catch(x){}renderSongs()});
 $('#catBar').addEventListener('click',e=>{const b=e.target.closest('[data-cat]');if(!b)return;curCat=b.dataset.cat;try{localStorage.setItem('barre-cat',curCat)}catch(x){}renderSongs()});
 function saveTab(key,text){
   USER.tabs[key]=text.slice(0,200000);openSongs.add('t'+key);saveUser();renderSongs();
