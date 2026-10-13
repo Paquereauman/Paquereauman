@@ -65,6 +65,7 @@ guess=[("@monde-musulman.png","Où se trouve le Maghreb sur cette carte ? 🗺�
 ("zellige","Quel est cet art ? 🎨",["Le zellige (mosaïque)","Le vitrail","Le graffiti"],0,"Le zellige : mosaïque de petits carreaux d'argile émaillés, typique de l'art maghrébin (motifs géométriques, pas de figures humaines)."),
 ("@petrole.png","Que voit-on ? 🔥",["Une usine en France","Un gisement de pétrole au Sahara","Un volcan"],1,"Hassi Messaoud (Algérie) : le pétrole et le gaz sont la 1re richesse de l'Algérie."),
 ("@tourisme.png","Où est cet hôtel ? 🏖️",["Monastir (Tunisie)","Miami (USA)","Cannes (France)"],0,"Monastir : le tourisme balnéaire est essentiel pour la Tunisie depuis les années 1960.")]
+guess=[g for g in guess if g[0] in ("@monde-musulman.png","couscous","merzouga","chefchaouen","sidibou","jemaa","zellige","@petrole.png")]
 def gpath(k): return IMGD+k[1:] if k.startswith("@") else G+k+".jpg"
 IMGD="/home/user/Paquereauman/maghreb/img/"
 
@@ -96,21 +97,14 @@ for i,(k,q,opts,ok,fact) in enumerate(guess):
     nx=btn(r,9.4,5.6,2.8,0.7,"Suivant ➡️" if i<len(guess)-1 else "Menu 🗺️",BLEU,16); links.append((nx,f"g{i+1}" if i<len(guess)-1 else "menu"))
 # 2 Menu
 s=slide("🗺️ Menu du voyage — clique sur une étape !",key="menu")
-etapes=[("🔎 Devine où c'est ?","guessIntro","15'"),("Brise-glace","bris","10'"),("I. Carte d'identité & relief","geo","30'"),("🎬 C.O. Vidéo","video","20'"),
-("Quiz géo","quiz","10'"),("📜 V. Histoire (3 000 ans)","hist","40'"),("II. Littoral & intérieur","litt","30'"),("☕ Pause","pause","10'"),
-("III. Démographie & émigration","demo","30'"),("IV. Islam & conflits","islam","30'"),("📖 C.E. B1 : 3 textes","ceB1","25'"),("📖 C.E. Yasmine","ce","20'"),("Cuisine & culture","cult","10'"),("Jeux de mots","jeux","10'"),
-("Défi final","defi","5'"),("Bilan","bilan","5'")]
+etapes=[("🔎 Devine où c'est ?","guessIntro","15'"),("I. Carte d'identité & relief","geo","35'"),("II. Littoral & intérieur","litt","30'"),("III. Démographie & émigration","demo","30'"),
+("☕ Pause","pause","10'"),("IV. Islam & conflits","islam","30'"),("📜 V. Histoire (3 000 ans)","hist","35'"),("🎬 C.O. Vidéo","video","20'"),
+("📖 C.E. B1 : 3 textes","ceB1","25'"),("Défi final","defi","5'"),("Bilan","bilan","5'")]
 cols=[TERRE,BLEU,VERT,OR]
 for i,(t,k,d) in enumerate(etapes):
     x=0.5+(i%4)*3.1; y=1.5+(i//4)*1.3
     b=btn(s,x,y,2.95,1.1,f"{t}  ({d})",cols[i%4],16); links.append((b,k))
-txt(s,0.6,6.85,11,0.5,"Durée totale ≈ 4 h 30 (3 à 4 séances)  •  Score des équipes au tableau  🏆",16,BLEU,True)
-
-# 3 Brise-glace
-s=slide("1. Brise-glace : le Maghreb en 1 mot","15'",key="bris",notes="Chacun dit un mot qui lui évoque le Maghreb ; on construit un nuage de mots au tableau. Puis formation de 3 équipes : Atlas, Sahara, Médina.")
-bullets(s,["Tour de table : 1 mot, 1 image, 1 souvenir associé au Maghreb","On construit ensemble un nuage de mots au tableau ☁️",
-"Formez 3 équipes : 🏔️ ATLAS  •  🏜️ SAHARA  •  🕌 MÉDINA","Chaque bonne réponse = 1 point — le score suit toute la séance !"])
-txt(s,0.7,5.4,12,1,"« Maghreb » (المغرب) signifie en arabe : « le couchant », l'Occident — là où le soleil se couche.",20,TERRE,True)
+txt(s,0.6,6.85,11,0.5,"Durée totale ≈ 4 h (3 séances de 1 h 20)  •  Score des équipes au tableau  🏆",16,BLEU,True)
 
 # 4 géo
 s=slide("I – Carte d'identité du Maghreb","25'",key="geo",notes="Faire lire les chiffres à voix haute, comparer avec la France (551 695 km², 68 M hab.). Valeurs arrondies : vérifier les dernières données Banque mondiale si besoin.")
@@ -147,51 +141,29 @@ s=slide("Réponses : l'Atlas, un massif en plusieurs parties","",key="reliefR")
 txt(s,0.6,1.5,6.3,5.3,["✅ L'ATLAS domine le Maghreb.","✅ Non, il n'est pas d'un seul bloc : il y a plusieurs parties :","   • le Rif (nord du Maroc)","   • le Moyen Atlas (près de Fès) ➡️","   • le Haut Atlas (Maroc, Toubkal 4 167 m)","   • l'Anti-Atlas","   • l'Atlas tellien et l'Atlas saharien (Algérie)","✅ Il pleut plus au nord (> 300 mm) : la montagne arrête les nuages venus de la mer.","✅ Au sud : le Sahara, des oasis et le Hoggar."],17)
 s.shapes.add_picture("/home/user/Paquereauman/maghreb/img/moyen-atlas.png",Inches(7.1),Inches(1.8),width=Inches(5.8))
 txt(s,7.1,4.8,5.8,0.6,"Le Moyen Atlas, près de Fès (Maroc)",16,TERRE,True,PP_ALIGN.CENTER)
-s=slide("Les autres paysages du Maghreb","",notes="Questionnement oral, puis « Réponses ».")
-txt(s,0.6,1.6,12,4.5,["❓ Quels sont les autres massifs montagneux du Maghreb ?","❓ Par quoi se caractérise le littoral ?","❓ Qu'est-ce qui domine au Maghreb ?","❓ Comment se nomment les îlots de verdure dans le désert ?"],24,BLEU,True)
-b=btn(s,9.4,6.0,2.8,0.7,"Réponses ➡️",VERT,16); links.append((b,"oasisR"))
-s=slide("Réponses : désert et oasis","",key="oasisR",notes="Insérer ici la photo de l'oasis de Bou Thramar (Insertion > Image) à la place du cadre.")
+s=slide("Autres paysages : Hoggar, littoral, désert et oasis","",key="oasisR",notes="Insérer ici la photo de l'oasis de Bou Thramar (Insertion > Image) à la place du cadre.")
 txt(s,0.6,1.5,6.3,5.3,["✅ Le Hoggar (sud de l'Algérie).","✅ Le littoral se caractérise par des plaines.","✅ Le désert (Sahara) domine, avec des îlots de verdure.","✅ Ces îlots s'appellent des OASIS 🌴"],20)
 r=rect(s,7.1,1.6,5.8,3.4,RGBColor(0xE8,0xD9,0xB5),MSO_SHAPE.ROUNDED_RECTANGLE)
 txt(s,7.1,2.9,5.8,0.8,"📷 Photo : l'oasis de Bou Thramar",18,TERRE,True,PP_ALIGN.CENTER)
 txt(s,7.1,5.1,5.8,0.6,"L'oasis de Bou Thramar (Maroc)",16,TERRE,True,PP_ALIGN.CENTER)
-s=slide("Doc. 1 p. 222 : les précipitations","",notes="Faire repérer les lignes 300 mm et 150 mm sur la carte.")
-s.shapes.add_picture("/home/user/Paquereauman/maghreb/img/relief.png",Inches(0.5),Inches(1.4),height=Inches(5.5))
-txt(s,7.5,1.5,5.4,3,["❓ Quel est le niveau des précipitations dans la région ?","❓ Où pleut-il le plus ?"],20,BLEU,True)
-b=btn(s,7.5,3.6,2.6,0.7,"Réponse 1",VERT,16); links.append((b,"pluieR"))
-s=slide("Réponse : des précipitations globalement faibles","",key="pluieR")
-txt(s,0.6,1.6,12,4.5,["✅ Les précipitations sont globalement FAIBLES.","• Plus de 300 mm/an seulement sur une étroite bande au nord (littoral, Atlas).","• Moins de 150 mm/an dans le Sahara : un climat désertique.","💡 Comparaison : Paris reçoit environ 640 mm de pluie par an."],22)
-s=slide("Précipitations et climats","",notes="Préciser qu'en dessous de 250 mm de précipitations, il n'y a plus d'agriculture possible (sans irrigation).")
-txt(s,0.6,1.6,12,4,["❓ Cette faiblesse des précipitations est-elle généralisée ?","❓ Lesquelles des régions sont plus arrosées ?","❓ Quels sont les climats du Maghreb ?"],24,BLEU,True)
-b=btn(s,9.4,6.0,2.8,0.7,"Réponses ➡️",VERT,16); links.append((b,"climR"))
-s=slide("Réponses : deux climats","",key="climR")
+s=slide("Précipitations et climats : deux climats","",key="climR")
 txt(s,0.6,1.5,6.3,5.3,["✅ Non : certaines régions sont un peu plus arrosées.","✅ Les plaines littorales et les massifs montagneux.","⚠️ En dessous de 250 mm/an, plus d'agriculture possible !","✅ Au Nord : climat MÉDITERRANÉEN 🌿","✅ Au Sud : climat DÉSERTIQUE 🏜️","✏️ Sur ta carte : trace l'isohyète des 250 mm et complète la légende."],19)
 s.shapes.add_picture("/home/user/Paquereauman/maghreb/img/isohyete.png",Inches(7.1),Inches(1.5),width=Inches(5.8))
 txt(s,7.1,6.4,5.8,0.5,"━ isohyète 250 mm (ligne bleue)",15,BLEU,True,PP_ALIGN.CENTER)
-s=slide("✏️ Complète le tableau","",notes="Les élèves complètent le tableau sur leur fiche, puis correction.")
-rect(s,2.0,1.6,9.3,0.9,TERRE); txt(s,2.0,1.75,9.3,0.7,"Principaux caractères du Maghreb",24,BLANC,True,PP_ALIGN.CENTER)
-for i in range(3):
-    rect(s,2.0,2.6+i*1.2,9.3,1.1,BLANC); txt(s,2.0,2.85+i*1.2,9.3,0.7,"1… 2… 3… ?"[0:0]+["1. ……………………","2. ……………………","3. ……………………"][i],22,NOIR,False,PP_ALIGN.CENTER)
-b=btn(s,9.4,6.3,2.8,0.6,"Correction ➡️",VERT,16); links.append((b,"tabR"))
-s=slide("Correction du tableau","",key="tabR")
+s=slide("✏️ Tableau : principaux caractères du Maghreb","",key="tabR")
 rect(s,2.0,1.6,9.3,0.9,TERRE); txt(s,2.0,1.75,9.3,0.7,"Principaux caractères du Maghreb",24,BLANC,True,PP_ALIGN.CENTER)
 for i,t in enumerate(["Importance du désert","Présence d'un massif montagneux : l'Atlas","Les domaines bioclimatiques méditerranéen et désertique, marqués par l'aridité"]):
     rect(s,2.0,2.6+i*1.2,9.3,1.1,BLANC); txt(s,2.1,2.75+i*1.2,9.1,0.9,t,20,NOIR,True,PP_ALIGN.CENTER)
 s=slide("B/ Le Maghreb appartient au monde arabo-musulman","",notes="Présentation : http://fr.calameo.com/read/0000054193e34050e91d9")
 s.shapes.add_picture("/home/user/Paquereauman/maghreb/img/monde-musulman.png",Inches(0.5),Inches(1.5),height=Inches(5.2))
 txt(s,6.9,1.6,6,4,["❓ D'après ce document et ce que tu as vu sur l'Afrique, quelle est la religion dominante au Maghreb ?","❓ Depuis quand ?"],21,BLEU,True)
-b=btn(s,9.4,6.0,2.8,0.7,"Réponses ➡️",VERT,16); links.append((b,"isR"))
-s=slide("Réponses : le Maghreb musulman","",key="isR")
-txt(s,0.6,1.8,12,4,["✅ La religion musulmane (islam) domine.","✅ Depuis les VIIe–VIIIe siècles, avec les conquêtes arabo-musulmanes.","🕋 Lieux saints de l'islam : La Mecque et Médine (Arabie saoudite)."],24)
+s.notes_slide.notes_text_frame.text+="\nRÉPONSES : l'islam ; depuis les VIIe-VIIIe siècles (conquêtes arabo-musulmanes)."
 s=slide("📖 C.E. — Doc. 4 p. 221 : Les Berbères","15'",notes="Lecture silencieuse 5', questions en binômes, correction collective.")
 txt(s,0.6,1.4,12.1,5.5,["« Les Berbères habitent en Algérie, dans les montagnes de Kabylie et des Aurès, et surtout au Maroc, dans les montagnes du Rif et dans l'Atlas.",
 "Les Berbères sont au moins bilingues. Ils parlent le berbère et l'arabe. Seuls les très jeunes enfants, les femmes ou les vieillards n'ayant pas séjourné en ville ne parlent que le berbère : dans la ville maghrébine, en effet, on parle arabe, à l'exception de quelques villes comme Agadir au Maroc.",
 "Tous les Maghrébins, qu'ils soient arabes ou berbères, accordent une grande valeur sentimentale à des traits de la culture berbère. Il s'agit notamment du « burnous », ce long manteau de laine à capuchon pour les hommes, et surtout du « couscous »¹, le plat le plus prestigieux de la cuisine maghrébine. »",
 "D'après Yves Lacoste, Maghreb, 1995.   ¹ Plat à base de semoule de blé."],17)
-b=btn(s,10.0,6.85,2.2,0.5,"Questions ➡️",VERT,14); links.append((b,"berQ"))
-s=slide("C.E. Les Berbères — Questions","",key="berQ")
-bullets(s,["1. Quels sont les deux peuples présents au Maghreb ?","2. Où habitent les Berbères ? Cite 2 pays et 3 régions.","3. Vrai/Faux : les Berbères ne parlent que le berbère. Justifie avec le texte.","4. Quelle langue parle-t-on dans les villes ? Quelle exception ?","5. Qu'est-ce que le « burnous » ?","6. Quel est « le plat le plus prestigieux » ? De quoi est-il fait ?","7. Qui est l'auteur ? En quelle année ?"],1.5,20)
-b=btn(s,9.8,6.1,2.4,0.7,"Correction",TERRE,16); links.append((b,"berC"))
+b=btn(s,10.0,6.85,2.2,0.5,"Questions + correction ➡️",VERT,14); links.append((b,"berC"))
 s=slide("C.E. Les Berbères — Correction","",key="berC")
 bullets(s,["1. Les Arabes et les Berbères.","2. En Algérie (Kabylie, Aurès) et surtout au Maroc (Rif, Atlas).","3. FAUX : « Les Berbères sont au moins bilingues » (berbère et arabe).","4. L'arabe, sauf quelques villes comme Agadir (Maroc).","5. Un long manteau de laine à capuchon pour les hommes.","6. Le couscous, à base de semoule de blé.","7. Yves Lacoste, 1995."],1.5,20)
 s=slide("Doc. 5 p. 221 : les Arabes et les Berbères","",notes="Présentation Calaméo : https://www.calameo.com/read/000005419914424b872ed")
@@ -203,7 +175,7 @@ bullets(s,["Arabophones : plaines littorales et villes (Casablanca, Rabat, Alger
 IMG="/home/user/Paquereauman/maghreb/img/"
 TR=RGBColor(0x1A,0x2F,0xC8)
 n=[0]
-def doc(title,img,qs,ans,trace=None,timing=None,key=None,notes="",wide=False):
+def doc(title,img,qs,ans,trace=None,timing=None,key=None,notes="",wide=False,compact=False):
     n[0]+=1; k=f"doc{n[0]}"
     s=slide(title,timing,key=key,notes=notes)
     pic=s.shapes.add_picture(IMG+img,Inches(0.5),Inches(1.4),height=Inches(5.4))
@@ -211,6 +183,11 @@ def doc(title,img,qs,ans,trace=None,timing=None,key=None,notes="",wide=False):
         r=Inches(7.2)/pic.width; pic.width=Inches(7.2); pic.height=int(pic.height*r)
     x=0.5+pic.width/914400+0.3
     txt(s,x,1.5,13.0-x,4.6,["❓ "+q for q in qs],18,BLEU,True)
+    if compact:
+        s.notes_slide.notes_text_frame.text="RÉPONSES : "+" | ".join(ans)+(" — TRACE : "+trace if trace else "")
+        if trace:
+            rect(s,x,5.3,13.0-x-0.2,1.5,RGBColor(0xE6,0xEA,0xFB),MSO_SHAPE.ROUNDED_RECTANGLE); txt(s,x+0.1,5.35,13.0-x-0.4,1.4,"✏️ "+trace,13,TR,True)
+        return
     bt=btn(s,10.2,6.15,2.2,0.6,"Réponses ➡️",VERT,15); links.append((bt,k))
     r=slide("Réponses — "+title.split(":")[-1].strip(),key=k)
     txt(r,0.6,1.5,12.1,3.8 if trace else 5.2,["✅ "+a for a in ans],19)
@@ -220,8 +197,11 @@ def doc(title,img,qs,ans,trace=None,timing=None,key=None,notes="",wide=False):
 def trace(title,lines):
     s=slide(title); rect(s,0.6,2.0,12.1,3.2,RGBColor(0xE6,0xEA,0xFB),MSO_SHAPE.ROUNDED_RECTANGLE)
     txt(s,0.9,2.2,11.5,3,["✏️ Trace écrite :"]+lines,22,TR,True)
-trace("Trace écrite — B/ Le monde arabo-musulman",["La population du Maghreb est composée majoritairement d'Arabes, mais les Berbères sont également nombreux.","La religion de la majorité de la population est l'islam."])
-
+def qa(title,qs,ans,trace=None):
+    s=slide(title)
+    txt(s,0.6,1.45,12.1,4.2,sum([["❓ "+q,"     ➜ "+a] for q,a in zip(qs,ans)],[]),16)
+    if trace:
+        rect(s,0.6,5.75,12.1,1.0,RGBColor(0xE6,0xEA,0xFB),MSO_SHAPE.ROUNDED_RECTANGLE); txt(s,0.8,5.8,11.7,0.95,"✏️ Trace écrite : "+trace,14,TR,True)
 # ===== II =====
 s=slide("II. Un littoral plus attractif que l'intérieur","30'",bg=BLEU,key="litt",notes="Présentation : http://fr.calameo.com/read/00000541937ce663e2326")
 txt(s,0.6,2.3,12,1,"Séance 2 : littoral et intérieur",36,OR,True,PP_ALIGN.CENTER)
@@ -296,7 +276,7 @@ ev=[("610","Mahomet reçoit la Révélation à La Mecque"),("622","Hégire : dé
 for i,(d,t) in enumerate(ev):
     btn(s,0.6,1.5+i*0.95,1.6,0.8,d,[TERRE,BLEU,VERT,OR,TERRE][i],20); txt(s,2.4,1.6+i*0.95,10.4,0.8,t,19)
 txt(s,0.6,6.35,12,0.5,"➡️ Les Berbères se convertissent peu à peu ; l'arabe devient la langue de la religion et des villes.",16,TERRE,True)
-doc("B/ Sunnites et chiites : quelle différence ?","monde-musulman.png",
+qa("B/ Sunnites et chiites : quelle différence ?",
  ["Pourquoi les musulmans se sont-ils divisés après 632 ?","Que pensent les sunnites ? les chiites ?","Le Maghreb est-il sunnite ou chiite ?","Où vivent surtout les chiites ?"],
  ["Désaccord sur la succession de Mahomet (qui doit diriger les musulmans ?).","Sunnites (≈ 85-90 %) : le chef (calife) est choisi parmi les fidèles. Chiites (≈ 10-15 %) : il doit descendre d'Ali, gendre de Mahomet (bataille de Kerbala, 680).","Presque entièrement sunnite (rite malékite).","Iran, Irak, Bahreïn, Liban (en partie)."],
  "Le Maghreb est musulman sunnite. La division sunnites/chiites, née d'une querelle de succession, alimente aujourd'hui des rivalités au Moyen-Orient (Arabie saoudite sunnite / Iran chiite).")
@@ -318,15 +298,8 @@ s=slide("🎲 Vrai ou faux ? (islam & conflits)","")
 vf=[("L'islam est arrivé au Maghreb au VIIe siècle.","VRAI"),("Le Maghreb est majoritairement chiite.","FAUX : sunnite"),("Le Printemps arabe a commencé en Tunisie.","VRAI (déc. 2010)"),("Tous les musulmans soutiennent le terrorisme.","FAUX : ils en sont les 1res victimes"),("Gibraltar vient de « Djebel Tariq ».","VRAI")]
 for i,(q,a) in enumerate(vf):
     txt(s,0.6,1.5+i*0.95,8.4,0.8,f"{i+1}. {q}",19)
-    b=btn(s,9.3,1.5+i*0.95,3.4,0.75,"Révéler",[TERRE,BLEU,VERT,OR,TERRE][i],15); links.append((b,"vfR"))
-s=slide("Correction du vrai/faux","",key="vfR")
-txt(s,0.6,1.5,12,5,[f"{i+1}. {q}  ➜  {a}" for i,(q,a) in enumerate(vf)],20)
-s=slide("Paysages : de la mer au désert","")
-for i,(t,d,c) in enumerate([("🌊 Méditerranée","Côtes, ports, plages au nord",BLEU),("🏔️ Atlas","Montagnes jusqu'à 4 167 m (Toubkal)",VERT),("🏜️ Sahara","Le plus grand désert chaud du monde",OR),("🌴 Oasis","Palmiers-dattiers, eau et vie",TERRE)]):
-    r=rect(s,0.6+i*3.15,1.7,2.95,4.2,c,MSO_SHAPE.ROUNDED_RECTANGLE)
-    txt(s,0.7+i*3.15,2.0,2.75,1,t,24,BLANC,True,PP_ALIGN.CENTER); txt(s,0.7+i*3.15,3.3,2.75,2,d,18,BLANC,False,PP_ALIGN.CENTER)
-txt(s,0.6,6.1,12,0.7,"🎯 Activité : à l'oral, décris ton paysage préféré avec 3 adjectifs.",20,TERRE,True)
-
+    txt(s,9.3,1.55+i*0.95,3.6,0.75,"VRAI ☐   FAUX ☐",18,TERRE,True)
+s.notes_slide.notes_text_frame.text="CORRECTION : "+" | ".join(f"{i+1}. {a}" for i,(q,a) in enumerate(vf))
 # vidéo
 s=slide("🎬 C.O. Compréhension orale : vidéo","20'",key="video",notes="Remplacer le lien par la vidéo choisie (ou insérer un fichier .mp4 : Insertion > Vidéo). 1er visionnage sans son, 2e avec son, 3e pour vérifier.")
 r=rect(s,0.8,1.6,6.6,4.2,NOIR); 
@@ -334,47 +307,7 @@ v=btn(s,2.6,3.2,3.0,1.0,"▶ LANCER LA VIDÉO",ROUGE,20)
 v.click_action.hyperlink.address="https://www.youtube.com/results?search_query=le+maghreb+documentaire+maroc+alg%C3%A9rie+tunisie"
 txt(s,0.8,5.9,6.6,0.8,"(Clique pour ouvrir la vidéo — ou insère ton .mp4 ici)",14,BLEU,False,PP_ALIGN.CENTER)
 txt(s,7.7,1.6,5.2,5,["📺 Visionnage 1 — sans le son :","   Quels lieux, couleurs, objets vois-tu ?","📺 Visionnage 2 — avec le son :","   Note 3 pays, 2 villes, 1 plat.","📺 Visionnage 3 :","   Réponds à la fiche vidéo ➡️"],18)
-b=btn(s,9.5,6.0,2.7,0.7,"Fiche vidéo ➡️",VERT,16); links.append((b,"fiche"))
-s=slide("Fiche vidéo : as-tu bien regardé ?","",key="fiche")
-bullets(s,["Quels pays sont présentés ?","Cite une ville et ce qu'on y voit.","Quel paysage t'a le plus surpris ? Pourquoi ?","Quelles langues entend-on ?","Vrai ou faux : le Maghreb est uniquement désertique."],1.5,22)
-b=btn(s,9.8,6.0,2.4,0.7,"Correction",TERRE,16); links.append((b,"ficheC"))
-s=slide("Fiche vidéo : correction","",key="ficheC")
-bullets(s,["Maroc, Algérie, Tunisie (et parfois Libye, Mauritanie)","Ex. : Marrakech (place Jemaa el-Fna), Alger (la Casbah), Tunis (la médina)","Réponse libre — justifie avec « parce que… »","Arabe (darija), tamazight (berbère), français","FAUX ❌ : il y a aussi la mer, les montagnes, les villes, les oasis !"])
-
-# quiz
-quiz=[("Quelle est la capitale du Maroc ?",["Casablanca","Rabat","Marrakech"],1),
-("Quel est le plus grand pays d'Afrique ?",["Algérie","Libye","Égypte"],0),
-("Que signifie « Maghreb » ?",["Le désert","Le couchant","La mer"],1),
-("Quelle montagne traverse le Maghreb ?",["Les Alpes","L'Atlas","L'Himalaya"],1),
-("Quelle mer borde le Maghreb au nord ?",["Mer Rouge","Méditerranée","Mer Noire"],1)]
-first=True
-for i,(q,opts,ok) in enumerate(quiz):
-    s=slide(f"Quiz géo — Question {i+1}/5","10'" if first else None,key="quiz" if first else None); first=False
-    txt(s,0.6,1.6,12,1,"❓ "+q,30,BLEU,True,PP_ALIGN.CENTER)
-    for j,o in enumerate(opts):
-        b=btn(s,1.0+j*3.9,3.3,3.6,1.4,"ABC"[j]+". "+o,[TERRE,VERT,BLEU][j],24)
-        links.append((b,f"q{i}ok" if j==ok else f"q{i}ko"))
-    ok_s=slide("✅ BRAVO ! +1 point",bg=RGBColor(0xD5,0xF0,0xDC),key=f"q{i}ok")
-    txt(ok_s,0.6,2.5,12,1.5,f"Bonne réponse : {opts[ok]} 🎉",40,VERT,True,PP_ALIGN.CENTER)
-    nxt=btn(ok_s,5.2,4.5,2.9,0.9,"Suivant ➡️",BLEU,22); links.append((nxt,f"q{i+1}" if i<4 else "hist"))
-    ko=slide("❌ Oups ! Essaie encore",bg=RGBColor(0xF8,0xD7,0xD3),key=f"q{i}ko")
-    txt(ko,0.6,2.5,12,1.5,"Ce n'est pas la bonne réponse… 🤔",40,ROUGE,True,PP_ALIGN.CENTER)
-    back=btn(ko,5.2,4.5,2.9,0.9,"⬅️ Réessayer",TERRE,22); links.append((back,f"q{i}"))
-    keys[f"q{i}"]=P.slides[P.slides.index(ok_s)-1]
-
-# histoire
-s=slide("📜 Histoire : la frise du temps (récap)",notes="Activité : distribuer les étiquettes dans le désordre, les équipes les remettent dans l'ordre.")
-ev=[("Antiquité","Berbères (Amazighs), Carthage (814 av. J.-C.), Rome"),("VIIe s.","Conquête arabe : islam et langue arabe"),("XVIe s.","Empire ottoman (Alger, Tunis, Tripoli) ; Maroc indépendant"),("1830–1912","Colonisation : France (Algérie, Tunisie, Maroc), Italie (Libye)"),("1951–1962","Indépendances")]
-rect(s,0.6,3.6,12.1,0.12,TERRE)
-for i,(d,t) in enumerate(ev):
-    x=0.6+i*2.45; rect(s,x+0.9,3.35,0.6,0.6,OR,MSO_SHAPE.OVAL)
-    txt(s,x,2.2,2.4,1,d,20,BLEU,True,PP_ALIGN.CENTER); txt(s,x,4.2,2.4,1.6,t,15,NOIR,False,PP_ALIGN.CENTER)
-txt(s,0.6,6.0,12,0.8,"🗣️ Langues : arabe (darija), tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ), français • Salam = bonjour • Choukran = merci • Azul = bonjour (berbère)",16,TERRE,True)
-s=slide("📜 Histoire : quelques données clés","")
-rows=[("1951","Indépendance de la Libye"),("1956","Indépendance du Maroc (2 mars) et de la Tunisie (20 mars)"),("1954–1962","Guerre d'Algérie → indépendance le 5 juillet 1962"),("1960","Indépendance de la Mauritanie"),("1989","Création de l'Union du Maghreb arabe (Marrakech)"),("2011","« Printemps arabe » : départ de Ben Ali (Tunisie), chute de Kadhafi (Libye)"),("2020","Le couscous inscrit au patrimoine de l'UNESCO (candidature commune)")]
-for i,(d,t) in enumerate(rows):
-    btn(s,0.6,1.5+i*0.75,2.0,0.65,d,[TERRE,BLEU,VERT][i%3],18); txt(s,2.8,1.55+i*0.75,10,0.6,t,18)
-txt(s,0.6,6.8,11,0.4,"🎯 Question : combien d'années séparent l'indépendance de la Libye de celle de l'Algérie ? (11 ans)",15,BLEU,True)
+s.notes_slide.notes_text_frame.text+="\nCorrection : Maroc, Algérie, Tunisie ; villes (Marrakech, Alger, Tunis) ; langues : arabe, berbère, français ; le Maghreb n'est pas que désertique."
 # ===== V Histoire =====
 s=slide("V. 3 000 ans d'histoire du Maghreb","40'",bg=BLEU,key="hist",notes="Fil rouge : le Maghreb, carrefour entre l'Afrique, l'Orient et l'Europe.")
 txt(s,0.6,1.9,12,1,"📜 Le Maghreb, un carrefour de civilisations",34,OR,True,PP_ALIGN.CENTER)
@@ -446,45 +379,6 @@ ce("📖 C.E. B1 — Texte 3 : le Maghreb, l'Europe et les tensions","ceB3",
  ["Avec la France (crises diplomatiques liées à 130 ans de colonisation).","L'Algérie et le Maroc (notamment le Sahara occidental).","En Tunisie (Ennahdha) et au Maroc (PJD)."])
 s=slide("☕ PAUSE — thé à la menthe !","15'",bg=RGBColor(0xE3,0xF1,0xE6),key="pause")
 txt(s,0.6,2.4,12,2,["🫖 15 minutes de pause","Le thé à la menthe, symbole d'hospitalité, se sert « de haut » pour faire de la mousse !"],30,VERT,True,PP_ALIGN.CENTER)
-
-# C.E.
-s=slide("📖 C.E. Compréhension écrite : la lettre de Yasmine","20'",key="ce",notes="Lecture silencieuse 10', questions en binômes 15', correction collective 10'.")
-txt(s,0.6,1.5,12.1,5.3,["Lettre de Yasmine, depuis Marrakech",
-"Chère Léa,",
-"Me voici enfin à Marrakech, chez ma grand-mère ! Hier matin, nous sommes allées au souk : quel spectacle ! Des épices de toutes les couleurs, des tapis, des lanternes en cuivre… On a acheté du cumin et du safran pour le couscous du vendredi.",
-"Le soir, la place Jemaa el-Fna se transforme : il y a des conteurs, des musiciens gnaoua et des dizaines de petits restaurants. J'ai goûté une harira, une soupe délicieuse.",
-"Samedi, nous partons trois jours dans le désert, près de Merzouga. Nous dormirons sous une tente berbère et nous monterons à dos de dromadaire pour voir le lever du soleil sur les dunes. J'ai hâte !",
-"Je t'envoie plein de soleil. Bisous, Yasmine"],17)
-b=btn(s,10.2,6.85,2.0,0.5,"Questions ➡️",VERT,14); links.append((b,"ceq"))
-s=slide("C.E. — Questions","",key="ceq")
-bullets(s,["1. Qui écrit ? À qui ? D'où ?","2. Vrai/Faux : Yasmine est en vacances chez sa tante. Justifie.","3. Cite 3 choses qu'on trouve au souk.","4. Que se passe-t-il le soir sur la place Jemaa el-Fna ?","5. Qu'est-ce que la harira ?","6. Combien de temps durera l'excursion dans le désert ?","7. ✍️ Production : réponds à Yasmine (5 lignes) en racontant un voyage."],1.5,21)
-b=btn(s,9.8,6.1,2.4,0.7,"Correction",TERRE,16); links.append((b,"cec"))
-s=slide("C.E. — Correction","",key="cec")
-bullets(s,["1. Yasmine écrit à Léa, depuis Marrakech (Maroc).","2. FAUX : elle est chez sa grand-mère.","3. Épices, tapis, lanternes en cuivre.","4. Conteurs, musiciens gnaoua, petits restaurants.","5. Une soupe (traditionnelle).","6. Trois jours.","7. Production libre — critères : formule d'appel, passé composé, 3 détails, formule finale."],1.5,21)
-
-# culture
-s=slide("7. Cuisine & culture : devine l'image !","15'",key="cult",notes="Clique sur chaque carte pour révéler la réponse.")
-cards=[("🍲","Je cuis dans un plat en terre au couvercle pointu.","tajine"),("🥣","Graine de semoule, je suis servi le vendredi.","couscous"),("🥾","Chaussure en cuir, souvent jaune.","babouche"),("🏺","Marché traditionnel couvert.","souk")]
-for i,(e,d,k) in enumerate(cards):
-    x=0.6+i*3.15; rect(s,x,1.6,2.95,3.6,BLANC,MSO_SHAPE.ROUNDED_RECTANGLE)
-    txt(s,x,1.7,2.95,1,e,48,NOIR,False,PP_ALIGN.CENTER); txt(s,x+0.1,2.9,2.75,2,"« "+d+" »",16,NOIR,False,PP_ALIGN.CENTER)
-    b=btn(s,x+0.4,5.4,2.15,0.7,"Qui suis-je ?",[TERRE,VERT,BLEU,OR][i],16); links.append((b,"cultR"))
-s=slide("Réponses : tajine • couscous • babouche • souk","",key="cultR")
-bullets(s,["🍲 Le TAJINE — plat et cuisson à l'étouffée","🥣 Le COUSCOUS — classé au patrimoine de l'UNESCO (2020)","🥾 La BABOUCHE","🏺 Le SOUK","🎵 Bonus : raï, chaâbi, gnaoua — quelles musiques connais-tu ?"])
-
-# jeux
-s=slide("8. Jeux de mots : le mot mystère","15'",key="jeux",notes="Les équipes devinent lettre par lettre (pendu).")
-txt(s,0.6,1.7,12,1,"_ _ _ _ _ _ _   (7 lettres)",48,BLEU,True,PP_ALIGN.CENTER)
-txt(s,0.6,3.0,12,1,"Indice : arbre des oasis qui donne des dattes 🌴",24,NOIR,False,PP_ALIGN.CENTER)
-b=btn(s,5.2,4.4,2.9,0.9,"Révéler",TERRE,22); links.append((b,"jeuxR"))
-s=slide("Réponse du mot mystère","",key="jeuxR")
-txt(s,0.6,2.0,12,1.5,["D A T T I E R  ✅","Le palmier-dattier : l'arbre roi des oasis 🌴"],40,TERRE,True,PP_ALIGN.CENTER)
-s=slide("Jeu : associe le mot et la définition","")
-pairs=[("Médina","Vieille ville entourée de remparts"),("Casbah","Citadelle, quartier fortifié"),("Oasis","Point d'eau dans le désert"),("Hammam","Bain de vapeur traditionnel"),("Riad","Maison avec jardin intérieur")]
-import random; random.seed(3); defs=[d for _,d in pairs]; random.shuffle(defs)
-for i,(m,_) in enumerate(pairs):
-    btn(s,0.8,1.6+i*1.0,3,0.8,m,BLEU,20); r=rect(s,6.0,1.6+i*1.0,6.6,0.8,BLANC); txt(s,6.2,1.7+i*1.0,6.4,0.6,"ABCDE"[i]+". "+defs[i],18)
-s.notes_slide.notes_text_frame.text="Solution : "+" ; ".join(f"{m} → {d}" for m,d in pairs)
 
 # défi
 s=slide("9. Défi final : 60 secondes chrono !","10'",key="defi",notes="Chaque équipe cite le plus de mots liés au Maghreb en 60 s. 1 mot = 1 point.")
