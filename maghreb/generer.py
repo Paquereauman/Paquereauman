@@ -97,14 +97,14 @@ for i,(k,q,opts,ok,fact) in enumerate(guess):
 # 2 Menu
 s=slide("🗺️ Menu du voyage — clique sur une étape !",key="menu")
 etapes=[("🔎 Devine où c'est ?","guessIntro","15'"),("Brise-glace","bris","10'"),("I. Carte d'identité & relief","geo","30'"),("🎬 C.O. Vidéo","video","20'"),
-("Quiz géo","quiz","10'"),("📜 Histoire & données","hist","15'"),("II. Littoral & intérieur","litt","30'"),("☕ Pause","pause","10'"),
+("Quiz géo","quiz","10'"),("📜 V. Histoire (3 000 ans)","hist","40'"),("II. Littoral & intérieur","litt","30'"),("☕ Pause","pause","10'"),
 ("III. Démographie & émigration","demo","30'"),("IV. Islam & conflits","islam","30'"),("📖 C.E. Yasmine","ce","20'"),("Cuisine & culture","cult","10'"),("Jeux de mots","jeux","10'"),
 ("Défi final","defi","5'"),("Bilan","bilan","5'")]
 cols=[TERRE,BLEU,VERT,OR]
 for i,(t,k,d) in enumerate(etapes):
     x=0.5+(i%4)*3.1; y=1.5+(i//4)*1.3
     b=btn(s,x,y,2.95,1.1,f"{t}  ({d})",cols[i%4],16); links.append((b,k))
-txt(s,0.6,6.85,11,0.5,"Durée totale ≈ 4 h (3 séances)  •  Score des équipes au tableau  🏆",16,BLEU,True)
+txt(s,0.6,6.85,11,0.5,"Durée totale ≈ 4 h 30 (3 à 4 séances)  •  Score des équipes au tableau  🏆",16,BLEU,True)
 
 # 3 Brise-glace
 s=slide("1. Brise-glace : le Maghreb en 1 mot","15'",key="bris",notes="Chacun dit un mot qui lui évoque le Maghreb ; on construit un nuage de mots au tableau. Puis formation de 3 équipes : Atlas, Sahara, Médina.")
@@ -363,7 +363,7 @@ for i,(q,opts,ok) in enumerate(quiz):
     keys[f"q{i}"]=P.slides[P.slides.index(ok_s)-1]
 
 # histoire
-s=slide("📜 Histoire : la frise du temps","15'",key="hist",notes="Activité : distribuer les étiquettes dans le désordre, les équipes les remettent dans l'ordre.")
+s=slide("📜 Histoire : la frise du temps (récap)",notes="Activité : distribuer les étiquettes dans le désordre, les équipes les remettent dans l'ordre.")
 ev=[("Antiquité","Berbères (Amazighs), Carthage (814 av. J.-C.), Rome"),("VIIe s.","Conquête arabe : islam et langue arabe"),("XVIe s.","Empire ottoman (Alger, Tunis, Tripoli) ; Maroc indépendant"),("1830–1912","Colonisation : France (Algérie, Tunisie, Maroc), Italie (Libye)"),("1951–1962","Indépendances")]
 rect(s,0.6,3.6,12.1,0.12,TERRE)
 for i,(d,t) in enumerate(ev):
@@ -375,6 +375,53 @@ rows=[("1951","Indépendance de la Libye"),("1956","Indépendance du Maroc (2 ma
 for i,(d,t) in enumerate(rows):
     btn(s,0.6,1.5+i*0.75,2.0,0.65,d,[TERRE,BLEU,VERT][i%3],18); txt(s,2.8,1.55+i*0.75,10,0.6,t,18)
 txt(s,0.6,6.8,11,0.4,"🎯 Question : combien d'années séparent l'indépendance de la Libye de celle de l'Algérie ? (11 ans)",15,BLEU,True)
+# ===== V Histoire =====
+s=slide("V. 3 000 ans d'histoire du Maghreb","40'",bg=BLEU,key="hist",notes="Fil rouge : le Maghreb, carrefour entre l'Afrique, l'Orient et l'Europe.")
+txt(s,0.6,1.9,12,1,"📜 Le Maghreb, un carrefour de civilisations",34,OR,True,PP_ALIGN.CENTER)
+ep=[("🏛️ Antiquité","hA"),("🕌 Islam & dynasties","hB"),("⚓ Ottomans","hC"),("🇫🇷 Colonisation","hD"),("✊ Indépendances","hE"),("🎭 Qui suis-je ?","hF")]
+for i,(t,k) in enumerate(ep):
+    b=btn(s,0.9+(i%3)*4.0,3.4+(i//3)*1.4,3.6,1.1,t,[TERRE,VERT,OR][i%3],20); links.append((b,k))
+def period(title,key,items,question,answer,notes=""):
+    s=slide(title,key=key,notes=notes)
+    for i,(d,t) in enumerate(items):
+        btn(s,0.6,1.5+i*0.85,2.2,0.72,d,[TERRE,BLEU,VERT][i%3],17); txt(s,3.0,1.55+i*0.85,9.8,0.75,t,18)
+    rect(s,0.6,6.0,9.3,0.75,RGBColor(0xFB,0xF3,0xE2),MSO_SHAPE.ROUNDED_RECTANGLE)
+    txt(s,0.8,6.08,9,0.6,"❓ "+question,16,BLEU,True)
+    k=key+"R"; b=btn(s,10.1,6.0,2.1,0.75,"Réponse",VERT,15); links.append((b,k))
+    r=slide("✅ "+title.split(":")[0],key=k,bg=RGBColor(0xD5,0xF0,0xDC))
+    txt(r,0.6,2.2,12,3,["❓ "+question,"","➡️ "+answer],24,NOIR,True,PP_ALIGN.CENTER)
+    nb=btn(r,5.2,5.5,2.9,0.8,"⬅️ Retour aux époques",BLEU,15); links.append((nb,"hist"))
+period("🏛️ L'Antiquité : Berbères, Carthage et Rome","hA",
+ [("≈ 3000 av.","Les Berbères (Amazighs, « hommes libres ») peuplent l'Afrique du Nord"),("814 av. J.-C.","Les Phéniciens fondent Carthage (près de Tunis)"),("218 av. J.-C.","Hannibal traverse les Alpes avec des éléphants pour attaquer Rome"),("146 av. J.-C.","Rome détruit Carthage : l'« Africa » devient province romaine"),("354–430","Saint Augustin, Berbère né en Algérie, grand penseur chrétien"),("Vestiges","Timgad, Djemila (Algérie), Volubilis (Maroc), El Jem (Tunisie)")],
+ "Que signifie « Amazigh », le nom des Berbères ?","« Homme libre ». Le Maghreb est berbère bien avant d'être arabe !")
+period("🕌 L'islam et les grandes dynasties","hB",
+ [("670","Fondation de Kairouan ; conquête arabe du Maghreb"),("711","Tariq ibn Ziyad passe en Espagne : début d'Al-Andalus"),("789","Fondation de Fès par les Idrissides (Maroc)"),("859","Fatima al-Fihri fonde la Qarawiyyin à Fès"),("XIe–XIIIe s.","Almoravides puis Almohades : empires berbères de l'Espagne au Sahara"),("1325–1354","Ibn Battuta, né à Tanger, voyage jusqu'en Chine")],
+ "Qui a fondé la plus ancienne université du monde encore en activité ?","Une femme : Fatima al-Fihri, en 859, à Fès (la Qarawiyyin).")
+period("⚓ Ottomans et corsaires (XVIe–XIXe s.)","hC",
+ [("1492","Fin d'Al-Andalus : musulmans et juifs d'Espagne se réfugient au Maghreb"),("1516–1529","Les frères Barberousse prennent Alger"),("XVIe s.","Alger, Tunis et Tripoli passent sous l'Empire ottoman"),("Maroc","Reste indépendant (dynasties saadienne puis alaouite, encore au pouvoir)"),("XVIIe s.","Les corsaires « barbaresques » capturent des navires en Méditerranée")],
+ "Quel pays du Maghreb n'a jamais été ottoman ?","Le Maroc, gouverné par la dynastie alaouite depuis le XVIIe siècle (le roi actuel, Mohammed VI, en fait partie).")
+period("🇫🇷 La colonisation européenne","hD",
+ [("1830","La France prend Alger ; l'Algérie devient française (3 départements)"),("1832–1847","L'émir Abd el-Kader résiste à la conquête"),("1881","Protectorat français sur la Tunisie"),("1911–1912","Italie en Libye ; protectorats français et espagnol sur le Maroc"),("1914–1945","Des tirailleurs maghrébins combattent pour la France dans les deux guerres mondiales")],
+ "Quelle différence entre une colonie et un protectorat ?","Colonie (Algérie) : le pays est annexé et gouverné directement. Protectorat (Maroc, Tunisie) : le souverain local reste, mais la France contrôle.")
+period("✊ Les indépendances et la guerre d'Algérie","hE",
+ [("1951","Indépendance de la Libye"),("1956","Indépendance du Maroc (Mohammed V) et de la Tunisie (Bourguiba)"),("1er nov. 1954","« Toussaint rouge » : le FLN déclenche la guerre d'Algérie"),("1962","Accords d'Évian → indépendance de l'Algérie (5 juillet)"),("1962","Environ 1 million de pieds-noirs et des harkis partent pour la France"),("Aujourd'hui","Une histoire commune : des millions de Français ont des origines maghrébines")],
+ "Combien de temps a duré la guerre d'Algérie ?","Près de 8 ans (1954-1962), avec des centaines de milliers de morts. Une mémoire encore sensible des deux côtés de la Méditerranée.")
+s=slide("🎭 Qui suis-je ? Les grands personnages","",key="hF",notes="Lire les indices un par un ; les équipes devinent. Cliquer sur une carte pour la réponse.")
+pers=[("Je suis né à Carthage et j'ai traversé les Alpes avec des éléphants.","Hannibal"),("Je suis né à Thagaste (Algérie) et je suis un saint chrétien.","Saint Augustin"),("Un rocher d'Espagne porte mon nom.","Tariq ibn Ziyad"),("Né à Tanger, j'ai voyagé 30 ans jusqu'en Chine.","Ibn Battuta"),("J'ai combattu la conquête française de l'Algérie.","L'émir Abd el-Kader"),("J'ai été le 1er président de la Tunisie et j'ai donné des droits aux femmes.","Habib Bourguiba")]
+for i,(ind,rep) in enumerate(pers):
+    x=0.6+(i%3)*4.15; y=1.5+(i//3)*2.6
+    rect(s,x,y,3.9,2.4,BLANC,MSO_SHAPE.ROUNDED_RECTANGLE); txt(s,x+0.15,y+0.15,3.6,1.5,"« "+ind+" »",15)
+    b=btn(s,x+0.6,y+1.65,2.7,0.55,"Qui suis-je ?",[TERRE,VERT,BLEU][i%3],14); links.append((b,"hFR"))
+s=slide("🎭 Réponses : qui suis-je ?","",key="hFR")
+txt(s,0.6,1.5,12,5,[f"{i+1}. {rep}" for i,(_,rep) in enumerate(pers)],24,TERRE,True)
+b=btn(s,9.4,6.0,2.8,0.7,"⬅️ Époques",BLEU,15); links.append((b,"hist"))
+s=slide("🎲 Remets l'histoire dans l'ordre !","",notes="Imprimer les étiquettes ; chaque équipe les classe. Puis cliquer pour la correction.")
+ev=["Indépendance de l'Algérie","Fondation de Carthage","Fondation de Kairouan","Prise d'Alger par la France","Fondation de la Qarawiyyin","Printemps arabe"]
+for i,e in enumerate(ev):
+    btn(s,0.9+(i%3)*4.0,1.7+(i//3)*1.6,3.6,1.2,"? — "+e,[TERRE,VERT,BLEU][i%3],17)
+b=btn(s,5.2,5.4,2.9,0.8,"Correction",OR,18); links.append((b,"ordreR"))
+s=slide("✅ L'ordre chronologique","",key="ordreR")
+txt(s,0.6,1.5,12,5,["1. Fondation de Carthage — 814 av. J.-C.","2. Fondation de Kairouan — 670","3. Fondation de la Qarawiyyin — 859","4. Prise d'Alger par la France — 1830","5. Indépendance de l'Algérie — 1962","6. Printemps arabe — 2010-2011"],24)
 s=slide("☕ PAUSE — thé à la menthe !","15'",bg=RGBColor(0xE3,0xF1,0xE6),key="pause")
 txt(s,0.6,2.4,12,2,["🫖 15 minutes de pause","Le thé à la menthe, symbole d'hospitalité, se sert « de haut » pour faire de la mousse !"],30,VERT,True,PP_ALIGN.CENTER)
 
