@@ -98,7 +98,7 @@ for i,(k,q,opts,ok,fact) in enumerate(guess):
 s=slide("🗺️ Menu du voyage — clique sur une étape !",key="menu")
 etapes=[("🔎 Devine où c'est ?","guessIntro","15'"),("Brise-glace","bris","10'"),("I. Carte d'identité & relief","geo","30'"),("🎬 C.O. Vidéo","video","20'"),
 ("Quiz géo","quiz","10'"),("📜 V. Histoire (3 000 ans)","hist","40'"),("II. Littoral & intérieur","litt","30'"),("☕ Pause","pause","10'"),
-("III. Démographie & émigration","demo","30'"),("IV. Islam & conflits","islam","30'"),("📖 C.E. Yasmine","ce","20'"),("Cuisine & culture","cult","10'"),("Jeux de mots","jeux","10'"),
+("III. Démographie & émigration","demo","30'"),("IV. Islam & conflits","islam","30'"),("📖 C.E. B1 : 3 textes","ceB1","25'"),("📖 C.E. Yasmine","ce","20'"),("Cuisine & culture","cult","10'"),("Jeux de mots","jeux","10'"),
 ("Défi final","defi","5'"),("Bilan","bilan","5'")]
 cols=[TERRE,BLEU,VERT,OR]
 for i,(t,k,d) in enumerate(etapes):
@@ -422,6 +422,28 @@ for i,e in enumerate(ev):
 b=btn(s,5.2,5.4,2.9,0.8,"Correction",OR,18); links.append((b,"ordreR"))
 s=slide("✅ L'ordre chronologique","",key="ordreR")
 txt(s,0.6,1.5,12,5,["1. Fondation de Carthage — 814 av. J.-C.","2. Fondation de Kairouan — 670","3. Fondation de la Qarawiyyin — 859","4. Prise d'Alger par la France — 1830","5. Indépendance de l'Algérie — 1962","6. Printemps arabe — 2010-2011"],24)
+# ===== C.E. B1 (3 textes) =====
+def ce(title,key,text,qs,ans,timing=None,nextk=None):
+    s=slide(title,timing,key=key,notes="Lecture silencieuse, puis questions en binômes, correction collective.")
+    rect(s,0.5,1.4,7.4,5.4,BLANC,MSO_SHAPE.ROUNDED_RECTANGLE)
+    txt(s,0.7,1.5,7.0,5.2,text,15)
+    txt(s,8.2,1.5,4.7,4.4,[f"{i+1}. {q}" for i,q in enumerate(qs)],17,BLEU,True)
+    b=btn(s,9.8,6.0,2.4,0.7,"Correction",VERT,16); links.append((b,key+"C"))
+    r=slide(title+" — correction",key=key+"C")
+    txt(r,0.6,1.5,12,4.8,[f"{i+1}. {q}" for i,q in enumerate(qs)] and sum([[f"{i+1}. {q}",f"   ✅ {a}"] for i,(q,a) in enumerate(zip(qs,ans))],[]),18)
+    if nextk: nb=btn(r,9.4,6.1,2.8,0.7,"Texte suivant ➡️",BLEU,15); links.append((nb,nextk))
+ce("📖 C.E. B1 — Texte 1 : pourquoi parle-t-on français au Maghreb ?","ceB1",
+ ["Une langue héritée de l'histoire","Les pays du Maghreb ont été colonisés par la France pendant plus de cent ans. Cette période a fortement influencé la langue, l'école et l'organisation administrative. Après l'indépendance, les États ont choisi l'arabe comme langue officielle, mais le français n'a pas disparu.","Aujourd'hui, le français est une langue de travail et d'ouverture internationale. Il permet de faciliter les échanges économiques, le tourisme et les études à l'étranger. Même si certains pays souhaitent renforcer l'usage de l'arabe, le français reste une langue très utilisée par la population."],
+ ["Quelle période historique explique la présence du français ?","Pourquoi le français n'a-t-il pas disparu après l'indépendance ?","Quels avantages le français apporte-t-il aujourd'hui ?"],
+ ["La colonisation française (plus de cent ans).","Il avait marqué l'école, l'administration et la langue ; il reste une langue de travail et d'ouverture internationale.","Faciliter les échanges économiques, le tourisme et les études à l'étranger."],"25'","ceB2")
+ce("📖 C.E. B1 — Texte 2 : la population du Maroc","ceB2",
+ ["Le Maroc est un pays du Maghreb. Depuis les années 1960, sa population augmente rapidement : c'est la croissance démographique. Aujourd'hui, le pays compte plus de 36 millions d'habitants. Cette évolution s'explique par une transition démographique. La fécondité baisse et l'espérance de vie augmente.","La population est donc jeune, ce qui peut représenter un dividende démographique.","Depuis plusieurs années, la population quitte les campagnes pour les villes : c'est l'exode rural. Les grandes villes attirent les habitants et la densité de population y est plus forte. La population est ainsi inégalement répartie. Cependant, cette évolution crée des défis comme le chômage des jeunes et le logement."],
+ ["C'est quoi la transition démographique au Maroc ?","C'est quoi l'exode rural ?","Quels sont deux défis liés à cette évolution de la population ?"],
+ ["Le passage à une baisse de la fécondité et à une hausse de l'espérance de vie, après une forte croissance de la population.","Le départ des habitants des campagnes vers les villes.","Le chômage des jeunes et le logement."],None,"ceB3")
+ce("📖 C.E. B1 — Texte 3 : le Maghreb, l'Europe et les tensions","ceB3",
+ ["Les pays du Maghreb ont une histoire commune avec l'Europe à cause de la colonisation. Avec la plupart des pays, les relations commerciales et politiques sont aujourd'hui plutôt bonnes.","L'Algérie cependant a été colonisée par la France pendant plus de 130 ans. Cette histoire crée encore aujourd'hui des tensions politiques et le président algérien exprime souvent des propos contre la France. On parle de crises diplomatiques.","Il existe aussi des tensions entre pays du Maghreb. L'Algérie et le Maroc sont en désaccord sur certains territoires, ce qui complique leurs relations.","Depuis les révolutions arabes de 2011, des mouvements religieux ont pris plus de place dans la vie politique en Tunisie (Ennahdha) et au Maroc (Parti de la justice et du développement – PJD), tandis qu'en Algérie, l'État a gardé un contrôle plus fort pour limiter leur influence."],
+ ["Avec quel pays l'Algérie a-t-elle encore des tensions politiques ?","Quels deux pays du Maghreb sont en désaccord sur certains territoires ?","Dans quels pays des mouvements religieux ont-ils pris plus de place après 2011 ?"],
+ ["Avec la France (crises diplomatiques liées à 130 ans de colonisation).","L'Algérie et le Maroc (notamment le Sahara occidental).","En Tunisie (Ennahdha) et au Maroc (PJD)."])
 s=slide("☕ PAUSE — thé à la menthe !","15'",bg=RGBColor(0xE3,0xF1,0xE6),key="pause")
 txt(s,0.6,2.4,12,2,["🫖 15 minutes de pause","Le thé à la menthe, symbole d'hospitalité, se sert « de haut » pour faire de la mousse !"],30,VERT,True,PP_ALIGN.CENTER)
 
