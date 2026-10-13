@@ -82,7 +82,8 @@ for i,(k,q,opts,ok,fact) in enumerate(guess):
     s=slide(f"🔎 Photo {i+1}/{len(guess)} : {q}",key=f"g{i}")
     if os.path.exists(gpath(k)): cover(s,gpath(k))
     else:
-        rect(s,3.2,1.6,7,4.4,RGBColor(0xE8,0xD9,0xB5),MSO_SHAPE.ROUNDED_RECTANGLE); txt(s,3.2,3.3,7,1,"📷 Insère ici la photo : "+opts[ok],20,TERRE,True,PP_ALIGN.CENTER)
+        ph=rect(s,2.2,1.5,9,4.6,RGBColor(0xE8,0xD9,0xB5),MSO_SHAPE.ROUNDED_RECTANGLE); ph.line.color.rgb=TERRE; ph.line.width=Pt(3); ph.line.dash_style=7
+        txt(s,2.4,2.4,8.6,2.5,["📷 PHOTO À INSÉRER ICI","« "+opts[ok]+" »","Cherche : "+opts[ok]+" photo","(Insertion > Image, puis supprime ce cadre)"],20,TERRE,True,PP_ALIGN.CENTER)
     for j,o in enumerate(opts):
         b=btn(s,0.7+j*4.1,6.25,3.8,0.75,"ABC"[j]+". "+o,[TERRE,VERT,BLEU][j],16); links.append((b,f"g{i}r"))
     r=slide("✅ Réponse : "+opts[ok],bg=RGBColor(0xD5,0xF0,0xDC),key=f"g{i}r")
