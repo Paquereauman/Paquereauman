@@ -4,9 +4,6 @@
 
 <p align="center">
   <a href="https://paquereauman.github.io/Paquereauman/"><b>🌐 Portfolio</b></a> &nbsp;·&nbsp;
-  <a href="https://paquereauman.github.io/apprendre-francais-a1/"><b>🥖 Français A1</b></a> &nbsp;·&nbsp;
-  <a href="https://github.com/Paquereauman/cu-bootstrap/releases/latest"><b>⚡ IP Unlocker</b></a> &nbsp;·&nbsp;
-  <a href="https://github.com/Paquereauman/stickaru/releases/latest"><b>🐱 Stickaru</b></a> &nbsp;·&nbsp;
   <a href="#-projects"><b>🚀 Projects</b></a> &nbsp;·&nbsp;
   <a href="#-contact"><b>📫 Contact</b></a>
 </p>
