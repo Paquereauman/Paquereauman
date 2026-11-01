@@ -1,5 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" width="900" height="240" role="img" aria-label="Bai Laoshi (Paquereauman), teacher, techno-anthropologist, building pragmatic tools with Claude">
   <defs>
+    <!-- Style responsive optimise pour mobile et ecrans haute densite -->
+    <style>
+      .banner-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 58px; font-weight: 700; fill: #ffffff; letter-spacing: -0.02em; }
+      .banner-sub { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 20px; font-weight: 500; fill: #ffd8be; }
+      .banner-anim { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 20px; font-weight: 600; fill: #ffb703; }
+      @media (max-width: 600px) {
+        .banner-title { font-size: 62px; }
+        .banner-sub { font-size: 24px; font-weight: 600; }
+        .banner-anim { font-size: 24px; font-weight: 700; }
+        .constellation { opacity: 0.22; }
+      }
+    </style>
+
     <!-- Fond chaud : degrade d'ebene ambre vers cuivre chaleureux -->
     <linearGradient id="warmBg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#180b05"/>
@@ -32,14 +45,14 @@
     <rect width="900" height="240" fill="url(#warmEmber)"/>
 
     <!-- Reseau de points constellation en teintes or et ambre chaud -->
-    <g stroke="#ffb703" stroke-opacity=".40" stroke-width="1.5" fill="none">
+    <g class="constellation" stroke="#ffb703" stroke-opacity=".40" stroke-width="1.5" fill="none">
       <path d="M610 40L690 90L780 50L850 120L770 180L680 160L610 40"/>
       <path d="M690 90L680 160M780 50L770 180M690 90L770 180"/>
       <path d="M850 120L880 200M680 160L640 215"/>
     </g>
 
     <!-- Noeuds du reseau avec pulsation lumineuse -->
-    <g fill="#ffb703">
+    <g class="constellation" fill="#ffb703">
       <circle cx="610" cy="40" r="5" opacity=".75"/>
       <circle cx="690" cy="90" r="7"><animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/></circle>
       <circle cx="780" cy="50" r="5" opacity=".75"/>
@@ -61,18 +74,18 @@
     </circle>
 
     <!-- Titre Bai Laoshi -->
-    <text x="48" y="104" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff" letter-spacing="-0.02em">Bai Laoshi</text>
+    <text class="banner-title" x="48" y="104">Bai Laoshi</text>
 
     <!-- Barre d'accentuation en degrade chaud or / orange -->
     <rect x="50" y="122" width="130" height="5" rx="2.5" fill="url(#goldLine)"/>
 
     <!-- Sous-titre identite (chaud et doux) -->
-    <text x="48" y="162" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="500" fill="#ffd8be">@Paquereauman &#183; Teacher</text>
+    <text class="banner-sub" x="48" y="162">@Paquereauman &#183; Teacher</text>
 
     <!-- Message anime 1 : Building pragmatic tools with Claude -->
     <g>
       <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.45;0.50;0.95;1" dur="8s" repeatCount="indefinite"/>
-      <text x="48" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#ffb703">
+      <text class="banner-anim" x="48" y="198">
         Building pragmatic tools with Claude<tspan fill="#ff7900"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite"/>_</tspan>
       </text>
     </g>
@@ -80,7 +93,7 @@
     <!-- Message anime 2 : Techno-anthropologist turned teacher -->
     <g>
       <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.50;0.95;1" dur="8s" repeatCount="indefinite"/>
-      <text x="48" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#ffb703">
+      <text class="banner-anim" x="48" y="198">
         Techno-anthropologist turned teacher<tspan fill="#ff7900"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite"/>_</tspan>
       </text>
     </g>

@@ -134,6 +134,31 @@ section>h2::after{content:'';display:block;width:50px;height:4px;border-radius:2
 
 footer{text-align:center;padding-block:48px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);margin-top:40px}
 
+/* Optimisation Mobile (Smartphones & Écrans tactiles) */
+@media (max-width:540px){
+  body{padding-inline:12px;overflow-x:hidden}
+  .top{flex-direction:column;gap:12px;padding-block:16px 12px;text-align:center}
+  .top .brand{font-size:1.25rem}
+  .top nav{flex-wrap:wrap;justify-content:center;gap:6px}
+  .top nav a{padding:6px 10px;font-size:.92rem}
+  .langs{margin-left:0}
+  .hero{padding:28px 18px 32px;border-radius:20px;min-height:auto}
+  .hero h1{font-size:clamp(2.4rem,8.5vw,3.6rem)}
+  .hero p.lead{font-size:1.05rem}
+  .cta{flex-direction:column;width:100%;gap:10px}
+  .cta .btn{width:100%;text-align:center;box-sizing:border-box;padding:13px 20px}
+  section{padding-block:42px 10px}
+  section>h2{font-size:1.75rem;margin-bottom:24px}
+  .cards{gap:20px}
+  .card{border-radius:18px}
+  .card .body{padding:20px 18px 22px;gap:12px}
+  .card h3{font-size:1.3rem}
+  .card p{font-size:.95rem}
+  .card .btn.primary{width:100%;text-align:center;box-sizing:border-box;justify-self:stretch;padding:12px 18px}
+  .contact-box{padding:28px 16px;border-radius:20px}
+  .contact-box .mail{font-size:clamp(1rem,4.5vw,1.3rem);padding:10px 14px;max-width:100%;word-break:break-all;justify-content:center}
+}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .net *,.card,.pulse-dot::after,.btn.primary::after,.media.fr span{animation:none!important}
