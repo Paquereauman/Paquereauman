@@ -1,12 +1,6 @@
 <div align="center">
 
-<img src="assets/banner-en.svg" alt="Bai Laoshi (Paquereauman), techno-anthropologist, teacher, I build useful tools with Claude" width="100%">
-
-<br><br>
-
-<img src="https://readme-typing-svg.demolab.com?font=Familjen+Grotesk&weight=600&size=20&duration=3000&pause=1000&color=F5B942&center=true&vcenter=true&width=560&lines=Building+pragmatic+tools+with+Claude;Techno-anthropologist+turned+teacher;French+A1+Web+App+%C2%B7+Sing-box+IP+Unlocker" alt="Typing SVG" />
-
-<br><br>
+<img src="assets/banner-en.svg" alt="Bai Laoshi (Paquereauman)" width="100%">
 
 <p align="center">
   <a href="https://paquereauman.github.io/Paquereauman/"><b>🌐 Portfolio</b></a> &nbsp;·&nbsp;
@@ -18,8 +12,6 @@
 </p>
 
 <img src="assets/animated-divider.svg" width="100%">
-
-<br><br>
 
 ## 🚀 Projects
 
@@ -33,13 +25,7 @@
 | 🎸 **Barré guitare**<br><sub>Web app for guitarists: personalized song list with chords, synchronized YouTube lessons, and real-time audio tuner.</sub> | `Web App / Music` | **Web App** | [Open App](https://paquereauman.github.io/Paquereauman/barre-guitare/) · [Code](./barre-guitare) |
 | 🎙️ **Dictaphone DeepSeek FR**<br><sub>Free French voice dictation for DeepSeek: Chrome extension paired with a 100% local Whisper speech-to-text server.</sub> | `AI / Voice` | **Chrome + Python** | [Code & Setup](https://github.com/Paquereauman/dictaphone-deepseek-fr) |
 
-<br>
-
 <div align="center">
-
-<img src="assets/animated-divider.svg" width="100%">
-
-<br><br>
 
 ## 🛠️ Toolbox & Technologies
 
@@ -49,15 +35,8 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)
-![Claude Code](https://img.shields.io/badge/Claude%20Code-D97757?style=flat-square)
 ![Sing-box](https://img.shields.io/badge/Sing--box-TUN%20L3-14524c?style=flat-square)
 ![Web Scraping](https://img.shields.io/badge/Web%20Scraping-BeautifulSoup%20%7C%20Requests-14524c?style=flat-square)
-
-<br><br>
-
-<img src="assets/animated-divider.svg" width="100%">
-
-<br><br>
 
 ## 📫 Contact
 
@@ -66,8 +45,6 @@ Feel free to reach out directly:
 
 ### ✉️ **[bpaquereau@hotmail.fr](mailto:bpaquereau@hotmail.fr)**
 
-<br>
-
-<sub>Made with curiosity, coffee and a bit of help from Claude.</sub>
+<sub>Made with curiosity and coffee.</sub>
 
 </div>
