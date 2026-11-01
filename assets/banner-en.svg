@@ -1,40 +1,83 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" width="900" height="240" role="img" aria-label="Bai Laoshi (Paquereauman), techno-anthropologist, teacher, I build useful tools with Claude">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" width="900" height="240" role="img" aria-label="Bai Laoshi (Paquereauman), techno-anthropologist, teacher, I build useful tools">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0b1f2a"/>
-      <stop offset="1" stop-color="#14524c"/>
+    <!-- Fond chaud : dégradé d'ébène chaud / chocolat profond vers un ambre cuivré -->
+    <linearGradient id="warmBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#160e0a"/>
+      <stop offset="50%" stop-color="#24140d"/>
+      <stop offset="100%" stop-color="#361a0f"/>
     </linearGradient>
-    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#f5b942"/>
-      <stop offset="1" stop-color="#f58f42"/>
+
+    <!-- Halo lumineux chaud sous la constellation -->
+    <radialGradient id="emberGlow" cx="80%" cy="50%" r="45%">
+      <stop offset="0%" stop-color="#ff7b00" stop-opacity="0.32"/>
+      <stop offset="55%" stop-color="#e85d04" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#160e0a" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Ligne dorée / ambre vive -->
+    <linearGradient id="warmLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f5b942"/>
+      <stop offset="100%" stop-color="#f58f42"/>
     </linearGradient>
-    <clipPath id="r"><rect width="900" height="240" rx="18"/></clipPath>
+
+    <clipPath id="rounded">
+      <rect width="900" height="240" rx="20"/>
+    </clipPath>
   </defs>
-  <g clip-path="url(#r)">
-    <rect width="900" height="240" fill="url(#bg)"/>
-    <!-- réseau de points : le scraping, les liens entre les choses -->
-    <g stroke="#7fd1c4" stroke-opacity=".28" stroke-width="1.2" fill="none">
+
+  <g clip-path="url(#rounded)">
+    <!-- Fond -->
+    <rect width="900" height="240" fill="url(#warmBg)"/>
+    <rect width="900" height="240" fill="url(#emberGlow)"/>
+
+    <!-- Réseau de points constellation en teintes chaudes dorées -->
+    <g stroke="#f5b942" stroke-opacity=".35" stroke-width="1.4" fill="none">
       <path d="M610 40L690 90L780 50L850 120L770 180L680 160L610 40"/>
       <path d="M690 90L680 160M780 50L770 180M690 90L770 180"/>
       <path d="M850 120L880 200M680 160L640 215"/>
     </g>
-    <g fill="#7fd1c4">
+
+    <!-- Noeuds du réseau avec animation de pulsation -->
+    <g fill="#f5b942">
       <circle cx="610" cy="40" r="5" opacity=".7"/>
-      <circle cx="690" cy="90" r="7"><animate attributeName="opacity" values=".5;1;.5" dur="4s" repeatCount="indefinite"/></circle>
+      <circle cx="690" cy="90" r="7"><animate attributeName="opacity" values=".4;1;.4" dur="3.5s" repeatCount="indefinite"/></circle>
       <circle cx="780" cy="50" r="5" opacity=".7"/>
-      <circle cx="850" cy="120" r="8"><animate attributeName="opacity" values="1;.5;1" dur="5s" repeatCount="indefinite"/></circle>
+      <circle cx="850" cy="120" r="8"><animate attributeName="opacity" values="1;.4;1" dur="4.2s" repeatCount="indefinite"/></circle>
       <circle cx="770" cy="180" r="6" opacity=".8"/>
       <circle cx="680" cy="160" r="5" opacity=".7"/>
       <circle cx="880" cy="200" r="4" opacity=".5"/>
       <circle cx="640" cy="215" r="4" opacity=".5"/>
     </g>
-    <circle cx="850" cy="120" r="14" fill="none" stroke="#f5b942" stroke-width="2" opacity=".9">
-      <animate attributeName="r" values="12;22;12" dur="4s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values=".9;0;.9" dur="4s" repeatCount="indefinite"/>
+
+    <!-- Anneau lumineux pulsant sur le noeud principal -->
+    <circle cx="850" cy="120" r="14" fill="none" stroke="#f5b942" stroke-width="2.2" opacity=".9">
+      <animate attributeName="r" values="10;24;10" dur="3.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values=".95;0;.95" dur="3.5s" repeatCount="indefinite"/>
     </circle>
-    <text x="48" y="108" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff">Bai Laoshi</text>
-    <rect x="50" y="128" width="120" height="5" rx="2.5" fill="url(#line)"/>
-    <text x="48" y="172" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="21" fill="#cfe8e4">@Paquereauman · Techno-anthropologist · Teacher</text>
-    <text x="48" y="202" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="21" fill="#cfe8e4">I build useful tools with Claude</text>
+
+    <!-- Titre principal -->
+    <text x="48" y="104" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="56" font-weight="700" fill="#ffffff" letter-spacing="-0.02em">Bai Laoshi</text>
+
+    <!-- Barre d'accentuation ambrée -->
+    <rect x="50" y="122" width="124" height="5" rx="2.5" fill="url(#warmLine)"/>
+
+    <!-- Sous-titre fixe chaleureux -->
+    <text x="48" y="164" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="500" fill="#fbd5b5">@Paquereauman &nbsp;·&nbsp; Techno-anthropologist</text>
+
+    <!-- Animation intégrée : message 1 (Building pragmatic tools with Claude) -->
+    <g>
+      <text x="48" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#f5b942">
+        Building pragmatic tools with Claude
+        <animate attributeName="opacity" values="0;1;1;1;0;0;0" keyTimes="0;0.08;0.45;0.48;0.52;0.96;1" dur="7s" repeatCount="indefinite"/>
+      </text>
+    </g>
+
+    <!-- Animation intégrée : message 2 (Techno-anthropologist turned teacher) -->
+    <g>
+      <text x="48" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#f5b942">
+        Techno-anthropologist turned teacher
+        <animate attributeName="opacity" values="0;0;0;1;1;1;0" keyTimes="0;0.48;0.52;0.58;0.92;0.96;1" dur="7s" repeatCount="indefinite"/>
+      </text>
+    </g>
   </g>
 </svg>
