@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 <img src="assets/banner-en.svg" alt="Bai Laoshi (Paquereauman), techno-anthropologist, teacher, I build useful tools with Claude" width="100%">
 
@@ -11,12 +11,57 @@
 
 <p align="center">
 <a href="https://paquereauman.github.io/Paquereauman/">🌐 Website</a> ·
-<a href="https://github.com/Paquereauman/stickaru/releases/latest">📥 Download Stickaru</a> ·
+<a href="https://paquereauman.github.io/apprendre-francais-a1/">🥖 Français A1</a> ·
+<a href="https://github.com/Paquereauman/cu-bootstrap/releases/latest">⚡ IP Unlocker</a> ·
+<a href="https://github.com/Paquereauman/stickaru/releases/latest">📥 Stickaru</a> ·
 <a href="#-projects">🚀 Projects</a> ·
 <a href="#-get-in-touch">📫 Contact</a>
 </p>
 
 </div>
+
+---
+
+## 🥖 Featured: Français A1 · Je parle baguette (法语学习)
+
+An **interactive web app** designed specifically for Chinese speakers to learn French at the CEFR A1 level, combining structured progression with engaging gamification:
+
+- 📚 **17 progressive chapters** with ~760 illustrated words and 25 foundational sentence patterns.
+- 🗣️ **Neural audio pronunciation** (Microsoft cognitive voices) paired with theme posters (classroom, transport, food, daily life...).
+- 🎯 **Server-graded quizzes** ensuring authentic progress tracking, anti-cheat safeguards, and fair monthly rankings.
+- 🔄 **Spaced repetition engine** and interactive vocabulary flashcards.
+- 🧑‍🎨 **Customizable avatars** with daily unlockable accessories, outfits, and styling options.
+- 📱 Responsive design, instant loading, fully accessible on mobile and desktop with a French / Chinese interface.
+
+<p align="center">
+<a href="https://paquereauman.github.io/apprendre-francais-a1/"><img src="assets/francais-a1.jpg" alt="Français A1 pour sinophones - Aperçu du cours" width="600" style="border-radius:12px;"></a>
+</p>
+
+<p align="center">
+<b><a href="https://paquereauman.github.io/apprendre-francais-a1/">🚀 Open the Web App (Live) →</a></b> ·
+<a href="https://github.com/Paquereauman/apprendre-francais-a1">Source Code</a>
+</p>
+
+---
+
+## ⚡ Featured: IP Unlocker
+
+A high-performance **desktop application for Windows and macOS** built to unblock AI platforms (Claude, ChatGPT, Gemini) and bypass geographic network restrictions seamlessly.
+
+- 🛡️ **Silent Layer 3 TUN Engine** (Sing-box): routes traffic at the network level without touching fragile Windows proxy registry keys (`ProxyEnable = 0`).
+- 🔀 **Smart Dual Routing**: AI traffic routes automatically through Cloudflare WARP relay while general web traffic flows through your regular VPN upstream.
+- 🔌 **Universal Proxy Auto-Detection**: automatically probes and connects to active local cores (`v2rayN`, `Clash Verge Rev`, `FlClash`, `Shadowsocks`) with native UDP support.
+- 🔒 **Zero WebRTC Leak**: built-in protection against IP address disclosure during active AI sessions.
+- 📦 **Cross-platform**: native installers for Windows 10/11 and macOS (Apple Silicon M1-M4 & Intel).
+
+<p align="center">
+<img src="assets/ip-unlocker-icon.png" alt="IP Unlocker Logo" width="120" height="120">
+</p>
+
+<p align="center">
+<b><a href="https://github.com/Paquereauman/cu-bootstrap/releases/latest">📥 Download IP Unlocker for Windows & Mac →</a></b> ·
+<a href="https://github.com/Paquereauman/cu-bootstrap">Release Repo</a>
+</p>
 
 ---
 
@@ -60,6 +105,8 @@ Today I mostly code **with Claude**. What I enjoy is starting from a real proble
 
 | Project | Description |
 |---|---|
+| 🥖 [**Français A1 (Je parle baguette)**](https://paquereauman.github.io/apprendre-francais-a1/) ([code](https://github.com/Paquereauman/apprendre-francais-a1)) | Interactive French course for Chinese speakers: 17 chapters, ~760 words, neural audio, server-graded quizzes, spaced repetition, avatars and monthly rankings. In French & Chinese. |
+| ⚡ [**IP Unlocker**](https://github.com/Paquereauman/cu-bootstrap) ([downloads](https://github.com/Paquereauman/cu-bootstrap/releases/latest)) | Desktop app (Windows & Mac) to unlock AI platforms (Claude, ChatGPT, Gemini). Silent Sing-box TUN Layer 3 engine, WARP relay, smart auto-routing and anti-WebRTC leak. |
 | <img src="assets/stickaru-logo.png" alt="" height="20"> [**Stickaru**](https://github.com/Paquereauman/stickaru) ([installer](https://github.com/Paquereauman/stickaru/releases/latest)) | A Windows sticker and meme library: keyless search (Tenor, GIPHY, Telegram, RisiBank), one-click copy with transparency, favourites, plus transparent stickers you can paste straight into slideshows. Python and pygame, in French, English and Chinese. |
 | 🎸 [**Barré guitare**](https://paquereauman.github.io/Paquereauman/barre-guitare/) ([code](./barre-guitare)) | A web app for guitar: your own song list with chords, YouTube videos attached to each song, and a tuner that listens through the microphone. In French. |
 | 🈶 [**Learn Chinese**](https://paquereauman.github.io/apprendre-chinois/) ([code](https://github.com/Paquereauman/apprendre-chinois)) | A Mandarin course from A1 to B1 for French speakers: about 900 words, a tone gym with animated pitch curves, spaced repetition, grammar and character writing. One web page, works on phone and computer. In French. |
