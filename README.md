@@ -6,11 +6,10 @@
 <a href="#-projects"><b>🚀 Projects</b></a> &nbsp;·&nbsp;
 <a href="#-contact"><b>📫 Contact</b></a>
 <br><br>
-<a id="-projects"></a>
-<font size="4"><b>🚀 Projects</b></font>
-<br><br>
 
 </div>
+
+<a id="-projects"></a>
 
 | Project | Tech & Highlights | Platform | Links |
 | :--- | :--- | :---: | :---: |
