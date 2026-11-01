@@ -2,6 +2,8 @@
 
 <img src="assets/banner-en.svg" alt="Bai Laoshi (Paquereauman)" width="100%">
 
+<img src="https://readme-typing-svg.demolab.com?font=Familjen+Grotesk&weight=600&size=18&duration=3000&pause=1000&color=F5B942&center=true&vcenter=true&width=560&lines=Building+pragmatic+tools+with+Claude;Techno-anthropologist+turned+teacher" alt="Typing SVG" height="30" />
+
 <p align="center">
   <a href="https://paquereauman.github.io/Paquereauman/"><b>🌐 Portfolio</b></a> &nbsp;·&nbsp;
   <a href="#-projects"><b>🚀 Projects</b></a> &nbsp;·&nbsp;
