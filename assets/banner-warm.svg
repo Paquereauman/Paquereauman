@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" width="900" height="240" role="img" aria-label="Bai Laoshi (Paquereauman), techno-anthropologist, teacher, I build useful tools">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" width="900" height="240" role="img" aria-label="Bai Laoshi (Paquereauman), teacher, techno-anthropologist, building pragmatic tools with Claude">
   <defs>
-    <!-- Fond chaud : dégradé d'ébène ambré vers cuivre chaleureux -->
+    <!-- Fond chaud : degrade d'ebene ambre vers cuivre chaleureux -->
     <linearGradient id="warmBg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#180b05"/>
       <stop offset="45%" stop-color="#2d1307"/>
@@ -14,7 +14,7 @@
       <stop offset="100%" stop-color="#180b05" stop-opacity="0"/>
     </radialGradient>
 
-    <!-- Barre d'accentuation or & feu -->
+    <!-- Barre d'accentuation or et feu -->
     <linearGradient id="goldLine" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#ffbe0b"/>
       <stop offset="50%" stop-color="#fb8500"/>
@@ -31,14 +31,14 @@
     <rect width="900" height="240" fill="url(#warmBg)"/>
     <rect width="900" height="240" fill="url(#warmEmber)"/>
 
-    <!-- Réseau de points constellation en teintes or et ambre chaud -->
+    <!-- Reseau de points constellation en teintes or et ambre chaud -->
     <g stroke="#ffb703" stroke-opacity=".40" stroke-width="1.5" fill="none">
       <path d="M610 40L690 90L780 50L850 120L770 180L680 160L610 40"/>
       <path d="M690 90L680 160M780 50L770 180M690 90L770 180"/>
       <path d="M850 120L880 200M680 160L640 215"/>
     </g>
 
-    <!-- Noeuds du réseau avec pulsation lumineuse -->
+    <!-- Noeuds du reseau avec pulsation lumineuse -->
     <g fill="#ffb703">
       <circle cx="610" cy="40" r="5" opacity=".75"/>
       <circle cx="690" cy="90" r="7"><animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/></circle>
@@ -50,7 +50,7 @@
       <circle cx="640" cy="215" r="4" opacity=".55"/>
     </g>
 
-    <!-- Anneaux dorés pulsants sur le noeud phare -->
+    <!-- Anneaux dores pulsants sur le noeud phare -->
     <circle cx="850" cy="120" r="14" fill="none" stroke="#ffb703" stroke-width="2.4" opacity=".95">
       <animate attributeName="r" values="9;26;9" dur="3.2s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="1;0;1" dur="3.2s" repeatCount="indefinite"/>
@@ -63,25 +63,25 @@
     <!-- Titre Bai Laoshi -->
     <text x="48" y="104" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff" letter-spacing="-0.02em">Bai Laoshi</text>
 
-    <!-- Barre d'accentuation en dégradé chaud or / orange -->
+    <!-- Barre d'accentuation en degrade chaud or / orange -->
     <rect x="50" y="122" width="130" height="5" rx="2.5" fill="url(#goldLine)"/>
 
-    <!-- Sous-titre identité (chaud et doux) -->
-    <text x="48" y="164" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="500" fill="#ffd8be">@Paquereauman &nbsp;·&nbsp; Techno-anthropologist</text>
+    <!-- Sous-titre identite (chaud et doux) -->
+    <text x="48" y="162" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="500" fill="#ffd8be">@Paquereauman &#183; Teacher</text>
 
-    <!-- Message animé 1 : Building pragmatic tools with Claude -->
+    <!-- Message anime 1 : Building pragmatic tools with Claude -->
     <g>
+      <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.45;0.50;0.95;1" dur="8s" repeatCount="indefinite"/>
       <text x="48" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#ffb703">
-        Building pragmatic tools with Claude<tspan fill="#ff7900"><animate attributeName="opacity" values="1;0;1" dur="0.8s" repeatCount="indefinite"/>_</tspan>
-        <animate attributeName="opacity" values="1;1;1;0;0;0;1" keyTimes="0;0.42;0.47;0.52;0.95;0.98;1" dur="6.5s" repeatCount="indefinite"/>
+        Building pragmatic tools with Claude<tspan fill="#ff7900"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite"/>_</tspan>
       </text>
     </g>
 
-    <!-- Message animé 2 : Techno-anthropologist turned teacher -->
+    <!-- Message anime 2 : Techno-anthropologist turned teacher -->
     <g>
+      <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.50;0.95;1" dur="8s" repeatCount="indefinite"/>
       <text x="48" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#ffb703">
-        Techno-anthropologist turned teacher<tspan fill="#ff7900"><animate attributeName="opacity" values="1;0;1" dur="0.8s" repeatCount="indefinite"/>_</tspan>
-        <animate attributeName="opacity" values="0;0;0;1;1;1;0" keyTimes="0;0.47;0.52;0.56;0.91;0.96;1" dur="6.5s" repeatCount="indefinite"/>
+        Techno-anthropologist turned teacher<tspan fill="#ff7900"><animate attributeName="opacity" values="1;0;1" dur="0.9s" repeatCount="indefinite"/>_</tspan>
       </text>
     </g>
   </g>

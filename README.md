@@ -15,9 +15,9 @@
 <br><br>
 
 <a id="-projects"></a>
-<p align="center">
-  <font size="5"><b>🚀 Projects</b></font>
-</p>
+<font size="5"><b>🚀 Projects</b></font>
+
+<br><br>
 
 </div>
 
@@ -34,12 +34,14 @@
 <div align="center">
 
 <a id="-contact"></a>
-<p align="center">
-  <font size="5"><b>📫 Contact</b></font>
-</p>
+<font size="5"><b>📫 Contact</b></font>
+
+<br><br>
 
 Got an idea, a challenge to tackle, or want to collaborate?  
 Feel free to reach out directly:
+
+<br>
 
 ### ✉️ **[bpaquereau@hotmail.fr](mailto:bpaquereau@hotmail.fr)**
 
