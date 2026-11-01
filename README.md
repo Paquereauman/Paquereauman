@@ -1,15 +1,14 @@
 <div align="center">
 
 <img src="assets/banner-warm.svg" alt="Bai Laoshi (Paquereauman)" width="100%">
-<br>
+<br><br>
 <a href="https://paquereauman.github.io/Paquereauman/"><b>🌐 Portfolio</b></a> &nbsp;·&nbsp;
 <a href="#-projects"><b>🚀 Projects</b></a> &nbsp;·&nbsp;
 <a href="#-contact"><b>📫 Contact</b></a>
-
 <br><br>
-
 <a id="-projects"></a>
 <font size="4"><b>🚀 Projects</b></font>
+<br><br>
 
 </div>
 
@@ -26,15 +25,13 @@
 <div align="center">
 
 <img src="assets/animated-divider.svg" width="100%">
-
-<br>
-
+<br><br>
 <a id="-contact"></a>
 <font size="4"><b>📫 Contact</b></font>
-<br>
+<br><br>
 Got an idea, a challenge to tackle, or want to collaborate?  
 Feel free to reach out directly:
-<br>
+<br><br>
 
 ### ✉️ **[bpaquereau@hotmail.fr](mailto:bpaquereau@hotmail.fr)**
 
