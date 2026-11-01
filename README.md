@@ -4,37 +4,42 @@
 
 <br><br>
 
-[![Website](https://img.shields.io/badge/Website-paquereauman.github.io-14524c?style=for-the-badge&logo=googlechrome&logoColor=white)](https://paquereauman.github.io/Paquereauman/)
-[![GitHub](https://img.shields.io/badge/GitHub-Paquereauman-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Paquereauman)
-![Techno-Anthropology](https://img.shields.io/badge/Background-Techno--Anthropology-14524c?style=for-the-badge)
-![Teacher](https://img.shields.io/badge/Role-Teacher-f5b942?style=for-the-badge&labelColor=222)
-![Copenhagen](https://img.shields.io/badge/Trained%20in-Copenhagen-c8102e?style=for-the-badge)
+<img src="https://readme-typing-svg.demolab.com?font=Familjen+Grotesk&weight=600&size=20&duration=3000&pause=1000&color=F5B942&center=true&vcenter=true&width=560&lines=Building+pragmatic+tools+with+Claude;Techno-anthropologist+turned+teacher;French+A1+Web+App+%C2%B7+Sing-box+IP+Unlocker" alt="Typing SVG" />
 
-<br>
+<br><br>
 
 <p align="center">
-  <a href="https://paquereauman.github.io/apprendre-francais-a1/"><b>🥖 Français A1</b></a> ·
-  <a href="https://github.com/Paquereauman/cu-bootstrap/releases/latest"><b>⚡ IP Unlocker</b></a> ·
-  <a href="https://github.com/Paquereauman/stickaru/releases/latest"><b>🐱 Stickaru</b></a> ·
-  <a href="#-projects"><b>🚀 Projects</b></a> ·
+  <a href="https://paquereauman.github.io/Paquereauman/"><b>🌐 Portfolio</b></a> &nbsp;·&nbsp;
+  <a href="https://paquereauman.github.io/apprendre-francais-a1/"><b>🥖 Français A1</b></a> &nbsp;·&nbsp;
+  <a href="https://github.com/Paquereauman/cu-bootstrap/releases/latest"><b>⚡ IP Unlocker</b></a> &nbsp;·&nbsp;
+  <a href="https://github.com/Paquereauman/stickaru/releases/latest"><b>🐱 Stickaru</b></a> &nbsp;·&nbsp;
+  <a href="#-projects"><b>🚀 Projects</b></a> &nbsp;·&nbsp;
   <a href="#-contact"><b>📫 Contact</b></a>
 </p>
 
-</div>
+<img src="assets/animated-divider.svg" width="100%">
 
----
+<br><br>
 
 ## 🚀 Projects
 
-| Project | Category | Platform | Links |
-|---|---|---|---|
-| 🥖 **Français A1 (Je parle baguette)**<br><sub>Interactive French course for Chinese speakers: 17 chapters, ~760 words, neural audio, server-graded quizzes, spaced repetition, avatars and monthly rankings.</sub> | Education / FLE | Web App | [Live App](https://paquereauman.github.io/apprendre-francais-a1/) · [Code](https://github.com/Paquereauman/apprendre-francais-a1) |
-| ⚡ **IP Unlocker**<br><sub>Cross-platform utility for unblocking AI tools (Claude, ChatGPT, Gemini). Silent Sing-box TUN L3 engine, WARP relay, auto-proxy detection, anti-WebRTC leak.</sub> | Network / AI Utility | Windows · macOS | [Downloads](https://github.com/Paquereauman/cu-bootstrap/releases/latest) · [Repo](https://github.com/Paquereauman/cu-bootstrap) |
-| 🐱 **Stickaru**<br><sub>Sticker & meme library: search Tenor, GIPHY, Telegram without API keys, 1-click copy with transparency into Discord, WhatsApp, Slides.</sub> | Desktop Tool | Windows | [Installer](https://github.com/Paquereauman/stickaru/releases/latest) · [Code](https://github.com/Paquereauman/stickaru) |
-| 🎸 **Barré guitare**<br><sub>Web app for guitarists: personalized song list with chords, synchronized YouTube lessons, and real-time audio tuner.</sub> | Web App / Music | Web App | [Open App](https://paquereauman.github.io/Paquereauman/barre-guitare/) · [Code](./barre-guitare) |
-| 🎙️ **Dictaphone DeepSeek FR**<br><sub>Free French voice dictation for DeepSeek: Chrome extension paired with a 100% local Whisper speech-to-text server.</sub> | AI / Voice | Chrome + Python | [Code & Setup](https://github.com/Paquereauman/dictaphone-deepseek-fr) |
+</div>
 
----
+| Project | Category | Platform | Links |
+| :--- | :---: | :---: | :---: |
+| 🥖 **Français A1 (Je parle baguette)**<br><sub>Interactive French course for Chinese speakers: 17 chapters, ~760 words, neural audio, server-graded quizzes, spaced repetition, avatars and monthly rankings.</sub> | `Education / FLE` | **Web App** | [Live App](https://paquereauman.github.io/apprendre-francais-a1/) · [Code](https://github.com/Paquereauman/apprendre-francais-a1) |
+| ⚡ **IP Unlocker**<br><sub>Cross-platform utility for unblocking AI tools (Claude, ChatGPT, Gemini). Silent Sing-box TUN L3 engine, WARP relay, auto-proxy detection, anti-WebRTC leak.</sub> | `Network / AI Utility` | **Windows · macOS** | [Downloads](https://github.com/Paquereauman/cu-bootstrap/releases/latest) · [Repo](https://github.com/Paquereauman/cu-bootstrap) |
+| 🐱 **Stickaru**<br><sub>Sticker & meme library: search Tenor, GIPHY, Telegram without API keys, 1-click copy with transparency into Discord, WhatsApp, Slides.</sub> | `Desktop Tool` | **Windows** | [Installer](https://github.com/Paquereauman/stickaru/releases/latest) · [Code](https://github.com/Paquereauman/stickaru) |
+| 🎸 **Barré guitare**<br><sub>Web app for guitarists: personalized song list with chords, synchronized YouTube lessons, and real-time audio tuner.</sub> | `Web App / Music` | **Web App** | [Open App](https://paquereauman.github.io/Paquereauman/barre-guitare/) · [Code](./barre-guitare) |
+| 🎙️ **Dictaphone DeepSeek FR**<br><sub>Free French voice dictation for DeepSeek: Chrome extension paired with a 100% local Whisper speech-to-text server.</sub> | `AI / Voice` | **Chrome + Python** | [Code & Setup](https://github.com/Paquereauman/dictaphone-deepseek-fr) |
+
+<br>
+
+<div align="center">
+
+<img src="assets/animated-divider.svg" width="100%">
+
+<br><br>
 
 ## 🛠️ Toolbox & Technologies
 
@@ -48,15 +53,21 @@
 ![Sing-box](https://img.shields.io/badge/Sing--box-TUN%20L3-14524c?style=flat-square)
 ![Web Scraping](https://img.shields.io/badge/Web%20Scraping-BeautifulSoup%20%7C%20Requests-14524c?style=flat-square)
 
----
+<br><br>
+
+<img src="assets/animated-divider.svg" width="100%">
+
+<br><br>
 
 ## 📫 Contact
 
 Got an idea, a challenge to tackle, or want to collaborate?  
-Feel free to reach out: **[bpaquereau@hotmail.fr](mailto:bpaquereau@hotmail.fr)**
+Feel free to reach out directly:
 
----
+### ✉️ **[bpaquereau@hotmail.fr](mailto:bpaquereau@hotmail.fr)**
 
-<div align="center">
+<br>
+
 <sub>Made with curiosity, coffee and a bit of help from Claude.</sub>
+
 </div>
