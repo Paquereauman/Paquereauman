@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner-en.svg" alt="Bai Laoshi (Paquereauman)" width="100%">
+<img src="assets/banner-warm.svg" alt="Bai Laoshi (Paquereauman)" width="100%">
 
 <p align="center">
   <a href="https://paquereauman.github.io/Paquereauman/"><b>🌐 Portfolio</b></a> &nbsp;·&nbsp;

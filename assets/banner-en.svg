@@ -1,82 +1,87 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" width="900" height="240" role="img" aria-label="Bai Laoshi (Paquereauman), techno-anthropologist, teacher, I build useful tools">
   <defs>
-    <!-- Fond chaud : dégradé d'ébène chaud / chocolat profond vers un ambre cuivré -->
+    <!-- Fond chaud : dégradé d'ébène ambré vers cuivre chaleureux -->
     <linearGradient id="warmBg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#160e0a"/>
-      <stop offset="50%" stop-color="#24140d"/>
-      <stop offset="100%" stop-color="#361a0f"/>
+      <stop offset="0%" stop-color="#180b05"/>
+      <stop offset="45%" stop-color="#2d1307"/>
+      <stop offset="100%" stop-color="#4a1c09"/>
     </linearGradient>
 
-    <!-- Halo lumineux chaud sous la constellation -->
-    <radialGradient id="emberGlow" cx="80%" cy="50%" r="45%">
-      <stop offset="0%" stop-color="#ff7b00" stop-opacity="0.32"/>
-      <stop offset="55%" stop-color="#e85d04" stop-opacity="0.10"/>
-      <stop offset="100%" stop-color="#160e0a" stop-opacity="0"/>
+    <!-- Halo lumineux chaud orange-feu sous la constellation -->
+    <radialGradient id="warmEmber" cx="78%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff7900" stop-opacity="0.38"/>
+      <stop offset="45%" stop-color="#ea580c" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#180b05" stop-opacity="0"/>
     </radialGradient>
 
-    <!-- Ligne dorée / ambre vive -->
-    <linearGradient id="warmLine" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#f5b942"/>
-      <stop offset="100%" stop-color="#f58f42"/>
+    <!-- Barre d'accentuation or & feu -->
+    <linearGradient id="goldLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffbe0b"/>
+      <stop offset="50%" stop-color="#fb8500"/>
+      <stop offset="100%" stop-color="#ff006e"/>
     </linearGradient>
 
-    <clipPath id="rounded">
+    <clipPath id="roundedCorners">
       <rect width="900" height="240" rx="20"/>
     </clipPath>
   </defs>
 
-  <g clip-path="url(#rounded)">
-    <!-- Fond -->
+  <g clip-path="url(#roundedCorners)">
+    <!-- Fond chaud -->
     <rect width="900" height="240" fill="url(#warmBg)"/>
-    <rect width="900" height="240" fill="url(#emberGlow)"/>
+    <rect width="900" height="240" fill="url(#warmEmber)"/>
 
-    <!-- Réseau de points constellation en teintes chaudes dorées -->
-    <g stroke="#f5b942" stroke-opacity=".35" stroke-width="1.4" fill="none">
+    <!-- Réseau de points constellation en teintes or et ambre chaud -->
+    <g stroke="#ffb703" stroke-opacity=".40" stroke-width="1.5" fill="none">
       <path d="M610 40L690 90L780 50L850 120L770 180L680 160L610 40"/>
       <path d="M690 90L680 160M780 50L770 180M690 90L770 180"/>
       <path d="M850 120L880 200M680 160L640 215"/>
     </g>
 
-    <!-- Noeuds du réseau avec animation de pulsation -->
-    <g fill="#f5b942">
-      <circle cx="610" cy="40" r="5" opacity=".7"/>
-      <circle cx="690" cy="90" r="7"><animate attributeName="opacity" values=".4;1;.4" dur="3.5s" repeatCount="indefinite"/></circle>
-      <circle cx="780" cy="50" r="5" opacity=".7"/>
-      <circle cx="850" cy="120" r="8"><animate attributeName="opacity" values="1;.4;1" dur="4.2s" repeatCount="indefinite"/></circle>
-      <circle cx="770" cy="180" r="6" opacity=".8"/>
-      <circle cx="680" cy="160" r="5" opacity=".7"/>
-      <circle cx="880" cy="200" r="4" opacity=".5"/>
-      <circle cx="640" cy="215" r="4" opacity=".5"/>
+    <!-- Noeuds du réseau avec pulsation lumineuse -->
+    <g fill="#ffb703">
+      <circle cx="610" cy="40" r="5" opacity=".75"/>
+      <circle cx="690" cy="90" r="7"><animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/></circle>
+      <circle cx="780" cy="50" r="5" opacity=".75"/>
+      <circle cx="850" cy="120" r="9"><animate attributeName="opacity" values="1;.4;1" dur="3.8s" repeatCount="indefinite"/></circle>
+      <circle cx="770" cy="180" r="6" opacity=".85"/>
+      <circle cx="680" cy="160" r="5" opacity=".75"/>
+      <circle cx="880" cy="200" r="4" opacity=".55"/>
+      <circle cx="640" cy="215" r="4" opacity=".55"/>
     </g>
 
-    <!-- Anneau lumineux pulsant sur le noeud principal -->
-    <circle cx="850" cy="120" r="14" fill="none" stroke="#f5b942" stroke-width="2.2" opacity=".9">
-      <animate attributeName="r" values="10;24;10" dur="3.5s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values=".95;0;.95" dur="3.5s" repeatCount="indefinite"/>
+    <!-- Anneaux dorés pulsants sur le noeud phare -->
+    <circle cx="850" cy="120" r="14" fill="none" stroke="#ffb703" stroke-width="2.4" opacity=".95">
+      <animate attributeName="r" values="9;26;9" dur="3.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0;1" dur="3.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="850" cy="120" r="20" fill="none" stroke="#fb8500" stroke-width="1.4" opacity=".6">
+      <animate attributeName="r" values="14;34;14" dur="3.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values=".7;0;.7" dur="3.2s" repeatCount="indefinite"/>
     </circle>
 
-    <!-- Titre principal -->
-    <text x="48" y="104" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="56" font-weight="700" fill="#ffffff" letter-spacing="-0.02em">Bai Laoshi</text>
+    <!-- Titre Bai Laoshi -->
+    <text x="48" y="104" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="58" font-weight="700" fill="#ffffff" letter-spacing="-0.02em">Bai Laoshi</text>
 
-    <!-- Barre d'accentuation ambrée -->
-    <rect x="50" y="122" width="124" height="5" rx="2.5" fill="url(#warmLine)"/>
+    <!-- Barre d'accentuation en dégradé chaud or / orange -->
+    <rect x="50" y="122" width="130" height="5" rx="2.5" fill="url(#goldLine)"/>
 
-    <!-- Sous-titre fixe chaleureux -->
-    <text x="48" y="164" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="500" fill="#fbd5b5">@Paquereauman &nbsp;·&nbsp; Techno-anthropologist</text>
+    <!-- Sous-titre identité (chaud et doux) -->
+    <text x="48" y="164" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="500" fill="#ffd8be">@Paquereauman &nbsp;·&nbsp; Techno-anthropologist</text>
 
-    <!-- Animation intégrée : message 1 (Building pragmatic tools with Claude) -->
+    <!-- Message animé 1 : Building pragmatic tools with Claude -->
     <g>
-      <text x="48" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#f5b942">
-        Building pragmatic tools with Claude
-        <animate attributeName="opacity" values="0;1;1;1;0;0;0" keyTimes="0;0.08;0.45;0.48;0.52;0.96;1" dur="7s" repeatCount="indefinite"/>
+      <text x="48" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#ffb703">
+        Building pragmatic tools with Claude<tspan fill="#ff7900"><animate attributeName="opacity" values="1;0;1" dur="0.8s" repeatCount="indefinite"/>_</tspan>
+        <animate attributeName="opacity" values="1;1;1;0;0;0;1" keyTimes="0;0.42;0.47;0.52;0.95;0.98;1" dur="6.5s" repeatCount="indefinite"/>
       </text>
     </g>
 
-    <!-- Animation intégrée : message 2 (Techno-anthropologist turned teacher) -->
+    <!-- Message animé 2 : Techno-anthropologist turned teacher -->
     <g>
-      <text x="48" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#f5b942">
-        Techno-anthropologist turned teacher
-        <animate attributeName="opacity" values="0;0;0;1;1;1;0" keyTimes="0;0.48;0.52;0.58;0.92;0.96;1" dur="7s" repeatCount="indefinite"/>
+      <text x="48" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#ffb703">
+        Techno-anthropologist turned teacher<tspan fill="#ff7900"><animate attributeName="opacity" values="1;0;1" dur="0.8s" repeatCount="indefinite"/>_</tspan>
+        <animate attributeName="opacity" values="0;0;0;1;1;1;0" keyTimes="0;0.47;0.52;0.56;0.91;0.96;1" dur="6.5s" repeatCount="indefinite"/>
       </text>
     </g>
   </g>
