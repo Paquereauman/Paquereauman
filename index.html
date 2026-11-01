@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Bai Laoshi</title>
+<title>Bai Laoshi — Portfolio</title>
 <meta name="description" content="Bai Laoshi (Paquereauman): techno-anthropologist turned teacher, building useful tools with Claude.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,30 +24,31 @@
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 var(--body);padding-inline:16px}
 .wrap{max-width:960px;margin:0 auto}
-a{color:var(--link)}
+a{color:var(--link);transition:color .15s}
 a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:6px}
-h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;text-wrap:balance}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0;text-wrap:balance}
 p{margin:0}
 html:not([data-lang="fr"]) [lang="fr"]{display:none!important}
 html[data-lang="fr"] [lang="en"]{display:none!important}
 
 .top{display:flex;justify-content:space-between;align-items:center;padding-block:18px}
-.top .brand{font:700 1.05rem var(--display)}
+.top .brand{font:700 1.05rem var(--display);letter-spacing:.02em}
 .top nav{display:flex;gap:6px;align-items:center}
-.top nav a{color:var(--muted);text-decoration:none;font-weight:500;padding:6px 10px;border-radius:8px}
-.top nav a:hover{color:var(--fg)}
+.top nav a{color:var(--muted);text-decoration:none;font-weight:500;padding:6px 10px;border-radius:8px;transition:background .15s,color .15s}
+.top nav a:hover{color:var(--fg);background:color-mix(in srgb,var(--line) 40%,transparent)}
 .langs{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden;margin-left:6px}
-.langs button{font:600 .8rem var(--mono);background:none;color:var(--muted);border:0;padding:6px 11px;cursor:pointer}
+.langs button{font:600 .8rem var(--mono);background:none;color:var(--muted);border:0;padding:6px 11px;cursor:pointer;transition:background .15s,color .15s}
 .langs button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
 
-.hero{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(135deg,var(--hero1),var(--hero2));color:var(--hero-fg);padding:clamp(28px,6vw,64px);display:grid;gap:18px;min-height:340px;align-content:center}
-.hero>*{position:relative;z-index:1;max-width:30ch}
+.hero{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(135deg,var(--hero1),var(--hero2));color:var(--hero-fg);padding:clamp(28px,6vw,64px);display:grid;gap:18px;min-height:340px;align-content:center;box-shadow:0 12px 36px rgba(11,31,42,.15)}
+.hero>*{position:relative;z-index:1;max-width:32ch}
 .hero .eyebrow{font:500 .9rem var(--mono);color:var(--amber);letter-spacing:.04em}
 .hero h1{font-size:clamp(2.8rem,9vw,5.2rem);letter-spacing:-.02em}
 .hero .rule{width:120px;height:5px;border-radius:3px;background:linear-gradient(90deg,#f5b942,#f58f42)}
-.hero p.lead{font-size:clamp(1.1rem,2.6vw,1.35rem);color:var(--hero-muted);max-width:34ch}
+.hero p.lead{font-size:clamp(1.1rem,2.6vw,1.35rem);color:var(--hero-muted);max-width:36ch}
 .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
-.btn{display:inline-block;font:600 1rem var(--body);text-decoration:none;border-radius:99px;padding:12px 22px}
+.btn{display:inline-block;font:600 .95rem var(--body);text-decoration:none;border-radius:99px;padding:11px 20px;transition:transform .15s,box-shadow .15s,opacity .15s}
+.btn:hover{transform:translateY(-1px);opacity:.95}
 .btn.primary{background:var(--amber);color:#1b1500}
 .btn.ghost{border:1.5px solid rgba(255,255,255,.55);color:#fff}
 .net{position:absolute;right:-30px;top:0;height:100%;width:min(60%,520px);z-index:0;opacity:.9}
@@ -64,28 +65,30 @@ section>h2{font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:22px}
 .fact span{color:var(--muted);font-size:.95rem}
 @media (max-width:720px){.about{grid-template-columns:1fr}}
 
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:22px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:grid;grid-template-rows:auto 1fr;transition:border-color .2s,box-shadow .2s}
+.card:hover{border-color:color-mix(in srgb,var(--link) 40%,var(--line));box-shadow:0 8px 24px rgba(0,0,0,.06)}
 .card .media{background:#e6ebe4;display:grid;place-items:center;border-bottom:1px solid var(--line);aspect-ratio:16/9;overflow:hidden}
 .card .media img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
-.card .media.shot{padding:14px}
+.card .media.shot{padding:16px}
 .card .media.shot img{object-fit:contain;object-position:center}
-.card .body{padding:20px 22px 24px;display:grid;gap:12px;align-content:start}
-.card h3{font-size:1.5rem}
-.card p{color:var(--muted)}
+.card .body{padding:22px 24px 26px;display:grid;gap:12px;align-content:start}
+.card h3{font-size:1.45rem}
+.card p{color:var(--muted);font-size:.98rem;line-height:1.55}
 .tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{font:500 .78rem var(--mono);border:1px solid var(--line);border-radius:99px;padding:2px 10px;color:var(--muted)}
+.tag{font:500 .76rem var(--mono);border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--muted)}
 .card .btn.primary{justify-self:start;background:var(--teal);color:#fff}
-.media.zh{background:linear-gradient(135deg,#14524c,#0b1f2a);color:#fff;font:700 clamp(3rem,10vw,5rem) "Noto Sans SC","PingFang SC","Microsoft YaHei",var(--display)}
-.media.zh span{letter-spacing:.08em}
+.card .btn.primary:hover{background:color-mix(in srgb,var(--teal) 88%,#fff)}
+
+.media.fr{background:linear-gradient(135deg,#0d2538,#1b4965);color:#fff;font:700 clamp(2rem,5vw,2.9rem) var(--display);display:grid;place-items:center}
+.media.fr span{letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
 .media.flow{background:var(--surface);color:var(--fg);padding:18px}
-.card.soon{border-style:dashed;background:transparent}
-.card.soon .media{background:repeating-linear-gradient(135deg,transparent 0 14px,color-mix(in srgb,var(--line) 55%,transparent) 14px 15px);color:var(--muted);font:600 1.1rem var(--display)}
-.badge{justify-self:start;font:500 .78rem var(--mono);background:color-mix(in srgb,var(--amber) 28%,transparent);color:var(--amber-ink);border-radius:99px;padding:3px 12px}
+.badge{justify-self:start;font:600 .75rem var(--mono);background:color-mix(in srgb,var(--amber) 25%,transparent);color:var(--amber-ink);border:1px solid color-mix(in srgb,var(--amber) 40%,transparent);border-radius:99px;padding:3px 11px;text-transform:uppercase;letter-spacing:.04em}
 
 .contact{display:grid;gap:14px;justify-items:start}
-.contact .mail{font:600 clamp(1.2rem,3.4vw,1.7rem) var(--display)}
-footer{padding-block:56px 40px;color:var(--muted);font-size:.9rem}
+.contact .mail{font:600 clamp(1.2rem,3.4vw,1.7rem) var(--display);text-decoration:none}
+.contact .mail:hover{text-decoration:underline}
+footer{padding-block:56px 40px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);margin-top:40px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.net *{animation:none!important}}
 </style>
 </head>
@@ -95,6 +98,7 @@ footer{padding-block:56px 40px;color:var(--muted);font-size:.9rem}
     <span class="brand">Bai Laoshi</span>
     <nav aria-label="Main">
       <a href="#projects"><span lang="en">Projects</span><span lang="fr">Projets</span></a>
+      <a href="#about"><span lang="en">About</span><span lang="fr">À propos</span></a>
       <a href="#contact">Contact</a>
       <span class="langs" role="group" aria-label="Language"><button type="button" data-l="en" aria-pressed="true">EN</button><button type="button" data-l="fr" aria-pressed="false">FR</button></span>
     </nav>
@@ -149,32 +153,37 @@ footer{padding-block:56px 40px;color:var(--muted);font-size:.9rem}
     <section id="projects">
       <h2><span lang="en">Projects</span><span lang="fr">Projets</span></h2>
       <div class="cards">
+
+        <!-- 1. Français A1 -->
         <article class="card">
-          <div class="media"><img src="assets/francais-a1.jpg" alt="Je parle baguette - Cours de français A1 pour sinophones" width="720" height="360" loading="lazy"></div>
+          <div class="media fr" aria-hidden="true"><span>🥖 Je parle baguette</span></div>
           <div class="body">
             <span class="badge" lang="en">Featured · Web App</span><span class="badge" lang="fr">En avant · Web App</span>
             <h3 lang="en">🥖 French A1 · Je parle baguette</h3>
             <h3 lang="fr">🥖 Français A1 · Je parle baguette</h3>
-            <p lang="en">An interactive French A1 learning web app for Chinese speakers: 17 chapters, ~760 illustrated words, neural audio pronunciation, server-validated quizzes, spaced repetition, customizable avatars, and class rankings.</p>
-            <p lang="fr">Parcours interactif de français A1 pour sinophones : 17 chapitres, ~760 mots illustrés avec emojis, prononciation audio neuronale, affiches thématiques, quiz corrigés côté serveur, répétition espacée, avatars et classements.</p>
+            <p lang="en">An interactive French A1 learning web app for Chinese speakers: 17 structured chapters, ~760 illustrated vocabulary words, neural voice pronunciation, server-validated quizzes, spaced repetition, customizable avatars, and class leaderboards.</p>
+            <p lang="fr">Parcours interactif d'apprentissage du français A1 pour sinophones : 17 chapitres, ~760 mots illustrés avec emojis, prononciation audio neuronale, quiz corrigés côté serveur, répétition espacée, avatars personnalisables et classements.</p>
             <div class="tags"><span class="tag">Web app</span><span class="tag">FLE A1</span><span class="tag">Audio & Quiz</span><span class="tag">FR · 中文</span></div>
             <a class="btn primary" href="https://paquereauman.github.io/apprendre-francais-a1/" target="_blank" rel="noopener"><span lang="en">Open the app</span><span lang="fr">Ouvrir l'appli</span></a>
           </div>
         </article>
 
+        <!-- 2. IP Unlocker -->
         <article class="card">
-          <div class="media shot" style="background:linear-gradient(135deg,#0b1f2a,#14354c)">
-            <img src="assets/ip-unlocker-icon.png" alt="IP Unlocker Logo" width="160" height="160" style="max-height:150px;object-fit:contain" loading="lazy">
+          <div class="media shot" style="background:linear-gradient(135deg,#0c1920,#163038)">
+            <img src="assets/ip-unlocker-icon.png" alt="IP Unlocker Logo" width="130" height="130" style="max-height:120px;object-fit:contain" loading="lazy">
           </div>
           <div class="body">
-            <span class="badge" lang="en">Featured · Desktop App</span><span class="badge" lang="fr">En avant · App Bureau</span>
+            <span class="badge" lang="en">Featured · Desktop Utility</span><span class="badge" lang="fr">En avant · App Bureau</span>
             <h3>⚡ IP Unlocker</h3>
-            <p lang="en">Smart desktop app for Windows and macOS to seamlessly access AI platforms (Claude, ChatGPT, Gemini). Silent Layer 3 Sing-box TUN engine, Cloudflare WARP relay, automatic proxy detection, and anti-WebRTC leak protection.</p>
+            <p lang="en">High-performance desktop app for Windows and macOS to access AI platforms (Claude, ChatGPT, Gemini). Silent Sing-box Layer 3 TUN engine, Cloudflare WARP relay, proxy auto-detection, and anti-WebRTC leak protection.</p>
             <p lang="fr">Application de bureau pour Windows et macOS débloquant l'accès aux plateformes d'IA (Claude, ChatGPT, Gemini). Moteur silencieux Sing-box TUN Layer 3, relai Cloudflare WARP, détection automatique des proxys et protection anti-fuite WebRTC.</p>
-            <div class="tags"><span class="tag">Desktop app</span><span class="tag">Windows · macOS</span><span class="tag">Sing-box TUN</span><span class="tag">AI Unblock</span></div>
-            <a class="btn primary" href="https://github.com/Paquereauman/cu-bootstrap/releases/latest" target="_blank" rel="noopener"><span lang="en">Download for Windows & Mac</span><span lang="fr">Télécharger (Windows & Mac)</span></a>
+            <div class="tags"><span class="tag">Windows</span><span class="tag">macOS</span><span class="tag">Sing-box TUN</span><span class="tag">WARP</span><span class="tag">Anti-Leak</span></div>
+            <a class="btn primary" href="https://github.com/Paquereauman/cu-bootstrap/releases/latest" target="_blank" rel="noopener"><span lang="en">Download (Windows & Mac)</span><span lang="fr">Télécharger (Windows & Mac)</span></a>
           </div>
         </article>
+
+        <!-- 3. Stickaru -->
         <article class="card">
           <div class="media shot"><img src="assets/stickaru-window.png" alt="Stickaru search window with theme chips and a side menu" width="720" height="357" loading="lazy"></div>
           <div class="body">
@@ -182,32 +191,23 @@ footer{padding-block:56px 40px;color:var(--muted);font-size:.9rem}
             <p lang="en">A Windows sticker and meme library: keyless search (Tenor, GIPHY, Telegram, RisiBank), one-click copy with transparency, favourites in your own collection. Handy for slideshows: paste transparent stickers and animated GIFs straight into PowerPoint or Google Slides.</p>
             <p lang="fr">Une bibliothèque de stickers et de mèmes pour Windows : recherche sans clé API, copie en un clic avec transparence, favoris dans votre propre collection. Pratique pour les diaporamas : collez des stickers transparents et des GIF animés directement dans PowerPoint ou Google Slides.</p>
             <div class="tags"><span class="tag">Windows</span><span class="tag">Python</span><span class="tag">Stickers</span><span class="tag">FR · EN · 中文</span></div>
-            <a class="btn primary" href="https://github.com/Paquereauman/stickaru/releases/latest"><span lang="en">Download the installer</span><span lang="fr">Télécharger l'installateur</span></a>
+            <a class="btn primary" href="https://github.com/Paquereauman/stickaru/releases/latest" target="_blank" rel="noopener"><span lang="en">Download the installer</span><span lang="fr">Télécharger l'installateur</span></a>
           </div>
         </article>
 
+        <!-- 4. Barré guitare -->
         <article class="card">
           <div class="media"><img src="assets/barre-demo.gif" alt="Animated chord shape sliding along the guitar neck" width="720" height="360" loading="lazy"></div>
           <div class="body">
             <h3>Barré guitare</h3>
-            <p lang="en">A web app for guitar: your own song list with chords, YouTube videos attached to each song, and a tuner.</p>
-            <p lang="fr">Une appli web de guitare : ta liste de chansons avec accords, des vidéos YouTube liées à chaque chanson, et un accordeur.</p>
+            <p lang="en">A web app for guitar: your own song list with chords, YouTube videos attached to each song, and a real-time guitar tuner listening through the microphone.</p>
+            <p lang="fr">Une appli web de guitare : ta liste de chansons avec accords, des vidéos YouTube liées à chaque chanson, et un accordeur qui écoute par le micro.</p>
             <div class="tags"><span class="tag">Web app</span><span class="tag">Guitar</span><span class="tag">Tuner</span><span class="tag">FR</span></div>
             <a class="btn primary" href="barre-guitare/"><span lang="en">Open the app</span><span lang="fr">Ouvrir l'appli</span></a>
           </div>
         </article>
 
-        <article class="card">
-          <div class="media zh" aria-hidden="true"><span>你好</span></div>
-          <div class="body">
-            <h3 lang="en">Learn Chinese</h3><h3 lang="fr">Apprendre le chinois</h3>
-            <p lang="en">A Mandarin course from A1 to B1 for French speakers: about 900 words, a tone gym with animated pitch curves, spaced repetition, grammar lessons and character writing. One web page, 1,319 audio files, works on phone and computer.</p>
-            <p lang="fr">Un parcours de mandarin A1 → B1 en français : environ 900 mots, une gym des tons avec courbes animées, répétition espacée, grammaire et écriture des caractères. Une seule page web, 1 319 fichiers audio, sur ordinateur et téléphone.</p>
-            <div class="tags"><span class="tag">Web app</span><span class="tag">Mandarin</span><span class="tag">A1 · A2 · B1</span><span class="tag">FR</span></div>
-            <a class="btn primary" href="https://paquereauman.github.io/apprendre-chinois/"><span lang="en">Open the app</span><span lang="fr">Ouvrir l'appli</span></a>
-          </div>
-        </article>
-
+        <!-- 5. Dictaphone DeepSeek FR -->
         <article class="card">
           <div class="media flow" aria-hidden="true">
             <svg viewBox="0 0 480 120" width="100%" role="presentation">
@@ -226,9 +226,10 @@ footer{padding-block:56px 40px;color:var(--muted);font-size:.9rem}
             <p lang="en">Free voice dictation in French for DeepSeek. A Chrome extension sends your voice to a local Whisper server: you speak, the text appears in the chat box, and nothing leaves your computer. Voice commands such as "Valider" send the message.</p>
             <p lang="fr">Dictée vocale gratuite en français pour DeepSeek. Une extension Chrome envoie ta voix à un serveur Whisper local : tu parles, le texte s'écrit dans le champ de saisie, et rien ne sort de ton ordinateur. Des commandes vocales comme « Valider » envoient le message.</p>
             <div class="tags"><span class="tag">Chrome extension</span><span class="tag">Whisper</span><span class="tag">Python</span><span class="tag">FR</span></div>
-            <a class="btn primary" href="https://github.com/Paquereauman/dictaphone-deepseek-fr"><span lang="en">See the code</span><span lang="fr">Voir le code</span></a>
+            <a class="btn primary" href="https://github.com/Paquereauman/dictaphone-deepseek-fr" target="_blank" rel="noopener"><span lang="en">See the code</span><span lang="fr">Voir le code</span></a>
           </div>
         </article>
+
       </div>
     </section>
 
@@ -238,7 +239,7 @@ footer{padding-block:56px 40px;color:var(--muted);font-size:.9rem}
         <p lang="en">Got an idea, a problem to solve, or want to collaborate? Write to me.</p>
         <p lang="fr">Une idée, un problème à résoudre, une collaboration ? Écris-moi.</p>
         <a class="mail" href="mailto:bpaquereau@hotmail.fr">bpaquereau@hotmail.fr</a>
-        <a href="https://github.com/Paquereauman">github.com/Paquereauman</a>
+        <a href="https://github.com/Paquereauman" target="_blank" rel="noopener">github.com/Paquereauman</a>
       </div>
     </section>
   </main>
