@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" width="900" height="240" role="img" aria-label="Bai Laoshi (Paquereauman), teacher, techno-anthropologist, building pragmatic tools with Claude">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 900 240" width="900" height="240" role="img" aria-label="Bai Laoshi (Paquereauman), teacher, techno-anthropologist, building pragmatic tools with Claude">
   <defs>
     <!-- Style responsive optimise pour mobile et ecrans haute densite -->
     <style>
@@ -21,7 +21,7 @@
       <stop offset="100%" stop-color="#1d1b18"/>
     </linearGradient>
 
-    <!-- Ambiance douce phosphore ambre vintage (tres subtile, 6% max) -->
+    <!-- Ambiance douce phosphore ambre vintage (tres subtile, 10% max) -->
     <radialGradient id="amberPhosphor" cx="80%" cy="50%" r="55%">
       <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.10"/>
       <stop offset="60%" stop-color="#d97706" stop-opacity="0.03"/>
@@ -36,6 +36,16 @@
     <clipPath id="roundedCorners">
       <rect width="900" height="240" rx="18"/>
     </clipPath>
+
+    <!-- Trajectoires animees pour effet machine a ecrire / terminal typing -->
+    <path id="typePath0">
+      <animate id="d0" attributeName="d" begin="0s;d1.end" dur="5200ms" fill="remove"
+        values="m68,198 h0 ; m68,198 h460 ; m68,198 h460 ; m68,198 h0" keyTimes="0; 0.42; 0.84; 1" />
+    </path>
+    <path id="typePath1">
+      <animate id="d1" attributeName="d" begin="d0.end" dur="5200ms" fill="remove"
+        values="m68,198 h0 ; m68,198 h450 ; m68,198 h450 ; m68,198 h0" keyTimes="0; 0.42; 0.84; 1" />
+    </path>
   </defs>
 
   <g clip-path="url(#roundedCorners)">
@@ -87,20 +97,36 @@
     <!-- Sous-titre identite retro terminal avec prompt '>' -->
     <text class="banner-sub" x="48" y="164"><tspan fill="#f59e0b" font-weight="700">&gt;</tspan> @Paquereauman &#183; Teacher</text>
 
-    <!-- Message anime 1 : Building pragmatic tools with Claude + curseur bloc retro clignotant -->
-    <g>
-      <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.45;0.50;0.95;1" dur="8s" repeatCount="indefinite"/>
-      <text class="banner-anim" x="48" y="198">
-        <tspan fill="#f59e0b" font-weight="700">&gt;</tspan> Building pragmatic tools with Claude<tspan fill="#f59e0b"><animate attributeName="opacity" values="1;0;1" dur="0.85s" repeatCount="indefinite"/>&#9608;</tspan>
-      </text>
-    </g>
+    <!-- Ligne animee en frappe terminal machine a ecrire (Typing Animation) -->
+    <!-- Prompt retro fixe '>' -->
+    <text x="48" y="198" font-family="'IBM Plex Mono', 'Courier New', ui-monospace, monospace" font-size="19" font-weight="700" fill="#f59e0b">&gt;</text>
 
-    <!-- Message anime 2 : Techno-anthropologist turned teacher + curseur bloc retro clignotant -->
-    <g>
-      <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.45;0.50;0.95;1" dur="8s" repeatCount="indefinite"/>
-      <text class="banner-anim" x="48" y="198">
-        <tspan fill="#f59e0b" font-weight="700">&gt;</tspan> Techno-anthropologist turned teacher<tspan fill="#f59e0b"><animate attributeName="opacity" values="1;0;1" dur="0.85s" repeatCount="indefinite"/>&#9608;</tspan>
-      </text>
-    </g>
+    <!-- Phrase 1 tapee caractere par caractere -->
+    <text class="banner-anim">
+      <textPath href="#typePath0" xlink:href="#typePath0">Building pragmatic tools with Claude</textPath>
+    </text>
+
+    <!-- Curseur 1 bloc ambre qui avance avec la frappe -->
+    <text y="198" font-family="'IBM Plex Mono', 'Courier New', ui-monospace, monospace" font-size="19" fill="#f59e0b">
+      <animate attributeName="x" begin="0s;d1.end" dur="5200ms" fill="remove"
+        values="68; 480; 480; 68" keyTimes="0; 0.42; 0.84; 1" />
+      <animate attributeName="visibility" begin="0s;d1.end" dur="5200ms" fill="remove"
+        values="visible; visible; visible; hidden" keyTimes="0; 0.42; 0.99; 1" />
+      <tspan><animate attributeName="opacity" values="1;0;1" dur="0.8s" repeatCount="indefinite" />&#9608;</tspan>
+    </text>
+
+    <!-- Phrase 2 tapee caractere par caractere -->
+    <text class="banner-anim">
+      <textPath href="#typePath1" xlink:href="#typePath1">Techno-anthropologist turned teacher</textPath>
+    </text>
+
+    <!-- Curseur 2 bloc ambre qui avance avec la frappe -->
+    <text y="198" font-family="'IBM Plex Mono', 'Courier New', ui-monospace, monospace" font-size="19" fill="#f59e0b">
+      <animate attributeName="x" begin="d0.end" dur="5200ms" fill="remove"
+        values="68; 470; 470; 68" keyTimes="0; 0.42; 0.84; 1" />
+      <animate attributeName="visibility" begin="d0.end" dur="5200ms" fill="remove"
+        values="visible; visible; visible; hidden" keyTimes="0; 0.42; 0.99; 1" />
+      <tspan><animate attributeName="opacity" values="1;0;1" dur="0.8s" repeatCount="indefinite" />&#9608;</tspan>
+    </text>
   </g>
 </svg>
