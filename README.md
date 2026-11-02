@@ -1,15 +1,10 @@
 <div align="center">
 
 <img src="assets/banner-warm.svg" alt="Bai Laoshi (Paquereauman)" width="100%">
-<br><br>
-<a href="https://paquereauman.github.io/Paquereauman/"><b>🌐 Portfolio</b></a> &nbsp;·&nbsp;
-<a href="#-projects"><b>🚀 Projects</b></a> &nbsp;·&nbsp;
-<a href="#-contact"><b>📫 Contact</b></a>
-<br><br>
 
 </div>
 
-<a id="-projects"></a>
+<br>
 
 | Project | Preview | Platform | Links&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
 | :--- | :---: | :---: | :--- |
