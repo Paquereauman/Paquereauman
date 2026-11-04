@@ -28,7 +28,7 @@ Got an idea, a challenge to tackle, or want to collaborate?
 Feel free to reach out directly:
 <br><br>
 
-### ✉️ **[bpaquereau@hotmail.fr](mailto:bpaquereau@hotmail.fr)**
+### ✉️ **[paquereauman5@outlook.com](mailto:paquereauman5@outlook.com)**
 
 <sub>Made with curiosity and coffee.</sub>
 
